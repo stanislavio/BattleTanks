@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleTanks", "BattleTanks\BattleTanks.csproj", "{F2B2194D-B42E-4CC3-A6A6-CB048175B910}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BattleTanks", "BattleTanks\BattleTanks.csproj", "{F2B2194D-B42E-4CC3-A6A6-CB048175B910}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleTanks.Core", "BattleTanks.Core\BattleTanks.Core.csproj", "{BE222D2A-93A7-4E03-98A4-A2EAE1E118CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleTanks.DB", "BattleTanks.DB\BattleTanks.DB.csproj", "{5D265DFF-859C-492B-B791-45707605EFAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{F2B2194D-B42E-4CC3-A6A6-CB048175B910}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2B2194D-B42E-4CC3-A6A6-CB048175B910}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2B2194D-B42E-4CC3-A6A6-CB048175B910}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE222D2A-93A7-4E03-98A4-A2EAE1E118CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE222D2A-93A7-4E03-98A4-A2EAE1E118CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE222D2A-93A7-4E03-98A4-A2EAE1E118CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE222D2A-93A7-4E03-98A4-A2EAE1E118CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D265DFF-859C-492B-B791-45707605EFAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D265DFF-859C-492B-B791-45707605EFAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D265DFF-859C-492B-B791-45707605EFAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D265DFF-859C-492B-B791-45707605EFAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
