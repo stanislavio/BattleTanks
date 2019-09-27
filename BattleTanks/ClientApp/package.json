@@ -5,10 +5,17 @@
   "dependencies": {
     "@material-ui/core": "^4.4.2",
     "@material-ui/icons": "^4.4.1",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-router-dom": "^4.2.2",
+    "history": "^4.10.1",
+    "mdbreact": "^4.20.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^5.0.0-alpha.8",
     "react-scripts": "^3.1.2",
+    "redux": "^3.7.2",
+    "redux-form": "7.4.2",
+    "redux-thunk": "^2.3.0",
     "rimraf": "^2.6.2"
   },
   "scripts": {

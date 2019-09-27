@@ -12,7 +12,7 @@ namespace BattleTanks.Mapping
     {                             
         public AutoMapperProfile()
         {
-            CreateMap<User, UserDTO>();
+            CreateMap<User, UserDTO>().ReverseMap();
 
             CreateMap<UserDTO, UserInfo>()
                 .ForMember(dest => dest.Nickname, opts => opts.MapFrom(src => src.Nickname ?? src.Email.Substring(0, src.Email.IndexOf("@", StringComparison.Ordinal))))
@@ -20,6 +20,8 @@ namespace BattleTanks.Mapping
                 //.ForMember(dest => dest.PhotoUrl,
                 //    opts => opts.MapFrom(src => src.Photo.Thumb.ToRenderablePictureString()))
                 .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender));
+
+            CreateMap<LoginDTO, UserDTO>();
         }
     }
 }

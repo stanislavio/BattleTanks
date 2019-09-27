@@ -9,7 +9,7 @@ export default class Layout extends Component {
     
         const { children } = this.props;
 
-        return <div>
+        return <div className="container-fluid">
             <Header />
             {children}
         </div>

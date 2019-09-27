@@ -62,6 +62,16 @@ namespace BattleTanks.Core.Service
             return new OperationResult(true, token, "");
         }
 
+        public UserDTO GetCurrentUser(ClaimsPrincipal userClaims)
+        {
+            string email = userClaims.FindFirst(ClaimTypes.Email).Value;
+            if (string.IsNullOrEmpty(email))
+            {
+                return null;
+            }
+            return _userService.GetByEmail(email);
+        }
+
         private static bool VerifyPassword(UserDTO user, string actualPassword) =>
            (user.PasswordHash == PasswordHasher.GenerateHash(actualPassword));
                                                         
