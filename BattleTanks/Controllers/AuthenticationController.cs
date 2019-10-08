@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using BattleTanks.Core.DTOs;
 using BattleTanks.Core.IService;
@@ -33,7 +30,7 @@ namespace BattleTanks.Controllers
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public IActionResult Login([FromBody]LoginDTO model)
+        public IActionResult Login([FromBody]LoginDto model)
         {
             var result = _authService.Authenticate(model.Email, model.Password);
             if (!result.Successed)
@@ -51,14 +48,13 @@ namespace BattleTanks.Controllers
 
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public async Task<IActionResult> Register(LoginDTO authRequest)
+        public async Task<IActionResult> Register(RegisterDto authRequest)
         {
             //if (!ModelState.IsValid)
             //{
             //    return BadRequest(ModelState);
             //}
-            var user = _mapper.Map<LoginDTO, UserDTO>(authRequest);
-            user.PasswordHash = PasswordHasher.GenerateHash(authRequest.Password);
+            var user = _mapper.Map<RegisterDto, UserDto>(authRequest);              
 
             var result = await _userService.Create(user);
             if (!result.Successed)

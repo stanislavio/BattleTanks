@@ -1,0 +1,8 @@
+.Logotype{
+    text-decoration: none;
+    color: white;
+}
+.Logotype:hover{
+    color: #73adad;
+    text-decoration: none;
+}

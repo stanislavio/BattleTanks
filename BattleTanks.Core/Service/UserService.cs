@@ -25,19 +25,23 @@ namespace BattleTanks.Core.Service
             _mapper = mapper;
         }
 
-        public UserDTO GetByEmail(string email)
+        public UserDto GetByEmail(string email)
         {
-            var user = _mapper.Map<UserDTO>(UnitOfWork.UserRepo.Get("Role,Photo").FirstOrDefault(o => o.Email == email));
+            var user = _mapper.Map<UserDto>(UnitOfWork.UserRepo.Get("Role,Photo").FirstOrDefault(o => o.Email == email));
             return user;
         }
 
-        public async Task<OperationResult> Create(UserDTO userDto)
+        public async Task<OperationResult> Create(UserDto userDto)
         {
 
 
             if (UnitOfWork.UserRepo.Get().Any(u => u.Email == userDto.Email))
             {
                 return new OperationResult(false, "Email already exists in database", "Email");
+            }
+            if (UnitOfWork.UserRepo.Get().Any(u => u.Nickname == userDto.Nickname))
+            {
+                return new OperationResult(false, "Nickname already exists", "Nickname");
             }
             var user = _mapper.Map<User>(userDto);
 

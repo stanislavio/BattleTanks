@@ -9,7 +9,7 @@ namespace BattleTanks.Core.IService
 {
     public interface IUserService
     {
-        UserDTO GetByEmail(string email);     
-        Task<OperationResult> Create(UserDTO userDto);
+        UserDto GetByEmail(string email);     
+        Task<OperationResult> Create(UserDto userDto);
     }
 }

@@ -1,38 +1,44 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { reduxForm, Field } from 'redux-form';
 import renderTextField from '../fields/input_text_field';
 import { connect } from 'react-redux';
 import validate from '../fields/validate';
 import Button from "@material-ui/core/Button";
-import './login.css';
 
-class Login extends Component {
+class Registration extends Component{
 
     render() {
+        
         const { pristine, reset, submitting, handleSubmit } = this.props;
-        const { isError } = this.props.login;
+        const { isSuccess, isError, isPending } = this.props.register;
+
         return <>
             <form
                 className="login-form text-center"
                 onSubmit={handleSubmit}>
 
+                <Field name="nickname" label='Nickname' component={renderTextField} type="text" />
+
                 <Field name="email" label='Email' component={renderTextField} type="text" />
 
                 <Field name="password" label='Password' className="mt-2" component={renderTextField} type="password" />
 
-                <p className="mt-4 text-danger text-center">{isError}</p>
+                <Field name="repeat_password" label='Confirm password' className="mt-2" component={renderTextField} type="password" />
 
-                <p className="mt-4"><Link to={"/registration"}>Registration</Link></p>   
+                <p className="text-danger mt-2">{isError}</p>
 
-                <Button fullWidth={true} disabled={pristine || submitting} type="submit" value="Login" color="primary">Sign In</Button>
+                <Button fullWidth={true} disabled={pristine || submitting} type="submit" value="Registration" color="primary">Sign Up</Button>
             </form>
+ 
         </>
+
     }
+
 }
 
+
 const mapStateToProps = (state) => ({
-    login: state.login
+    register: state.register
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -41,11 +47,11 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-Login = reduxForm({
-    form: 'login',
+Registration = reduxForm({
+    form: 'registr',
     validate: validate,
-})(Login);
+})(Registration);
 
-Login = connect(mapStateToProps, mapDispatchToProps)(Login);
+Registration = connect(mapStateToProps, mapDispatchToProps)(Registration);
 
-export default Login;
+export default Registration;

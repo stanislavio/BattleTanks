@@ -6,7 +6,7 @@ using System.Text;
 
 namespace BattleTanks.Core.DTOs
 {
-    public class UserDTO
+    public class UserDto
     {
         public Guid Id;
         public string Nickname { get; set; }

@@ -10,6 +10,6 @@ namespace BattleTanks.Core.IService
     public interface IAuthService
     {
         OperationResult Authenticate(string email, string password);
-        UserDTO GetCurrentUser(ClaimsPrincipal userClaims);
+        UserDto GetCurrentUser(ClaimsPrincipal userClaims);
     }
 }

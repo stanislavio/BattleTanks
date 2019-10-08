@@ -62,7 +62,7 @@ namespace BattleTanks.Core.Service
             return new OperationResult(true, token, "");
         }
 
-        public UserDTO GetCurrentUser(ClaimsPrincipal userClaims)
+        public UserDto GetCurrentUser(ClaimsPrincipal userClaims)
         {
             string email = userClaims.FindFirst(ClaimTypes.Email).Value;
             if (string.IsNullOrEmpty(email))
@@ -72,10 +72,10 @@ namespace BattleTanks.Core.Service
             return _userService.GetByEmail(email);
         }
 
-        private static bool VerifyPassword(UserDTO user, string actualPassword) =>
+        private static bool VerifyPassword(UserDto user, string actualPassword) =>
            (user.PasswordHash == PasswordHasher.GenerateHash(actualPassword));
                                                         
-        private string GenerateJwt(UserDTO user)
+        private string GenerateJwt(UserDto user)
         {
             var lifeTime = _configuration.GetValue<int>("JWTOptions:LifeTime");
 

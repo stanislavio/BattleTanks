@@ -2,9 +2,7 @@
 using BattleTanks.Core.DTOs;
 using BattleTanks.DB.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BattleTanks.DB.Helpers;
 
 namespace BattleTanks.Mapping
 {
@@ -12,16 +10,20 @@ namespace BattleTanks.Mapping
     {                             
         public AutoMapperProfile()
         {
-            CreateMap<User, UserDTO>().ReverseMap();
+            CreateMap<User, UserDto>().ReverseMap();
 
-            CreateMap<UserDTO, UserInfo>()
+            CreateMap<UserDto, UserInfo>()
                 .ForMember(dest => dest.Nickname, opts => opts.MapFrom(src => src.Nickname ?? src.Email.Substring(0, src.Email.IndexOf("@", StringComparison.Ordinal))))
                 .ForMember(dest => dest.Role, opts => opts.MapFrom(src => src.Role.Name))
                 //.ForMember(dest => dest.PhotoUrl,
                 //    opts => opts.MapFrom(src => src.Photo.Thumb.ToRenderablePictureString()))
                 .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender));
 
-            CreateMap<LoginDTO, UserDTO>();
+            CreateMap<LoginDto, UserDto>();
+
+            CreateMap<RegisterDto, UserDto>()
+                .ForMember(dest => dest.PasswordHash,
+                    opts => opts.MapFrom(src => PasswordHasher.GenerateHash(src.Password)));
         }
     }
 }

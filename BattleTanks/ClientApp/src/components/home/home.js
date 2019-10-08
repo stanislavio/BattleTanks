@@ -1,12 +1,14 @@
 import React, { Component }  from 'react';
-import Login from '../../containers/login'; 
+import NotFound from '../Route guard/404';
+import { Link } from 'react-router-dom';
 import './home.css';
 
 export default class Home extends Component{
 
     render() {
         return <>
-                <Login/>
+        hello
+        <Link to={'/login'} >Login</Link>
         </>
 
     }

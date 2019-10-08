@@ -30,6 +30,26 @@ export default class BattleTanksService{
 
     //Set methods
 
+    //#region Auth
+
+    setLogin = async (data) => {
+        const res = await this.setResource('authentication/login', data);
+        if (!res.ok) {
+            return { error: await res.text() };
+        }
+        return await res.json();
+    }
+
+    setRegister = async (data) => {
+        const res = await this.setResource('authentication/register', data);
+        if (!res.ok) {
+            return { error: await res.text() };
+        }
+        return res;
+    }
+
+    //#endregion
+
     setResource = (url, data) => fetch(
         this._baseUrl + url,
         {

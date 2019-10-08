@@ -1,31 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Login from '../components/login';
-import login from '../actions/login';
+import register from '../actions/register';
+import Registration from '../components/registration';
 
-
-class LoginWrapper extends Component {
+class RegistrationWrapper extends Component {
 
     onSubmit = val => {
-        this.props.login(val.email, val.password);
-        
-    }
-
-    componentDidUpdate = () => {
-      if(this.props.user.id != null){
-        this.props.history.push('/home');
-      }
+        this.props.register({'Nickname': val.nickname,'Email': val.email, 'Password': val.password });
     }
 
     render() {
-      if(this.props.user.id != null){
-        this.props.history.push('/home');
-      }
+        if(this.props.user.id != null){
+            this.props.history.push('/home');
+          }
         return <>
         
             <div className="row height-100 justify-content-center align-items-center login">
                 <div className="col-3">
-                    <Login onSubmit={this.onSubmit}/>       
+                    <Registration onSubmit={this.onSubmit}/>       
                 </div>
             </div>
         </>
@@ -40,10 +32,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    login: (email, password) => dispatch(login(email, password))
+      register: (data) => dispatch(register(data))
   };
 };
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(LoginWrapper);
+)(RegistrationWrapper);

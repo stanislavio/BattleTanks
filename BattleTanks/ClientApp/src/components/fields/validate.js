@@ -22,11 +22,8 @@ const validate = values => {
     // if(values.password.length() < 6){
     //     errors.password = "Password has min 6 simbols";
     // }
-    if (values.password !== values.RepeatPassword) {
-      errors.RepeatPassword = 'Passwords do not match';
-    }
-    if (values.newPassword !== values.repeatPassword) {
-      errors.repeatPassword = 'Passwords do not match';
+    if (values.password !== values.repeat_password) {
+      errors.repeat_password = 'Passwords do not match';
     }
       
     return errors
