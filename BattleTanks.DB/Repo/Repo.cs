@@ -12,12 +12,12 @@ namespace BattleTanks.DB.Repo
     {
 
         protected readonly AppDbContext Database;
-        protected readonly DbSet<T> entities;
+        protected readonly DbSet<T> Entities;
 
         public Repo(AppDbContext context)
         {
             Database = context;
-            entities = context.Set<T>();
+            Entities = context.Set<T>();
         }
 
 
@@ -27,7 +27,7 @@ namespace BattleTanks.DB.Repo
             {
                 throw new NotImplementedException();
             }
-            entities.Add(entity);
+            Entities.Add(entity);
             return entity;
         }
 
@@ -35,26 +35,22 @@ namespace BattleTanks.DB.Repo
         {
             if (entity == null)
                 throw new NotImplementedException();
-            entities.Update(entity);
+            Entities.Update(entity);
             return entity;
         }
 
 
         public IQueryable<T> Get(string includeProperties = "")
         {
-            IQueryable<T> query = entities;
-            foreach (var includeProperty in
-                includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                query = query.Include(includeProperty);
-            }
-            return query;
+            return includeProperties.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries)
+                .Aggregate<string, IQueryable<T>>(Entities,
+                    (current, includeProperty) => current.Include(includeProperty));
         }
 
 
         public T Get(Guid id)
         {
-            return entities.Find(id);
+            return Entities.Find(id);
         }
 
         public T Delete(T entity)
@@ -63,7 +59,7 @@ namespace BattleTanks.DB.Repo
             {
                 throw new NotImplementedException();
             }
-            entities.Remove(entity);
+            Entities.Remove(entity);
             return entity;
         }       
     }

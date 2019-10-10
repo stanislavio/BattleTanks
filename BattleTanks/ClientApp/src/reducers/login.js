@@ -1,4 +1,4 @@
-import { SET_LOGIN_PENDING, SET_LOGIN_SUCCESS, SET_LOGIN_ERROR} from "../actions/login";
+import { SET_LOGIN_PENDING, SET_LOGIN_SUCCESS, SET_LOGIN_ERROR, RESET_LOGIN} from "../actions/login";
 // import { SET_LOGOUT } from '../actions/logout';
 import initialState from '../store/initialState';
 
@@ -9,7 +9,9 @@ export const reducer = (
   switch (action.type) {
     case SET_LOGIN_PENDING:
       return Object.assign({}, state, {
-        isPending: action.isLoginPending
+        isPending: action.isLoginPending,
+        isSuccess: false,
+        isError: null
       });
 
     case SET_LOGIN_SUCCESS:
@@ -25,6 +27,8 @@ export const reducer = (
         isSuccess: false,
         isPending: false
       });
+    case RESET_LOGIN:
+      return initialState.login;
 
     default:
       return state;

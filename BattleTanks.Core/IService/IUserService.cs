@@ -11,5 +11,7 @@ namespace BattleTanks.Core.IService
     {
         UserDto GetByEmail(string email);     
         Task<OperationResult> Create(UserDto userDto);
+        Task<OperationResult> ConfirmEmail(CacheDto cacheDto);
+        UserDto GetById(Guid id);
     }
 }

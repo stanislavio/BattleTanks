@@ -19,6 +19,8 @@ using BattleTanks.DB.IRepo;
 using BattleTanks.Core.IService;
 using BattleTanks.Mapping;
 using System.Reflection;
+using BattleTanks.Core.NotificationHandlers;
+using MediatR;
 
 namespace BattleTanks
 {
@@ -90,17 +92,25 @@ namespace BattleTanks
             services.AddTransient<IUoW, UnitOfWork>();     
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddTransient<IRoleService, RoleService>();          
-                                                                   
+            services.AddTransient<IRoleService, RoleService>();    
             services.AddTransient<IPhotoService, PhotoService>();
+            services.AddTransient<IEmailService, EmailService>();
+
+
+            services.AddSingleton<ICacheHelper, CacheHelper>();
+
+            services.AddMediatR(typeof(RegisterVerificationHandler).Assembly);
+
+            services.Configure<EmailOptionsModel>(Configuration.GetSection("EmailSenderOptions"));
             //services.Configure<ImageOptionsModel>(Configuration.GetSection("ImageWidths"));
-                                   
+
             #endregion
-                            
+
             services.AddAutoMapper(typeof(AutoMapperProfile).GetTypeInfo().Assembly);
             services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(Configuration
                     .GetConnectionString("DefaultConnection")));
+
 
             services.AddSpaStaticFiles(configuration =>
             {

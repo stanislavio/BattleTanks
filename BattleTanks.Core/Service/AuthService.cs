@@ -5,11 +5,9 @@ using BattleTanks.Core.IService;
 using BattleTanks.DB.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
+using System;                                     
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using System.Security.Claims;         
 
 namespace BattleTanks.Core.Service
 {
@@ -32,14 +30,13 @@ namespace BattleTanks.Core.Service
             _signingEncodingKey = signingEncodingKey;
             _configuration = configuration;
         }
-
-
+        
         public OperationResult Authenticate(string email, string password)
         {
             var user = _userService.GetByEmail(email);
             if (user == null)
             {
-                return new OperationResult(false, "User not found", "email");
+                return new OperationResult(false, "Invalid Login or Password", "email");
             }
 
             if (user.IsBlocked)
@@ -54,7 +51,7 @@ namespace BattleTanks.Core.Service
 
             if (!VerifyPassword(user, password))
             {
-                return new OperationResult(false, "Invalid password", "Password");
+                return new OperationResult(false, "Invalid Login or Password", "Password");
             }
 
             var token = GenerateJwt(user);
@@ -95,6 +92,17 @@ namespace BattleTanks.Core.Service
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public OperationResult FirstAuthenticate(UserDto userDto)
+        {
+            if (userDto == null)
+            {
+                return new OperationResult(false, $"User with email: {userDto.Email} not found", "email");
+            }
+            var token = GenerateJwt(userDto);
+
+            return new OperationResult(true, token, "");
         }
     }
 }

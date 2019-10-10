@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using BattleTanks.Core.DTOs;
 using BattleTanks.Core.IService;
@@ -62,6 +63,33 @@ namespace BattleTanks.Controllers
                 return BadRequest(result.Message);
             }
             return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost("verify/{userid}/{token}")]
+        public async Task<IActionResult> EmailConfirm(string userid, string token)
+        {
+            var cache = new CacheDto { Token = token };
+
+            if (!Guid.TryParse(userid, out cache.UserId))
+            {
+                return BadRequest();
+            }
+
+            var result = await _userService.ConfirmEmail(cache);
+
+            if (!result.Successed)
+            {
+                return BadRequest(result.Message);
+            }
+
+            var user = _userService.GetById(cache.UserId);
+
+            var userInfo = _mapper.Map<UserDto, UserInfo>(user);
+            userInfo.Token = _authService.FirstAuthenticate(user).Message;
+            userInfo.AfterEmailConfirmation = true;
+
+            return Ok(userInfo);
         }
     }
 }

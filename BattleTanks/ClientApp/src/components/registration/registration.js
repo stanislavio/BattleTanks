@@ -4,8 +4,12 @@ import renderTextField from '../fields/input_text_field';
 import { connect } from 'react-redux';
 import validate from '../fields/validate';
 import Button from "@material-ui/core/Button";
-
+import { resetRegister } from '../../actions/register';
 class Registration extends Component{
+
+    componentWillUnmount = () => {
+        this.props.resetRegister();
+    }
 
     render() {
         
@@ -43,7 +47,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        resetRegister: () => dispatch(resetRegister())
     }
 };
 

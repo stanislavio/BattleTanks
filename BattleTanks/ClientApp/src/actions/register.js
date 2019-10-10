@@ -6,6 +6,7 @@ const api_serv = new Service();
 export const SET_REGISTER_PENDING = "SET_REGISTER_PENDING";
 export const SET_REGISTER_SUCCESS = "SET_REGISTER_SUCCESS";
 export const SET_REGISTER_ERROR = "SET_REGISTER_ERROR";
+export const RESET_REGISTER = "RESET_REGISTER";
 
 export default function register(data){
 
@@ -23,6 +24,12 @@ export default function register(data){
               }
             });   
     }
+}
+
+export function resetRegister(){
+  return {
+    type: RESET_REGISTER
+  }
 }
 
 

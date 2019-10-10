@@ -6,8 +6,14 @@ import { connect } from 'react-redux';
 import validate from '../fields/validate';
 import Button from "@material-ui/core/Button";
 import './login.css';
+import { resetLogin } from '../../actions/login';
 
 class Login extends Component {
+
+    componentWillUnmount = () =>{
+        this.props.resetLogin();
+    }
+
 
     render() {
         const { pristine, reset, submitting, handleSubmit } = this.props;
@@ -37,7 +43,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-
+        resetLogin: () => dispatch(resetLogin())
     }
 };
 

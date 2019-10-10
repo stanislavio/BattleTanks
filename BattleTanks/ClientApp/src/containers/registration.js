@@ -10,9 +10,12 @@ class RegistrationWrapper extends Component {
     }
 
     render() {
-        if(this.props.user.id != null){
-            this.props.history.push('/home');
-          }
+               
+        const { isSuccess } = this.props.registration;
+        if(isSuccess){
+            this.props.history.push('/login');
+        }
+
         return <>
         
             <div className="row height-100 justify-content-center align-items-center login">
@@ -26,7 +29,8 @@ class RegistrationWrapper extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user
+        user: state.user, 
+        registration: state.register
     }
 };
 

@@ -11,5 +11,6 @@ namespace BattleTanks.Core.IService
     {
         OperationResult Authenticate(string email, string password);
         UserDto GetCurrentUser(ClaimsPrincipal userClaims);
+        OperationResult FirstAuthenticate(UserDto userDto);
     }
 }

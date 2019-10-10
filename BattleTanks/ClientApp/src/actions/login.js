@@ -6,6 +6,7 @@ export const SET_LOGIN_PENDING = "SET_LOGIN_PENDING";
 export const SET_LOGIN_SUCCESS = "SET_LOGIN_SUCCESS";
 export const SET_LOGIN_ERROR = "SET_LOGIN_ERROR";
 export const SET_USER = "SET_USER";
+export const RESET_LOGIN = "RESET_LOGIN";
 
 export default function login(email, password) {
 
@@ -29,6 +30,11 @@ export default function login(email, password) {
   }
 }
 
+export function resetLogin(){
+  return {
+    type: RESET_LOGIN
+  }
+}
 
 export function setUser(data) {
     return {
