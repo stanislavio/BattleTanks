@@ -39,7 +39,7 @@ namespace BattleTanks.Controllers
                 return BadRequest(result.Message);
             }
 
-            var user = _userService.GetByEmail(model.Email);
+            var user = _userService.GetByEmailOrNickname(model.Email);
 
             var userInfo = _mapper.Map<UserInfo>(user);
             userInfo.Token = result.Message;
@@ -73,7 +73,7 @@ namespace BattleTanks.Controllers
 
             if (!Guid.TryParse(userid, out cache.UserId))
             {
-                return BadRequest();
+                return BadRequest("Validation failed");
             }
 
             var result = await _userService.ConfirmEmail(cache);
@@ -88,6 +88,16 @@ namespace BattleTanks.Controllers
             var userInfo = _mapper.Map<UserDto, UserInfo>(user);
             userInfo.Token = _authService.FirstAuthenticate(user).Message;
             userInfo.AfterEmailConfirmation = true;
+
+            return Ok(userInfo);
+        }
+
+        [Authorize]
+        [HttpPost("loginToken")]
+        public IActionResult Login()
+        {
+            var user = _authService.GetCurrentUser(HttpContext.User);
+            var userInfo = _mapper.Map<UserInfo>(user);
 
             return Ok(userInfo);
         }

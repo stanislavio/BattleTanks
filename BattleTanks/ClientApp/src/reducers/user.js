@@ -1,5 +1,5 @@
 import initialState from '../store/initialState';
-import {SET_USER} from '../actions/login';
+import {SET_USER, SET_LOGOUT} from '../actions/login';
 // import {SET_LOGOUT} from '../actions/logout';
 
 // import { authenticate } from '../actions/authentication';
@@ -14,8 +14,8 @@ export const reducer = (state = initialState.user, action) => {
         //     localStorage.setItem("token", action.payload.token);
         //     return action.payload;
 
-        // case SET_LOGOUT:
-        //     return initialState.user;
+        case SET_LOGOUT:
+            return initialState.user;
 
         
         default:

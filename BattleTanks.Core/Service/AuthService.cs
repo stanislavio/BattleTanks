@@ -33,7 +33,7 @@ namespace BattleTanks.Core.Service
         
         public OperationResult Authenticate(string email, string password)
         {
-            var user = _userService.GetByEmail(email);
+            var user = _userService.GetByEmailOrNickname(email);
             if (user == null)
             {
                 return new OperationResult(false, "Invalid Login or Password", "email");
@@ -66,7 +66,7 @@ namespace BattleTanks.Core.Service
             {
                 return null;
             }
-            return _userService.GetByEmail(email);
+            return _userService.GetByEmailOrNickname(email);
         }
 
         private static bool VerifyPassword(UserDto user, string actualPassword) =>

@@ -4,10 +4,8 @@ using BattleTanks.Core.Infrastructure;
 using BattleTanks.Core.IService;
 using BattleTanks.DB.Entities;
 using BattleTanks.DB.IRepo;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;                         
+using System.Linq;           
 using System.Threading.Tasks;
 using BattleTanks.Core.Notifications;
 using MediatR;
@@ -33,10 +31,10 @@ namespace BattleTanks.Core.Service
             _cacheHelper = cacheHelper;
         }
 
-        public UserDto GetByEmail(string email)
+        public UserDto GetByEmailOrNickname(string email)
         {
             var user = _mapper.Map<UserDto>(_unitOfWork.UserRepo.Get("Role,Photo")
-                .FirstOrDefault(o => o.Email == email));
+                .FirstOrDefault(o => o.Email == email || o.Nickname == email));
             return user;
         }
 
@@ -87,11 +85,11 @@ namespace BattleTanks.Core.Service
             }
 
             if (string.IsNullOrEmpty(cacheDto.Token))
-            {
+            {                  
                 return new OperationResult(false, "Token is null or empty", "verification token");
             }
                                  
-            if (cacheDto.Token != _cacheHelper.GetValue(cacheDto.UserId).Token)
+            if (cacheDto.Token != _cacheHelper.GetValue(cacheDto.UserId)?.Token)
             {
                 return new OperationResult(false, "Validation failed", "");
             }

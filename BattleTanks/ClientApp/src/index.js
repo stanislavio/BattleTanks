@@ -8,6 +8,8 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import { createBrowserHistory } from 'history';
 
+import { Authentification } from './actions/login';
+
 const baseUrl = document.getElementsByTagName('base')[0].getAttribute('href');
 const history = createBrowserHistory({ basename: baseUrl });
 
@@ -16,6 +18,12 @@ const store = configureStore(history, initialState);
 
 
 const rootElement = document.getElementById('root');
+
+const token = localStorage.getItem('token');
+if (token) {
+  Authentification(store, token);
+}
+
 
 ReactDOM.render(
   <Provider store={store}>

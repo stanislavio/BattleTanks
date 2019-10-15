@@ -6,6 +6,7 @@ export const SET_LOGIN_PENDING = "SET_LOGIN_PENDING";
 export const SET_LOGIN_SUCCESS = "SET_LOGIN_SUCCESS";
 export const SET_LOGIN_ERROR = "SET_LOGIN_ERROR";
 export const SET_USER = "SET_USER";
+export const SET_LOGOUT = "SET_LOGOUT";
 export const RESET_LOGIN = "RESET_LOGIN";
 
 export default function login(email, password) {
@@ -62,4 +63,29 @@ return {
     type: SET_LOGIN_ERROR,
     loginError
 };
+}
+
+export async function Authentification(store, token){
+  console.log(token);
+  if(!token)
+    return;
+    const res = await fetch('api/Authentication/loginToken', {
+    method: 'post',  
+    headers: new Headers({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+    }),
+    });
+    if(res.ok){
+      const user = await res.json();
+      store.dispatch(setUser(user));
+    }else{
+      localStorage.clear();
+  }
+}
+
+export function setLogout(){
+  return {
+    type: SET_LOGOUT
+  }
 }

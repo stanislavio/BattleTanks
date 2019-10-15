@@ -30,7 +30,7 @@ namespace BattleTanks.Core.NotificationHandlers
         public async Task Handle(RegisterVerificationMessage notification, CancellationToken cancellationToken)
         { 
             var token = Guid.NewGuid().ToString();
-            var theEmailLink = "https://localhost:44321/api/authentication/verify/" + notification.User.Id.ToString() + "/" + token;
+            var theEmailLink = $"https://localhost:44321/confirm_email/{notification.User.Id.ToString()}/{token}";
 
             _cacheHelper.Add(new CacheDto
             {

@@ -48,6 +48,14 @@ export default class BattleTanksService{
         return res;
     }
 
+    setConfirmEmail = async (data) =>{
+        const res = await this.setResource(`authentication/verify/${data.id}/${data.token}`);
+        if (!res.ok) {
+            return { error: await res.text() };
+        }
+        return await res.json();
+    }
+
     //#endregion
 
     setResource = (url, data) => fetch(

@@ -6,6 +6,7 @@ import { Redirect } from 'react-router';
 import Home from '../home';
 import NotFound from '../Route guard/404';
 import Registration from '../../containers/registration';
+import ConfirmEmail from '../../components/registration/confirm_email';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import '../login/login.css';
 import { connect } from 'react-redux';
@@ -26,8 +27,8 @@ class App extends Component {
                             )}
                         />
                         <Route path="/login" component={Login} />
-
                         <Route path="/registration" component={Registration} />
+                        <Route path="/confirm_email/:id/:token" component={ConfirmEmail} />
                         <Route component={NotFound} />
                     </Switch>
                 </Layout>

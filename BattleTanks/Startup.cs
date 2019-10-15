@@ -37,8 +37,7 @@ namespace BattleTanks
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-
+                     
             #region Authorization and Autontification configuring...
 
             var signingKey = new SigningSymmetricKey(Configuration.GetValue<string>("JWTOptions:SecretKey"));
@@ -65,23 +64,22 @@ namespace BattleTanks
 
                         ClockSkew = TimeSpan.FromSeconds(5)
                     };
-                    options.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = context =>
-                        {
-                            var accessToken = context.Request.Query["access_token"];
+                    //options.Events = new JwtBearerEvents
+                    //{
+                    //    OnMessageReceived = context =>
+                    //    {
+                    //        var accessToken = context.Request.Query["access_token"];
 
-                            // If the request is for our hub...
-                            var path = context.HttpContext.Request.Path;
-                            if (!string.IsNullOrEmpty(accessToken) &&
-                                (path.StartsWithSegments("/chatRoom")))
-                            {
-                                // Read the token out of the query string
-                                context.Token = accessToken;
-                            }
-                            return Task.CompletedTask;
-                        }
-                    };
+                    //        // If the request is for our hub...
+                    //        var path = context.HttpContext.Request.Path;
+                    //        if (!string.IsNullOrEmpty(accessToken))
+                    //        {
+                    //            // Read the token out of the query string
+                    //            context.Token = accessToken;
+                    //        }
+                    //        return Task.CompletedTask;
+                    //    }
+                    //};
                 });
 
             #endregion
@@ -130,6 +128,13 @@ namespace BattleTanks
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
+
+            app.UseCors(x => x
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
