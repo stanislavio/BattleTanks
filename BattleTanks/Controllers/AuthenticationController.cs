@@ -2,8 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using BattleTanks.Core.DTOs;
-using BattleTanks.Core.IService;
-using BattleTanks.DB.Helpers;
+using BattleTanks.Core.IService;     
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,7 +27,7 @@ namespace BattleTanks.Controllers
             _mapper = mapper;
             _authService = authSrv;
         }
-
+        
         [AllowAnonymous]
         [HttpPost("[action]")]
         public IActionResult Login([FromBody]LoginDto model)

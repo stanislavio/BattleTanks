@@ -2,6 +2,7 @@
 using BattleTanks.Core.DTOs;
 using BattleTanks.DB.Entities;
 using System;
+using BattleTanks.Core.Extensions;
 using BattleTanks.DB.Helpers;
 
 namespace BattleTanks.Mapping
@@ -15,8 +16,8 @@ namespace BattleTanks.Mapping
             CreateMap<UserDto, UserInfo>()
                 .ForMember(dest => dest.Nickname, opts => opts.MapFrom(src => src.Nickname ?? src.Email.Substring(0, src.Email.IndexOf("@", StringComparison.Ordinal))))
                 .ForMember(dest => dest.Role, opts => opts.MapFrom(src => src.Role.Name))
-                //.ForMember(dest => dest.PhotoUrl,
-                //    opts => opts.MapFrom(src => src.Photo.Thumb.ToRenderablePictureString()))
+                .ForMember(dest => dest.PhotoUrl,
+                    opts => opts.MapFrom(src => src.Photo.Img.ToRenderablePictureString()))
                 .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender));
 
             CreateMap<LoginDto, UserDto>();

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BattleTanks.Core.Notifications;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace BattleTanks.Core.Service
 {
@@ -18,17 +19,20 @@ namespace BattleTanks.Core.Service
         private readonly IMapper _mapper;     
         private readonly IMediator _mediator;
         private readonly ICacheHelper _cacheHelper;
+        private readonly IPhotoService _photoService;
 
         public UserService(
             IUoW uow,
             IMapper mapper,
             IMediator mediator, 
-            ICacheHelper cacheHelper)
+            ICacheHelper cacheHelper, 
+            IPhotoService photoService)
         {
             _unitOfWork = uow;
             _mapper = mapper;
             _mediator = mediator;
             _cacheHelper = cacheHelper;
+            _photoService = photoService;
         }
 
         public UserDto GetByEmailOrNickname(string email)
@@ -100,5 +104,29 @@ namespace BattleTanks.Core.Service
             return new OperationResult(true, "Verify succeeded", "");
         }
 
+        public async Task<OperationResult> ChangeAvatar(Guid uId, IFormFile avatar)
+        {
+            var user = _unitOfWork.UserRepo.Get("Photo").FirstOrDefault(u => u.Id == uId);
+            if (user == null)
+            {
+                return new OperationResult(false, "User not found", "Id");
+            }
+
+            if (user.Photo != null)
+            {
+                await _photoService.Delete(user.Photo.Id);
+            }
+            try
+            {
+                user.Photo = await _photoService.AddPhoto(avatar);
+                _unitOfWork.UserRepo.Update(user);
+                await _unitOfWork.SaveAsync();
+                return new OperationResult(true);
+            }
+            catch
+            {
+                return new OperationResult(false, "Bad image file", "Id");
+            }
+        }
     }
 }

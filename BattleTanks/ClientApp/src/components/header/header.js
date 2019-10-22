@@ -121,8 +121,7 @@ function Header(props) {
       onClose={handleMenuClose}
     >
       {props.user.id != null ? <>
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}><Link style={{ textDecoration: 'none' }} to={"/profile"}>Profile</Link></MenuItem>
       <MenuItem onClick={signOut}>Sign Out</MenuItem>
       </> :
       <>
