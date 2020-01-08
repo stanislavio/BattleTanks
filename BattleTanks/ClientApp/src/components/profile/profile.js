@@ -12,7 +12,7 @@ class Profile extends Component {
         return <>
 
             {nickname}
-
+            <img src={photoUrl} />
         </>
 
     }

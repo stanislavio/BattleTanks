@@ -7,9 +7,12 @@ export default class Home extends Component{
 
     render() {
         return <>
-        hello
-        <div className="row height-100 justify-content-center align-items-center notification-msg">
-            <p className="text-center">Home page</p>
+        <div className="row width-100 height-100 justify-content-center align-items-center">
+           <Link to="/game">
+            <div className="btn round-button">
+                <i className="fa fa-play fa-2x"></i>
+            </div>
+            </Link>
         </div>
         </>
 

@@ -8,6 +8,7 @@ import NotFound from '../Route guard/404';
 import Registration from '../../containers/registration';
 import ConfirmEmail from '../../components/registration/confirm_email';
 import Profile from '../../components/profile';
+import Game from '../game';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import '../login/login.css';
 import { connect } from 'react-redux';
@@ -27,6 +28,7 @@ class App extends Component {
                                 <Redirect to="/home" />
                             )}
                         />
+                        <Route path='/game' component={Game} />
                         <Route path="/profile" component={Profile} />
                         <Route path="/login" component={Login} />
                         <Route path="/registration" component={Registration} />

@@ -11,6 +11,10 @@ const initialState = {
         isPending: null,
         isError: null,
         isSuccess: null
+    }, 
+    game: {
+        ctx: null,
+        player: null
     }
 }
 
