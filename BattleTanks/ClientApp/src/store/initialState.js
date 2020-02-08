@@ -15,6 +15,9 @@ const initialState = {
     game: {
         ctx: null,
         player: null
+    }, 
+    admin:{
+        
     }
 }
 

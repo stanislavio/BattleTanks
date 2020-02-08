@@ -9,6 +9,7 @@ import Registration from '../../containers/registration';
 import ConfirmEmail from '../../components/registration/confirm_email';
 import Profile from '../../components/profile';
 import Game from '../game';
+import AdminPanel from '../../containers/admin';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import '../login/login.css';
 import { connect } from 'react-redux';
@@ -28,6 +29,7 @@ class App extends Component {
                                 <Redirect to="/home" />
                             )}
                         />
+                        <Route path='/admin' component={AdminPanel} />
                         <Route path='/game' component={Game} />
                         <Route path="/profile" component={Profile} />
                         <Route path="/login" component={Login} />

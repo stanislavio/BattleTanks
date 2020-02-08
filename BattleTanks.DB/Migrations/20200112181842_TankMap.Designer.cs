@@ -4,37 +4,22 @@ using BattleTanks.DB.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BattleTanks.DB.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200112181842_TankMap")]
+    partial class TankMap
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("BattleTanks.DB.Entities.Map", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Coordinates")
-                        .HasMaxLength(1048);
-
-                    b.Property<Guid?>("WallIconId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("WallIconId");
-
-                    b.ToTable("Maps");
-                });
 
             modelBuilder.Entity("BattleTanks.DB.Entities.Photo", b =>
                 {
@@ -60,20 +45,6 @@ namespace BattleTanks.DB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-                });
-
-            modelBuilder.Entity("BattleTanks.DB.Entities.Tank", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid?>("IconId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IconId");
-
-                    b.ToTable("Tanks");
                 });
 
             modelBuilder.Entity("BattleTanks.DB.Entities.User", b =>
@@ -104,20 +75,6 @@ namespace BattleTanks.DB.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("BattleTanks.DB.Entities.Map", b =>
-                {
-                    b.HasOne("BattleTanks.DB.Entities.Photo", "WallIcon")
-                        .WithMany()
-                        .HasForeignKey("WallIconId");
-                });
-
-            modelBuilder.Entity("BattleTanks.DB.Entities.Tank", b =>
-                {
-                    b.HasOne("BattleTanks.DB.Entities.Photo", "Icon")
-                        .WithMany()
-                        .HasForeignKey("IconId");
                 });
 
             modelBuilder.Entity("BattleTanks.DB.Entities.User", b =>

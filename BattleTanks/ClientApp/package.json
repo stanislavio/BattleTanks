@@ -9,6 +9,8 @@
     "mdbreact": "^4.20.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-dropzone": "^10.2.1",
+    "react-icons": "^3.9.0",
     "react-keyboard-event-handler": "^1.5.3",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",

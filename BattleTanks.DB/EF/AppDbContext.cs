@@ -10,6 +10,10 @@ namespace BattleTanks.DB.EF
         
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Tank> Tanks { get; set; }
+
+        public DbSet<Map> Maps { get; set; }
+
         //public DbSet<Relationship> Relationships { get; set; }
 
         public DbSet<Photo> Photos { get; set; }

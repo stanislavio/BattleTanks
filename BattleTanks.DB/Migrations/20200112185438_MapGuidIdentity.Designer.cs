@@ -4,14 +4,16 @@ using BattleTanks.DB.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BattleTanks.DB.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200112185438_MapGuidIdentity")]
+    partial class MapGuidIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,11 +29,7 @@ namespace BattleTanks.DB.Migrations
                     b.Property<string>("Coordinates")
                         .HasMaxLength(1048);
 
-                    b.Property<Guid?>("WallIconId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("WallIconId");
 
                     b.ToTable("Maps");
                 });
@@ -104,13 +102,6 @@ namespace BattleTanks.DB.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("BattleTanks.DB.Entities.Map", b =>
-                {
-                    b.HasOne("BattleTanks.DB.Entities.Photo", "WallIcon")
-                        .WithMany()
-                        .HasForeignKey("WallIconId");
                 });
 
             modelBuilder.Entity("BattleTanks.DB.Entities.Tank", b =>
