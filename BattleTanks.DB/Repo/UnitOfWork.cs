@@ -14,6 +14,7 @@ namespace BattleTanks.DB.Repo
         private IUserRepo userRepo;
         private IPhotoRepo photoRepo;
         private IRoleRepo roleRepo;
+        private IMapRepo mapRepo;
 
         public UnitOfWork(
             AppDbContext context
@@ -24,13 +25,15 @@ namespace BattleTanks.DB.Repo
 
         public IUserRepo UserRepo =>
             userRepo ?? (userRepo = new UserRepo(DB));
-
-
+                                               
         public IPhotoRepo PhotoRepo => 
             photoRepo ?? (photoRepo = new PhotoRepo(DB));
 
         public IRoleRepo RoleRepo => 
             roleRepo ?? (roleRepo = new RoleRepo(DB));
+
+        public IMapRepo MapRepo =>
+            mapRepo ?? (mapRepo = new MapRepo(DB));
 
         public void Dispose()
         {

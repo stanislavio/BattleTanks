@@ -2,6 +2,7 @@
 using BattleTanks.Core.DTOs;
 using BattleTanks.DB.Entities;
 using System;
+using BattleTanks.Core.DTO;
 using BattleTanks.Core.Extensions;
 using BattleTanks.DB.Helpers;
 
@@ -11,6 +12,9 @@ namespace BattleTanks.Mapping
     {                             
         public AutoMapperProfile()
         {
+            CreateMap<Map, MapDto>().ForMember(dest => dest.WallIcon,
+                opts => opts.MapFrom(src => src.WallIcon.Img.ToRenderablePictureString()));
+
             CreateMap<User, UserDto>().ReverseMap();
 
             CreateMap<UserDto, UserInfo>()

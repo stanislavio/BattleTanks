@@ -93,6 +93,7 @@ namespace BattleTanks
             services.AddTransient<IRoleService, RoleService>();    
             services.AddTransient<IPhotoService, PhotoService>();
             services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IMapService, MapService>();
 
 
             services.AddSingleton<ICacheHelper, CacheHelper>();

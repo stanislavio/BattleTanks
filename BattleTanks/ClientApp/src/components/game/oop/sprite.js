@@ -13,9 +13,9 @@ export default class Sprite{
         this.angle = 0; 
         }
 
-    draw(ctx) {
+    draw(ctx, map) {
         this.drawRotatedImage(ctx, this.img, this.angle, this.x, this.y)
-        // ctx.drawImage(this.img, this.x, this.y);
+        map.draw(ctx);
     }
 
     drawRotatedImage(ctx, image, angle, x, y)
@@ -27,7 +27,7 @@ export default class Sprite{
         ctx.restore();
     }
 
-    move(key, ctx){
+    move(key, ctx, map){
         ctx.clearRect(this.x, this.y, this.width, this.height);
         ctx.rect(0, 0, this.width, this.height);
         ctx.fillStyle = 'black';
@@ -50,7 +50,7 @@ export default class Sprite{
                 this.x += 1;
                 break;
         }    
-        this.draw(ctx);
+        this.draw(ctx, map);
     }
 
 }

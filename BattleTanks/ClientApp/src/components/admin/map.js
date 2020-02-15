@@ -4,7 +4,6 @@ import Button from "@material-ui/core/Button";
 import DropZoneField from '../helpers/DropZoneField';
 import { renderTextArea } from '../helpers/helpers';
 import { connect } from 'react-redux';
-
 import Module from '../helpers';
 
 
@@ -83,7 +82,7 @@ class AddMapForm extends Component {
             </div>
            
             <div className="mt-2">
-              <Field name='description' component={renderTextArea} type="input" label="Description" />
+              <Field name='coordinates' component={renderTextArea} type="input" label="Coordinates" />
             </div>
            
           <Button fullWidth={true} type="submit" color="primary" disabled={this.props.submitting}>
@@ -100,7 +99,6 @@ class AddMapForm extends Component {
   
   const mapDispatchToProps = (dispatch) => {
     return {
-  
     }
   };
   

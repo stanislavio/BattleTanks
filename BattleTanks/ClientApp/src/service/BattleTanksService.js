@@ -6,6 +6,10 @@ export default class BattleTanksService{
 
     //Get methods
 
+    getMap = async (id) => {
+        return await this.getResource('map/get?id='+id);
+    }
+
     getResource = async (url) => {
         const res = await fetch(this._baseUrl + url, {
             method: "get",
@@ -80,4 +84,20 @@ export default class BattleTanksService{
             body: data
         }
     );
+
+    addMap = async (data) => {
+    console.log(data);
+    let file = new FormData();
+    
+    if(data.image != null){
+    file.append('Photo', data.image.file);
+    }
+    file.append('Coordinates', data.coordinates);
+   
+    const res = await this.setResourceWithData('map/add', file);
+    if (!res.ok) {
+        return { error: await res.text() };
+    }
+    return res;
+    }
 }

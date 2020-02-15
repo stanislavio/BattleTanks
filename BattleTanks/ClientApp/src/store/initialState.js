@@ -14,10 +14,13 @@ const initialState = {
     }, 
     game: {
         ctx: null,
-        player: null
+        player: null, 
+        map: null
     }, 
     admin:{
-        
+        isPending: null,
+        isError: null,
+        isSuccess: null
     }
 }
 
