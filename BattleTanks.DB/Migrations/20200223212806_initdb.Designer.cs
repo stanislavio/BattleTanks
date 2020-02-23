@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BattleTanks.DB.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200223205412_initdb")]
+    [Migration("20200223212806_initdb")]
     partial class initdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

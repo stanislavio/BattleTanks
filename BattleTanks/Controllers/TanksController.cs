@@ -33,10 +33,15 @@ namespace BattleTanks.Controllers
         }
 
         [HttpPost("[action]")]
-        public IActionResult CreateOrUpdate([FromForm]TankDto model)
+        public async Task<IActionResult> CreateOrUpdate([FromForm]TankDto model)
         {
-            _tankService.CreateOrUpdate(model);
-            return Ok();
+            var res = await _tankService.CreateOrUpdate(model);
+            if (res.Successed)
+            {
+                return Ok();
+            }
+
+            return BadRequest(res.Message);
         }
 
 
