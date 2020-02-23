@@ -20,7 +20,8 @@ const initialState = {
     admin:{
         isPending: null,
         isError: null,
-        isSuccess: null
+        isSuccess: null, 
+        maps: null
     }
 }
 

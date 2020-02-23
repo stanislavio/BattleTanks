@@ -11,6 +11,7 @@ namespace BattleTanks.DB.IRepo
         IPhotoRepo PhotoRepo { get; }
         IRoleRepo RoleRepo { get; }
         IMapRepo MapRepo { get; }
+        ITankRepo TankRepo { get; }
 
         Task SaveAsync();
     }

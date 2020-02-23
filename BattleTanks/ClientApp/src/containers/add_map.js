@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AddMap from '../components/admin/map';
-import add_map from '../actions/admin';
+import { add_map } from '../actions/admin';
 
 
 class AddMapWrapper extends Component {

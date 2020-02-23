@@ -39,7 +39,7 @@ namespace BattleTanks.Controllers
 
         [HttpPost("[action]")]
         [Authorize(Roles="Admin")]
-        public async Task<IActionResult> Add([FromForm]MapDto model)
+        public async Task<IActionResult> CreateOrUpdate([FromForm]MapDto model)
         {
             var result = await _mapService.CreateOrUpdate(model);
             if (result.Successed)

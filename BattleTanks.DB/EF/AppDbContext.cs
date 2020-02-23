@@ -1,4 +1,6 @@
-﻿using BattleTanks.DB.Entities;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using BattleTanks.DB.Entities;
 using Microsoft.EntityFrameworkCore;        
 
 namespace BattleTanks.DB.EF
@@ -29,12 +31,19 @@ namespace BattleTanks.DB.EF
         {
             base.OnModelCreating(builder);
 
+            // tanks config
+            builder.Entity<Tank>()
+                .HasKey(u => u.Id);
+            builder.Entity<Tank>()
+                .Property(u => u.Id).ValueGeneratedOnAdd();
+
+
 
             // user config                                 
             //builder.Entity<User>()
             //    .Property(u => u.Birthday).HasColumnType("date");
 
-                                        
+
             //builder.Entity<Relationship>()
             //    .HasOne(r => r.UserFrom)
             //    .WithMany(u => u.Relationships)
@@ -51,7 +60,7 @@ namespace BattleTanks.DB.EF
             //    .HasOne(uc => uc.Category)
             //    .WithMany(c => c.Users)
             //    .HasForeignKey(uc => uc.CategoryId);
-                      
+
         }
     }
 }

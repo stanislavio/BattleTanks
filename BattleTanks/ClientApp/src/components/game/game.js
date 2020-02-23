@@ -16,15 +16,18 @@ class Game extends Component{
         ctx.fillStyle = "black";
         ctx.fill();
         const img = this.refs.image;
-        const sprite = new Sprite(img, 150, 100);
-        const id = '320c62ad-a618-488e-8473-08d7b20823f4';
+        const sprite = new Sprite(img, 25, 25);
+        const id = 'c587fc8a-19ce-4b08-d83e-08d7b7aea0e4';
         this.props.set_game(ctx, sprite, id);
     }
 
     componentDidUpdate(prevProps) {
+        const { player, map } = this.props.game;
         if (this.props !== prevProps) {
-            if(this.props.game.player != null)
-                this.props.game.player.draw(this.props.game.ctx, this.props.game.map);
+            if(player != null && prevProps.game.player == null){
+                player.draw(this.props.game.ctx);
+                map.draw(this.props.game.ctx);
+            }
         }
        }
 

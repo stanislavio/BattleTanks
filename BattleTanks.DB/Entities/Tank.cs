@@ -7,5 +7,6 @@ namespace BattleTanks.DB.Entities
     public class Tank : BaseEntity
     {
         public Photo Icon { get; set; }
+        public Guid? IconId { get; set; }
     }
 }

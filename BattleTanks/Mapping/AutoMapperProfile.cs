@@ -15,6 +15,10 @@ namespace BattleTanks.Mapping
             CreateMap<Map, MapDto>().ForMember(dest => dest.WallIcon,
                 opts => opts.MapFrom(src => src.WallIcon.Img.ToRenderablePictureString()));
 
+            CreateMap<Tank, TankDto>().ForMember(dest => dest.PhotoUrl,
+                opts => opts.MapFrom(src => src.Icon.Img.ToRenderablePictureString()));
+
+
             CreateMap<User, UserDto>().ReverseMap();
 
             CreateMap<UserDto, UserInfo>()

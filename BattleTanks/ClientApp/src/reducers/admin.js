@@ -1,4 +1,4 @@
-import { ADD_MAP, SET_ADMIN_SUCCESS, SET_ADMIN_PENDING, SET_ADMIN_ERROR } from '../actions/admin';
+import { ADD_MAP, SET_ADMIN_SUCCESS, SET_ADMIN_PENDING, SET_ADMIN_ERROR, SET_MAPS } from '../actions/admin';
 import initialState from '../store/initialState';
 
 export const reducer = (
@@ -28,8 +28,12 @@ export const reducer = (
         isPending: false,
       });
 
-    case ADD_MAP:
-      
+    case SET_MAPS:
+      return Object.assign({}, state, {
+        maps: action.payload
+      });
+
+    case ADD_MAP:      
       return state;
     
     default:

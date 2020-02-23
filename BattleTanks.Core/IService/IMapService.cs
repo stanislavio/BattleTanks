@@ -11,7 +11,7 @@ namespace BattleTanks.Core.IService
     public interface IMapService
     {
         Task<OperationResult> CreateOrUpdate(MapDto model);
-        IEnumerable<Map> AllMap();
+        IEnumerable<MapDto> AllMap();
         MapDto Get(Guid id);
 
     }

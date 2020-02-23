@@ -49,9 +49,9 @@ namespace BattleTanks.Core.Service
             return new OperationResult(true, "Ok", map.Id + " " + map.Coordinates);
         }
 
-        public IEnumerable<Map> AllMap()
+        public IEnumerable<MapDto> AllMap()
         {
-            return _unitOfWork.MapRepo.Get(includeProperties: "WallIcon").AsEnumerable();
+            return _mapper.Map<IEnumerable<MapDto>>(_unitOfWork.MapRepo.Get(includeProperties: "WallIcon").AsEnumerable());
         }
 
         public MapDto Get(Guid id)

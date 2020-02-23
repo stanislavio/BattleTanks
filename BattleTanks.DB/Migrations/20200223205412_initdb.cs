@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BattleTanks.DB.Migrations
 {
-    public partial class InitDatabase : Migration
+    public partial class initdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,43 @@ namespace BattleTanks.DB.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Maps",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Coordinates = table.Column<string>(nullable: true),
+                    WallIconId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Maps", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Maps_Photos_WallIconId",
+                        column: x => x.WallIconId,
+                        principalTable: "Photos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tanks",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    IconId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tanks", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tanks_Photos_IconId",
+                        column: x => x.IconId,
+                        principalTable: "Photos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,6 +101,16 @@ namespace BattleTanks.DB.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Maps_WallIconId",
+                table: "Maps",
+                column: "WallIconId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tanks_IconId",
+                table: "Tanks",
+                column: "IconId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_PhotoId",
                 table: "Users",
                 column: "PhotoId");
@@ -76,6 +123,12 @@ namespace BattleTanks.DB.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Maps");
+
+            migrationBuilder.DropTable(
+                name: "Tanks");
+
             migrationBuilder.DropTable(
                 name: "Users");
 
