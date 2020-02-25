@@ -1,0 +1,19 @@
+
+.default-link{
+    text-decoration: none;    
+    color: black;
+}
+
+
+.default-link:hover{
+    text-decoration: none;    
+    color: black;
+}
+
+.color-link-white{
+    color: white;
+}
+
+.color-link-white:hover{
+    color: white;
+}

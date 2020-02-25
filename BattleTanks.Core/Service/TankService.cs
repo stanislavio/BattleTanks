@@ -54,5 +54,10 @@ namespace BattleTanks.Core.Service
                                                 FirstOrDefault(x => x.Id == id));
         }
 
+        public IEnumerable<TankDto> All()
+        {
+            return _mapper.Map<IEnumerable<TankDto>>(_unitOfWork.TankRepo.Get(includeProperties: "Icon").AsEnumerable());
+        }
+
     }
 }

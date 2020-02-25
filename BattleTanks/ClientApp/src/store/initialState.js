@@ -2,25 +2,34 @@ const initialState = {
     user: {
         id: null
     },
+    loading:{
+      info: []  
+    },
     login:{
-        isPending: null,
-        isError: null,
-        isSuccess: null
+        isPending: false,
+        isError: false,
+        isSuccess: false
     },
     register: {
-        isPending: null,
-        isError: null,
-        isSuccess: null
+        isPending: false,
+        isError: false,
+        isSuccess: false
     }, 
     game: {
         ctx: null,
         player: null, 
         map: null
     }, 
+    tanks:{
+        isPending: false,
+        isError: false,
+        isSuccess: false, 
+        data: null
+    },
     admin:{
-        isPending: null,
-        isError: null,
-        isSuccess: null, 
+        isPending: false,
+        isError: false,
+        isSuccess: false, 
         maps: null
     }
 }

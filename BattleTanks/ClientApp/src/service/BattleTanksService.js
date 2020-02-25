@@ -14,6 +14,14 @@ export default class BattleTanksService{
         return await this.getResource('map/all');
     }
 
+    getTank = async (id) => {
+        return await this.getResource('tanks/get?id='+id);
+    }
+
+    getTanks = async () => {
+        return await this.getResource('tanks/all');
+    }
+
     getResource = async (url) => {
         const res = await fetch(this._baseUrl + url, {
             method: "get",
@@ -90,7 +98,6 @@ export default class BattleTanksService{
     );
 
     addMap = async (data) => {
-    console.log(data);
     let file = new FormData();
     if(data.id){
         file.append('Id', data.id);
@@ -101,10 +108,29 @@ export default class BattleTanksService{
     }
     file.append('Coordinates', data.coordinates);
    
-    const res = await this.setResourceWithData('tanks/createOrUpdate', file);
+    const res = await this.setResourceWithData('map/createOrUpdate', file);
     if (!res.ok) {
         return { error: await res.text() };
     }
     return res;
     }
+
+
+    addTank = async (data) => {
+        let file = new FormData();
+        if(data.id){
+            file.append('Id', data.id);
+        }
+    
+        if(data.image != null){
+        file.append('Photo', data.image.file);
+        }
+       
+        const res = await this.setResourceWithData('tanks/createOrUpdate', file);
+        if (!res.ok) {
+            return { error: await res.text() };
+        }
+        return res;
+        }
+
 }

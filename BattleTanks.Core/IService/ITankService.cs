@@ -11,5 +11,6 @@ namespace BattleTanks.Core.IService
     {
         Task<OperationResult> CreateOrUpdate(TankDto model);
         TankDto Get(Guid id);
+        IEnumerable<TankDto> All();
     }
 }

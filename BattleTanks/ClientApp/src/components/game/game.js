@@ -17,7 +17,7 @@ class Game extends Component{
         ctx.fill();
         const img = this.refs.image;
         const sprite = new Sprite(img, 25, 25);
-        const id = 'c587fc8a-19ce-4b08-d83e-08d7b7aea0e4';
+        const id = '7e9c82a3-86b7-4a39-286b-08d7b9553957';
         this.props.set_game(ctx, sprite, id);
     }
 

@@ -12,6 +12,7 @@ import Game from '../game';
 import AdminPanel from '../../containers/admin';
 import MapsWrapper from '../../containers/maps';
 import AddMapWrapper from '../../containers/add_map';
+import TanksWrapper from '../../containers/tanks';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import '../login/login.css';
@@ -34,6 +35,8 @@ class App extends Component {
                         />
                         <Route path='/admin' component={AdminPanel} />
                         <Route path='/maps' component={MapsWrapper} />
+                        <Route path='/tanks' component={TanksWrapper} />
+                        {/* <Route path='/add-tank' component={MapsWrapper} /> */}
                         <Route path='/add-map' component={AddMapWrapper} />
                         <Route path='/game' component={Game} />
                         <Route path="/profile" component={Profile} />

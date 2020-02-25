@@ -1,9 +1,10 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import FormControl from '@material-ui/core/FormControl'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import {Link} from 'react-router-dom';
 
 export const radioButton = ({ input, ...rest }) => (
   <FormControl>
@@ -15,6 +16,9 @@ export const radioButton = ({ input, ...rest }) => (
   </FormControl>
 )
 
+export const DefaultLink = (props) => {
+return <Link className='default-link color-link-white' to={props.to}>{props.children}</Link>
+}
 
 export const validate = values => {
   const errors = {}
