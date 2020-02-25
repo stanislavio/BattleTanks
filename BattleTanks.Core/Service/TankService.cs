@@ -50,8 +50,8 @@ namespace BattleTanks.Core.Service
 
         public TankDto Get(Guid id)
         {
-            return _mapper.Map<TankDto>(_unitOfWork.TankRepo.Get("Photo").
-                                                FirstOrDefault(x => x.Id == id));
+            var tank = _unitOfWork.TankRepo.Get("Icon").First();
+            return _mapper.Map<TankDto>(tank);
         }
 
         public IEnumerable<TankDto> All()

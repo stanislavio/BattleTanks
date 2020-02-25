@@ -3,7 +3,8 @@ import { RIGHT, LEFT, UP, DOWN } from './constants'
 export default class Sprite{
 
     constructor(icon, x, y, direct=RIGHT){
-        this.img = icon;
+        this.img = new Image()
+        this.img.src = icon;
         this.width = this.img.width;
         this.height = this.img.height;
         this.center_x = x;

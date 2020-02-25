@@ -16,6 +16,9 @@ const initialState = {
         isSuccess: false
     }, 
     game: {
+        isPending: true,
+        isError: false,
+        isSuccess: false,
         ctx: null,
         player: null, 
         map: null

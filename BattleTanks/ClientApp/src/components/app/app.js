@@ -8,11 +8,12 @@ import NotFound from '../Route guard/404';
 import Registration from '../../containers/registration';
 import ConfirmEmail from '../../components/registration/confirm_email';
 import Profile from '../../components/profile';
-import Game from '../game';
+import Game from '../../containers/game';
 import AdminPanel from '../../containers/admin';
 import MapsWrapper from '../../containers/maps';
 import AddMapWrapper from '../../containers/add_map';
 import TanksWrapper from '../../containers/tanks';
+import AddTankWrapper from '../../containers/add_tank';
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import '../login/login.css';
@@ -36,7 +37,7 @@ class App extends Component {
                         <Route path='/admin' component={AdminPanel} />
                         <Route path='/maps' component={MapsWrapper} />
                         <Route path='/tanks' component={TanksWrapper} />
-                        {/* <Route path='/add-tank' component={MapsWrapper} /> */}
+                        <Route path='/add-tank' component={AddTankWrapper} />
                         <Route path='/add-map' component={AddMapWrapper} />
                         <Route path='/game' component={Game} />
                         <Route path="/profile" component={Profile} />

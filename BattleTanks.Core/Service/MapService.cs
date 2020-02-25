@@ -56,7 +56,7 @@ namespace BattleTanks.Core.Service
 
         public MapDto Get(Guid id)
         {
-            return _mapper.Map<MapDto>(_unitOfWork.MapRepo.Get(includeProperties: "WallIcon").FirstOrDefault(x => x.Id == id));
+            return _mapper.Map<MapDto>(_unitOfWork.MapRepo.Get(includeProperties: "WallIcon").First());
         }
 
     }
