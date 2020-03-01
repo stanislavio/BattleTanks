@@ -40,8 +40,9 @@ namespace BattleTanks.Controllers
         }
 
         [HttpPost("[action]")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateOrUpdate([FromForm]TankDto model)
-        {
+        { 
             var res = await _tankService.CreateOrUpdate(model);
             if (res.Successed)
             {

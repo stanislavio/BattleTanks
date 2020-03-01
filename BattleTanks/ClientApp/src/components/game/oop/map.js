@@ -14,10 +14,9 @@ export default class Map{
 
     draw(ctx){
         var i = 0;
-        const mapArr = this.coor.split('|');
-        mapArr.forEach(element => {
+        this.coor.forEach(element => {
             var j = 0;
-            element.split(',').forEach(el => {
+            element.forEach(el => {
                 if(el.trim() == '1'){
                     ctx.drawImage(this.img, j*this.img.width, i*this.img.height);
                 }

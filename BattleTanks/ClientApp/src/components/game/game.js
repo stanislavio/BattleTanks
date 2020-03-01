@@ -9,12 +9,11 @@ import { WIDTH, HEIGHT } from './oop/constants';
 export default class Game extends Component{    
 
     componentWillMount() {
-        console.log(this.props.game);
         const { player, map, ctx } = this.props.game;
         player.draw(ctx);
         map.draw(ctx);
     }
-
+    
     render(){
         const { player, ctx, map } = this.props.game;
         return <KeyboardEventHandler

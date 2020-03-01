@@ -25,7 +25,11 @@ export function set_game(ctx, player, id) {
         var res = api_serv.getMap('7e9c82a3-86b7-4a39-286b-08d7b9553957');
         res.then(response => {
           if(response.error == null){
-            const map = new Map(response.wallIcon, response.coordinates);
+            const mapArr = response.coordinates.split('|');
+            const mapArray = mapArr.map((item) => {
+                return item.split(',');
+            });
+            const map = new Map(response.wallIcon, mapArray);
             dispatch({
                 type: SET_MAP_GAME,
                 payload: map
@@ -33,7 +37,7 @@ export function set_game(ctx, player, id) {
             res = api_serv.getTank('7e9c82a3-86b7-4a39-286b-08d7b9553957');
             res.then(response => {
                 if(response.error == null){
-                  const tank = new Sprite(response.photoUrl, 25, 25);
+                  const tank = new Sprite(response.photoUrl, 25, 25, mapArray);
                   dispatch(
                       {
                           type: SET_TANK_GAME,
