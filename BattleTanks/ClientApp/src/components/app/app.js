@@ -14,7 +14,7 @@ import MapsWrapper from '../../containers/maps';
 import AddMapWrapper from '../../containers/add_map';
 import TanksWrapper from '../../containers/tanks';
 import AddTankWrapper from '../../containers/add_tank';
-
+import Users from '../users';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import '../login/login.css';
 import { connect } from 'react-redux';
@@ -35,6 +35,7 @@ class App extends Component {
                             )}
                         />
                         <Route path='/admin' component={AdminPanel} />
+                        <Route path='/admin-users' component={Users} />
                         <Route path='/maps' component={MapsWrapper} />
                         <Route path='/tanks' component={TanksWrapper} />
                         <Route path='/add-tank' component={AddTankWrapper} />

@@ -20,6 +20,18 @@ namespace BattleTanks.DB.EF
 
         public DbSet<Photo> Photos { get; set; }
 
+        public DbSet<Bullet> Bullets { get; set; }
+
+        public DbSet<Friend> Friends { get; set; }
+
+        public DbSet<Game> Games { get; set; }
+
+        public DbSet<UserGame> UserGames { get; set; }
+
+        public DbSet<UserActivity> UserActivities { get; set; }
+
+        public DbSet<UserTankAccess> UserTankAccesses { get; set; }
+
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {                 
@@ -36,7 +48,6 @@ namespace BattleTanks.DB.EF
                 .HasKey(u => u.Id);
             builder.Entity<Tank>()
                 .Property(u => u.Id).ValueGeneratedOnAdd();
-
 
 
             // user config                                 

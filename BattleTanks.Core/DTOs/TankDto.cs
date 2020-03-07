@@ -8,7 +8,7 @@ namespace BattleTanks.Core.DTOs
 {
     public class TankDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public IFormFile Photo { get; set; }
 

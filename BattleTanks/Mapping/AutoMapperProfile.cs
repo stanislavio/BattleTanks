@@ -21,6 +21,14 @@ namespace BattleTanks.Mapping
 
             CreateMap<User, UserDto>().ReverseMap();
 
+            CreateMap<User, UserInfo>()
+                .ForMember(dest => dest.Nickname, opts => opts.MapFrom(src => src.Nickname ?? src.Email.Substring(0, src.Email.IndexOf("@", StringComparison.Ordinal))))
+                .ForMember(dest => dest.Role, opts => opts.MapFrom(src => src.Role.Name))
+                .ForMember(dest => dest.PhotoUrl,
+                    opts => opts.MapFrom(src => src.Photo.Img.ToRenderablePictureString()))
+                .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender));
+
+
             CreateMap<UserDto, UserInfo>()
                 .ForMember(dest => dest.Nickname, opts => opts.MapFrom(src => src.Nickname ?? src.Email.Substring(0, src.Email.IndexOf("@", StringComparison.Ordinal))))
                 .ForMember(dest => dest.Role, opts => opts.MapFrom(src => src.Role.Name))

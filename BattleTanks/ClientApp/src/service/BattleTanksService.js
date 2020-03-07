@@ -6,6 +6,14 @@ export default class BattleTanksService{
 
     //Get methods
 
+    getUsers = async () => {
+        return await this.getResource('user/all');
+    }
+
+    getUser = async (id) => {
+        return await this.getResource('user/get?id='+id);
+    }
+
     getMap = async (id) => {
         return await this.getResource('map/get?id='+id);
     }
@@ -35,7 +43,7 @@ export default class BattleTanksService{
                 error:
                 {
                     ErrorCode: res.status,
-                    massage: await res.statusText
+                    message: await res.statusText
                 }
             }
         }

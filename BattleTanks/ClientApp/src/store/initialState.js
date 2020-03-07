@@ -34,6 +34,12 @@ const initialState = {
         isError: false,
         isSuccess: false, 
         maps: null
+    },
+    users: {
+        isPending: true,
+        isError: false,
+        isSuccess: false,
+        data: null 
     }
 }
 

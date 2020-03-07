@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -6,12 +7,14 @@ using BattleTanks.Core.DTOs;
 using BattleTanks.Core.Extensions;
 using BattleTanks.Core.IService;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BattleTanks.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -60,5 +63,32 @@ namespace BattleTanks.Controllers
 
         private UserDto GetCurrentUser(ClaimsPrincipal userClaims) => _authService.GetCurrentUser(userClaims);
 
+        /// <summary>
+        /// This method have to return UsersData and Columns what draw
+        /// </summary>]
+        /// <returns></returns>
+        /// <response code="200">Return  List UserDTO</response>
+        /// <response code="400">Return failed</response>
+        [HttpGet("[action]")]      
+        public IActionResult All()
+        {
+            var res = new Dictionary<string, object>()
+            {
+                {
+                    "columns", new List<string>{"Id", "Nickname", "Email", "Gender", "Role"}
+                },
+                {
+                    "result", _userService.GetUsers()
+                }
+            };
+                                                     
+            return Ok(res);
+        }
+
+        [HttpGet("[action]")]
+        public IActionResult Get([FromForm]Guid id)
+        {
+            return Ok(_userService.GetById(id));
+        }
     }
 }

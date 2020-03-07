@@ -32,7 +32,13 @@ namespace BattleTanks.Controllers
             return Ok(_tankService.Get(id));
         }
 
-
+        /// <summary>
+        /// This method have to return TankDto
+        /// </summary>
+        /// <param name="filter">Required</param>
+        /// <returns></returns>
+        /// <response code="200">Return  Tanks</response>
+        /// <response code="400">Return failed</response>
         [HttpGet("[action]")]
         public IActionResult All()
         {

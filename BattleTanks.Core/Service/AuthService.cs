@@ -7,7 +7,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;                                     
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;         
+using System.Security.Claims;
+using BattleTanks.DB.Entities;
+using BattleTanks.DB.IRepo;
 
 namespace BattleTanks.Core.Service
 {
@@ -17,18 +19,21 @@ namespace BattleTanks.Core.Service
         private readonly IUserService _userService;
         private readonly IJwtSigningEncodingKey _signingEncodingKey;
         private readonly IConfiguration _configuration;
+        private readonly IUoW _unitOfWork;
 
         public AuthService(
             IMapper mapper,
             IUserService userService,
             IJwtSigningEncodingKey signingEncodingKey,
-            IConfiguration configuration
-            )
+            IConfiguration configuration,
+            IUoW unitOfWork
+        )
         {
             _mapper = mapper;
             _userService = userService;
             _signingEncodingKey = signingEncodingKey;
             _configuration = configuration;
+            _unitOfWork = unitOfWork;
         }
         
         public OperationResult Authenticate(string email, string password)
@@ -55,6 +60,10 @@ namespace BattleTanks.Core.Service
             }
 
             var token = GenerateJwt(user);
+
+            var res = _unitOfWork.UserActivity.Insert(new UserActivity() {UserId = user.Id});
+
+            _unitOfWork.SaveAsync();
 
             return new OperationResult(true, token, "");
         }

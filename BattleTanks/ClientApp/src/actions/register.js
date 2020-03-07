@@ -63,7 +63,6 @@ export const RESET_REGISTER = "RESET_REGISTER";
 
       res.then(response => {
           if(response.error == null){
-            console.log(response)
               dispatch(setUser(response));
               dispatch(setRegisterSuccess(true));
               
