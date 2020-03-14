@@ -4,62 +4,74 @@ import Sprite from '../components/game/oop/sprite';
 const api_serv = new Service();
 
 export const SET_DEFAULT_GAME = "SET_DEFAULT_GAME",
-            SET_MAP_GAME = "SET_MAP_GAME",
+            SET_MAP_PENDING = "SET_MAP_PENDING",
+            SET_MAP_ERROR = "SET_MAP_ERROR",
+            SET_MAP_SUCCESS = "SET_MAP_SUCCESS",
             SET_TANK_GAME = "SET_TANK_GAME",
             SET_GAME_PENDING = "SET_GAME_PENDING",
             SET_GAME_SUCCESS = "SET_GAME_SUCCESS",
             SET_GAME_ERROR = "SET_GAME_ERROR",
             SET_CANVAS_GAME = "SET_CANVAS_GAME",
-            RESET_GAME = "RESET_GAME";
+            RESET_GAME = "RESET_GAME",
+            SET_PLAYERS_PENDING = "SET_PLAYERS_PENDING",
+            SET_PLAYERS_ERROR = "SET_PLAYERS_ERROR",
+            SET_PLAYERS_SUCCESS = "SET_PLAYERS_SUCCESS";
 
-export function set_game(ctx, player, id) {
+export function set_canvas(ctx) {
     return dispatch =>{
-        //TODO: Change on load for new game
-        dispatch({
-            type: SET_GAME_PENDING
-        });
         dispatch({
             type: SET_CANVAS_GAME,
             payload: ctx
         });
-        var res = api_serv.getMap('7e9c82a3-86b7-4a39-286b-08d7b9553957');
-        res.then(response => {
-          if(response.error == null){
-            const mapArr = response.coordinates.split('|');
-            const mapArray = mapArr.map((item) => {
-                return item.split(',');
-            });
-            const map = new Map(response.wallIcon, mapArray);
+    }   
+}
+
+export function setGame(gameId){
+
+  return dispatch => {
+    dispatch({
+      type: SET_MAP_PENDING
+  });
+    var res = api_serv.getGameInfo(gameId);
+      res.then(response => {
+        if(response.error == null){
+        let coor = response.map.coordinates.split('|');
+        coor = coor.map((e) => (e.split(',')));
+          let map = new Map(response.map.photos, coor);
             dispatch({
-                type: SET_MAP_GAME,
-                payload: map
+              type: SET_MAP_SUCCESS,
+              payload: map
             });
-            res = api_serv.getTank('7e9c82a3-86b7-4a39-286b-08d7b9553957');
-            res.then(response => {
-                if(response.error == null){
-                  const tank = new Sprite(response.photoUrl, 25, 25, mapArray);
-                  dispatch(
-                      {
-                          type: SET_TANK_GAME,
-                          payload: tank
-                      }
-                  );
-                  
-          
-                    dispatch({
-                      type: SET_GAME_SUCCESS
-                  });
-                }
-                else{
-                      console.log(response.error);
-                }
+          }else{
+              dispatch({
+                type: SET_MAP_ERROR
               });
           }
-          else{
-                console.log(response.error);
+        });
+  }
+
+}
+
+export function setPlayers(gameId){
+    return dispatch => {
+      dispatch({
+        type: SET_PLAYERS_PENDING
+      });
+      var res = api_serv.getPlayers(gameId);
+      res.then(response => {
+        if(response.error == null){
+            let players = response.map((x) => (new Sprite(x.tank.tankPhotoUrl, 25, 25, x.tank.tankSpeed, x.userInfo)));
+            dispatch({
+              type: SET_PLAYERS_SUCCESS,
+              payload: players
+            });
+          }else{
+              dispatch({
+                type: SET_PLAYERS_ERROR
+              });
           }
         });
-    }   
+    }
 }
 
 

@@ -2,21 +2,90 @@
 using BattleTanks.Core.DTOs;
 using BattleTanks.DB.Entities;
 using System;
-using BattleTanks.Core.DTO;
+using System.Linq;
 using BattleTanks.Core.Extensions;
 using BattleTanks.DB.Helpers;
 
 namespace BattleTanks.Mapping
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AutoMapperProfile : Profile
     {                             
+        /// <summary>
+        /// 
+        /// </summary>
         public AutoMapperProfile()
         {
-            CreateMap<Map, MapDto>().ForMember(dest => dest.WallIcon,
-                opts => opts.MapFrom(src => src.WallIcon.Img.ToRenderablePictureString()));
+            CreateMap<Map, MapDto>()
+                .ForMember(dest => dest.Name, 
+                    opts => opts.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Coordinates,
+                    opts => opts.MapFrom(src => src.Coordinates))
+                .ForMember(dest => dest.Photos,
+                    opts => opts.MapFrom(src => src.Photos.Select(x => new PhotoDto()
+                    {            
+                        Id = x.Id, //Id MapIcon entity 
+                        Title = x.Title,
+                        PhotoUrl =  x.Icon.Thumb.ToRenderablePictureString()
+                    })))
+                ;
 
-            CreateMap<Tank, TankDto>().ForMember(dest => dest.PhotoUrl,
-                opts => opts.MapFrom(src => src.Icon.Img.ToRenderablePictureString()));
+            CreateMap<UserGame, TankerDto>()
+                .ForMember(dest => dest.TankId,
+                    opts => opts.MapFrom(src => src.TankId))
+                .ForMember(dest => dest.UserInfo,
+                    opts => opts.MapFrom(src => new UserInfo()
+                    {
+                        Id = src.Tanker.Id,
+                        PhotoUrl = src.Tanker.PhotoId != null ? src.Tanker.Photo.Img.ToRenderablePictureString() : null,
+                        Email = src.Tanker.Email,
+                        Nickname = src.Tanker.Nickname,   
+                        Gender = src.Tanker.Gender,
+                        Role = "",
+                        AfterEmailConfirmation = true,
+                        Token = ""
+                    }))
+                .ForMember(dest => dest.Coordinates,
+                    opts => opts.MapFrom(src => src.Coordinates))
+                .ForMember(dest => dest.Tank,
+                    opts => opts.MapFrom(src => src.Tank))
+                ;
+
+            CreateMap<Game, GameDto>()
+                .ForMember(dest => dest.Map,
+                    opts => opts.MapFrom(src => new MapDto()
+                    {
+                        Id = src.MapId,
+                        Name = src.Map.Name,
+                        Coordinates = src.Map.Coordinates,
+                        Photos = src.Map.Photos.Select(x => new PhotoDto()
+                        {
+                            Id = x.Id,
+                            PhotoUrl = x.Icon.Thumb.ToRenderablePictureString(),
+                            Title = x.Title
+                        }).ToList()
+                    }))
+                .ForMember(dest => dest.Finished,
+                    opts => opts.MapFrom(src => src.Finished))
+                .ForMember(dest => dest.Started,
+                    opts => opts.MapFrom(src => src.Started))
+                ;
+
+
+            //TODO
+            CreateMap<Tank, TankDto>()
+                .ForMember(dest => dest.TankPhotoUrl,
+                opts => opts.MapFrom(src => src.Icon.Img.ToRenderablePictureString()))
+                .ForMember(dest => dest.BulletPhotoUrl,
+                    opts => opts.MapFrom(src => src.Bullet.Photo.Img.ToRenderablePictureString()))
+                .ForMember(dest => dest.TankSpeed,
+                    opts => opts.MapFrom(src => src.Speed))
+                .ForMember(dest => dest.Name,
+                    opts => opts.MapFrom(src => src.Name))
+                .ForMember(dest => dest.BulletSpeed,
+                    opts => opts.MapFrom(src => src.Bullet.Speed));
 
 
             CreateMap<User, UserDto>().ReverseMap();

@@ -100,5 +100,30 @@ namespace BattleTanks.Controllers
 
             return Ok(userInfo);
         }
+
+        /// <summary>
+        /// This method is for change password
+        /// </summary>
+        /// <param name="changePasswordDto">Required</param>
+        /// <returns></returns>
+        /// <response code="200">Password change succesful</response> 
+        /// <response code="400">If assword change process failed</response>
+        [HttpPost("[action]")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var user = _authService.GetCurrentUser(HttpContext.User);
+
+            var result = await _authService.ChangePasswordAsync(user, changePasswordDto.OldPassword, changePasswordDto.NewPassword);
+
+            if (!result.Successed)
+            {
+                return BadRequest(result.Message);
+            }
+            return Ok();
+        }
     }
 }

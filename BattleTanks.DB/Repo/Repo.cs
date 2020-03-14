@@ -51,7 +51,7 @@ namespace BattleTanks.DB.Repo
         public T Get(Guid id)
         {
             return Entities.Find(id);
-        }
+        }                     
 
         public T Delete(T entity)
         {

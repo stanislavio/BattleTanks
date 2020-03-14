@@ -31,17 +31,59 @@ namespace BattleTanks.Core.Service
         }
 
                                           
-        public async Task<OperationResult> CreateOrUpdate(TankDto model)
+        public async Task<OperationResult> CreateOrUpdate(TankLoadDto model)
         {
 
             if (model.Id != null)
             {
+                var tank = _unitOfWork.TankRepo.Get("Icon,Bullet.Photo").FirstOrDefault(x => x.Id == model.Id);
 
+                if(tank == null)
+                    return new OperationResult(false, "Tank with id not found", "");
+
+                tank.Icon = model.TankPhoto != null ? await _photoService.AddPhoto(model.TankPhoto) : tank.Icon;
+                tank.Speed = model.TankSpeed != 0 ? model.TankSpeed : tank.Speed;
+                if (tank.Bullet == null)
+                {
+                    tank.Bullet = _unitOfWork.BulletRepo.Insert(
+                        new Bullet
+                        {
+                            Photo = await _photoService.AddPhoto(model.BulletPhoto),
+                            Speed = model.BulletSpeed
+                        });
+                }
+                else
+                {
+                    tank.Bullet.Photo = model.BulletPhoto != null
+                        ? await _photoService.AddPhoto(model.BulletPhoto)
+                        : tank.Bullet.Photo;
+                    tank.Bullet.Speed = model.BulletSpeed != 0 ? model.BulletSpeed : tank.Bullet.Speed;
+                }
+
+                await _unitOfWork.SaveAsync();
+
+                return new OperationResult(true, "", "");
             }
 
-            Photo icon = await _photoService.AddPhoto(model.Photo);
+            var tankPhoto = await _photoService.AddPhoto(model.TankPhoto);
 
-            var tank = _unitOfWork.TankRepo.Insert(new Tank(){ Icon = icon });
+            var bulletPhoto = await _photoService.AddPhoto(model.BulletPhoto);
+
+            var bullet = _unitOfWork.BulletRepo.Insert(
+                new Bullet
+                {     
+                    Photo = bulletPhoto,
+                    Speed = model.BulletSpeed
+                });
+
+             _unitOfWork.TankRepo.Insert(
+                new Tank()
+                {
+                    Name = model.Name,
+                    Icon = tankPhoto,
+                    Bullet = bullet,
+                    Speed = model.TankSpeed
+                });
 
             await _unitOfWork.SaveAsync();
 
@@ -50,13 +92,13 @@ namespace BattleTanks.Core.Service
 
         public TankDto Get(Guid id)
         {
-            var tank = _unitOfWork.TankRepo.Get("Icon").First();
+            var tank = _unitOfWork.TankRepo.Get("Icon,Bullet.Photo").FirstOrDefault(x => x.Id == id);
             return _mapper.Map<TankDto>(tank);
         }
 
         public IEnumerable<TankDto> All()
         {
-            return _mapper.Map<IEnumerable<TankDto>>(_unitOfWork.TankRepo.Get(includeProperties: "Icon").AsEnumerable());
+            return _mapper.Map<IEnumerable<TankDto>>(_unitOfWork.TankRepo.Get(includeProperties: "Icon,Bullet.Photo").AsEnumerable());
         }
 
     }

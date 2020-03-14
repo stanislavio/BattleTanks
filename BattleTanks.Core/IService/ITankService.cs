@@ -9,7 +9,7 @@ namespace BattleTanks.Core.IService
 {
     public interface ITankService
     {
-        Task<OperationResult> CreateOrUpdate(TankDto model);
+        Task<OperationResult> CreateOrUpdate(TankLoadDto model);
         TankDto Get(Guid id);
         IEnumerable<TankDto> All();
     }

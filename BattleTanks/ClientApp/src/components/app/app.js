@@ -3,7 +3,7 @@ import Layout from '../layout';
 import { Switch } from 'react-router-dom';
 import Login from '../../containers/login';
 import { Redirect } from 'react-router';
-import Home from '../home';
+import HomeWrapper from '../../containers/home';
 import NotFound from '../Route guard/404';
 import Registration from '../../containers/registration';
 import ConfirmEmail from '../../components/registration/confirm_email';
@@ -26,7 +26,7 @@ class App extends Component {
             <Router history={history}>
                 <Layout>
                     <Switch>
-                        <Route exact path="/home" component={() => this.props.user.id ? <Home/> : <Redirect to='/login' />} />
+                        <Route exact path="/home" component={() => this.props.user.id ? <HomeWrapper/> : <Redirect to='/login' />} />
                         <Route
                             exact
                             path="/"
@@ -40,7 +40,7 @@ class App extends Component {
                         <Route path='/tanks' component={TanksWrapper} />
                         <Route path='/add-tank' component={AddTankWrapper} />
                         <Route path='/add-map' component={AddMapWrapper} />
-                        <Route path='/game' component={Game} />
+                        <Route path='/game/:gameId' component={Game} />
                         <Route path="/profile" component={Profile} />
                         <Route path="/login" component={Login} />
                         <Route path="/registration" component={Registration} />

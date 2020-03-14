@@ -11,7 +11,7 @@ export default function FormDialog(props) {
     <div>
       <Dialog open={open} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-            {children}/
+            {children}
       </Dialog>
     </div>
   );

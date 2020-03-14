@@ -10,6 +10,13 @@ namespace BattleTanks.Core.Infrastructure
         public string Message { get; set; }
         public string Property { get; set; }
 
+        public OperationResult()
+        {
+            Successed = false;
+            Message = "Bad request";
+            Property = "";
+        }
+
         public OperationResult(bool successed, string message, string prop)
         {
             Successed = successed;

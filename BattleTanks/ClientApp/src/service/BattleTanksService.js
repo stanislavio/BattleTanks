@@ -30,6 +30,15 @@ export default class BattleTanksService{
         return await this.getResource('tanks/all');
     }
 
+    getGameInfo = async (gameId) => {
+        return await this.getResource(`game/getGameInfo?gameId=${gameId}`);
+    }
+
+    getPlayers = async (gameId) => {
+        return await this.getResource(`game/getPlayers?gameId=${gameId}`);
+    }
+
+
     getResource = async (url) => {
         const res = await fetch(this._baseUrl + url, {
             method: "get",
@@ -104,6 +113,14 @@ export default class BattleTanksService{
             body: data
         }
     );
+
+    createGame = async (data) => {
+        const res = await this.setResource('game', data);
+        if (!res.ok) {
+            return { error: await res.text() };
+        }
+        return await res.json();
+    }
 
     addMap = async (data) => {
     let file = new FormData();

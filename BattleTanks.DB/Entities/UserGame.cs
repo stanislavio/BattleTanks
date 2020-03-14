@@ -5,7 +5,7 @@ using System.Text;
 namespace BattleTanks.DB.Entities
 {
     public class UserGame : BaseEntity
-    {
+    {               
         public User Tanker { get; set; }
         public Guid? TankerId { get; set; }
 
@@ -17,5 +17,6 @@ namespace BattleTanks.DB.Entities
 
         public string Coordinates { get; set; }
         public bool Died { get; set; }
+        public bool Author { get; set; }
     }
 }

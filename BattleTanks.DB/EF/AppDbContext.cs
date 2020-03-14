@@ -32,6 +32,8 @@ namespace BattleTanks.DB.EF
 
         public DbSet<UserTankAccess> UserTankAccesses { get; set; }
 
+        public DbSet<MapIcon> MapIcons { get; set; }
+
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {                 

@@ -16,15 +16,22 @@ const initialState = {
         isSuccess: false
     }, 
     game: {
-        isPending: true,
-        isError: false,
-        isSuccess: false,
         ctx: null,
-        player: null, 
-        map: null
+        players: {
+            isPending: true,
+            isError: false,
+            isSuccess: false,
+            data: []
+        }, 
+        map: {
+            isPending: true,
+            isError: false,
+            isSuccess: false,
+            data: null
+        }
     }, 
     tanks:{
-        isPending: false,
+        isPending: true,
         isError: false,
         isSuccess: false, 
         data: null
@@ -36,6 +43,12 @@ const initialState = {
         maps: null
     },
     users: {
+        isPending: true,
+        isError: false,
+        isSuccess: false,
+        data: null 
+    },
+    maps: {
         isPending: true,
         isError: false,
         isSuccess: false,

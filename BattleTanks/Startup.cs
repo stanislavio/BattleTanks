@@ -99,6 +99,7 @@ namespace BattleTanks
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IMapService, MapService>();
             services.AddTransient<ITankService, TankService>();
+            services.AddTransient<IGameService, GameService>();
 
 
             services.AddSingleton<ICacheHelper, CacheHelper>();

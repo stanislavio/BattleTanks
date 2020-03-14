@@ -22,6 +22,7 @@ namespace BattleTanks.DB.Repo
         private IUserActivity _userActivity;
         private IFriendRepo _friendRepo;
         private IUserTankAccess _userTankAccess;
+        private IMapIcon _mapIcon;
 
         public UnitOfWork(
             AppDbContext context
@@ -62,6 +63,9 @@ namespace BattleTanks.DB.Repo
 
         public IUserTankAccess UserTankAccess =>
             _userTankAccess ?? (_userTankAccess = new UserTankAccessRepo(_db));
+
+        public IMapIcon MapIconRepo =>
+            _mapIcon ?? (_mapIcon = new MapPhotoRepo(_db));
 
         public void Dispose()
         {

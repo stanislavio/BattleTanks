@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;                                     
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using BattleTanks.DB.Entities;
 using BattleTanks.DB.IRepo;
 
@@ -35,7 +36,15 @@ namespace BattleTanks.Core.Service
             _configuration = configuration;
             _unitOfWork = unitOfWork;
         }
-        
+
+        public async Task<OperationResult> ChangePasswordAsync(UserDto userDto, string oldPassword, string newPassword)
+        {
+            if (!VerifyPassword(userDto, oldPassword)) return new OperationResult(false, "Invalid password", "");
+            userDto.PasswordHash = PasswordHasher.GenerateHash(newPassword);
+
+            return await _userService.Update(userDto);
+        }
+
         public OperationResult Authenticate(string email, string password)
         {
             var user = _userService.GetByEmailOrNickname(email);

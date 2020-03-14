@@ -18,6 +18,7 @@ namespace BattleTanks.DB.IRepo
         IUserActivity UserActivity { get; }
         IFriendRepo FriendRepo { get; }
         IUserTankAccess UserTankAccess { get; }
+        IMapIcon MapIconRepo { get; }
         
 
         Task SaveAsync();

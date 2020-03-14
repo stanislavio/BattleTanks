@@ -4,6 +4,9 @@ import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
 import {Link} from 'react-router-dom';
 
 export const radioButton = ({ input, ...rest }) => (
@@ -139,3 +142,41 @@ const asyncValidate = (values) => {
 }
 
 export default asyncValidate;
+
+const renderFromHelper = ({ touched, error }) => {
+  if (!(touched && error)) {
+    return
+  } else {
+    return <FormHelperText className="text-danger">{touched && error}</FormHelperText>
+  }
+}
+
+
+
+export const renderSelectTankField = ({
+  input,
+  label,
+  text,
+  data,
+  meta: { touched, invalid, error },
+  children,
+  ...custom
+}) =>
+    <FormControl error={touched && error}>
+      <InputLabel htmlFor="age-native-simple">{text}</InputLabel>
+      <Select
+        native
+        {...input}
+        onBlur={() => input.onBlur()}
+        {...custom}
+        inputProps={{
+          name: text.toLowerCase() + 'Id',
+          id: 'age-native-simple'
+        }}
+      >
+        <option value=""></option>
+        {data.map(x => <option key={x.id} value={x.id}>{x.name}</option>)}
+      </Select>
+      {renderFromHelper({ touched, error })}
+    </FormControl>
+

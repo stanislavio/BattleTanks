@@ -9,6 +9,7 @@ import * as Game from './game';
 import * as Admin from './admin';
 import * as Tank from './tanks';
 import * as Users from './users';
+import * as Maps from './maps';
 
 const rootReducers = {
     routing: routerReducer,
@@ -19,7 +20,8 @@ const rootReducers = {
     game: Game.reducer,
     admin:  Admin.reducer,
     tanks: Tank.reducer, 
-    users: Users.reducer
+    users: Users.reducer,
+    maps: Maps.reducer
 }
 
 export default rootReducers;

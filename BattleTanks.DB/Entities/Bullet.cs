@@ -6,7 +6,9 @@ namespace BattleTanks.DB.Entities
 {
     public class Bullet : BaseEntity
     {
-        public float Speed { get; set; }
-        public float Radius { get; set; }
+        public Photo Photo { get; set; }
+        public Guid? PhotoId { get; set; }
+
+        public float Speed { get; set; }       
     }
 }

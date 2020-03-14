@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BattleTanks.Core.IService
 {
@@ -12,5 +13,6 @@ namespace BattleTanks.Core.IService
         OperationResult Authenticate(string email, string password);
         UserDto GetCurrentUser(ClaimsPrincipal userClaims);
         OperationResult FirstAuthenticate(UserDto userDto);
+        Task<OperationResult> ChangePasswordAsync(UserDto userDto, string oldPassword, string newPassword);
     }
 }

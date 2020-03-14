@@ -24,11 +24,13 @@ namespace BattleTanks.DB.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<float>("Radius");
+                    b.Property<Guid?>("PhotoId");
 
                     b.Property<float>("Speed");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PhotoId");
 
                     b.ToTable("Bullets");
                 });
@@ -78,13 +80,31 @@ namespace BattleTanks.DB.Migrations
 
                     b.Property<string>("Coordinates");
 
-                    b.Property<Guid?>("WallIconId");
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WallIconId");
-
                     b.ToTable("Maps");
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.MapIcon", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("IconId");
+
+                    b.Property<Guid>("MapId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IconId");
+
+                    b.HasIndex("MapId");
+
+                    b.ToTable("MapIcons");
                 });
 
             modelBuilder.Entity("BattleTanks.DB.Entities.Photo", b =>
@@ -94,9 +114,13 @@ namespace BattleTanks.DB.Migrations
 
                     b.Property<byte[]>("Img");
 
+                    b.Property<Guid?>("MapId");
+
                     b.Property<byte[]>("Thumb");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("MapId");
 
                     b.ToTable("Photos");
                 });
@@ -122,9 +146,9 @@ namespace BattleTanks.DB.Migrations
 
                     b.Property<Guid?>("IconId");
 
-                    b.Property<float>("Speed");
+                    b.Property<string>("Name");
 
-                    b.Property<int>("Weight");
+                    b.Property<float>("Speed");
 
                     b.HasKey("Id");
 
@@ -188,6 +212,8 @@ namespace BattleTanks.DB.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<bool>("Author");
+
                     b.Property<string>("Coordinates");
 
                     b.Property<bool>("Died");
@@ -227,6 +253,13 @@ namespace BattleTanks.DB.Migrations
                     b.ToTable("UserTankAccesses");
                 });
 
+            modelBuilder.Entity("BattleTanks.DB.Entities.Bullet", b =>
+                {
+                    b.HasOne("BattleTanks.DB.Entities.Photo", "Photo")
+                        .WithMany()
+                        .HasForeignKey("PhotoId");
+                });
+
             modelBuilder.Entity("BattleTanks.DB.Entities.Friend", b =>
                 {
                     b.HasOne("BattleTanks.DB.Entities.User", "ForWho")
@@ -245,11 +278,24 @@ namespace BattleTanks.DB.Migrations
                         .HasForeignKey("MapId");
                 });
 
-            modelBuilder.Entity("BattleTanks.DB.Entities.Map", b =>
+            modelBuilder.Entity("BattleTanks.DB.Entities.MapIcon", b =>
                 {
-                    b.HasOne("BattleTanks.DB.Entities.Photo", "WallIcon")
+                    b.HasOne("BattleTanks.DB.Entities.Photo", "Icon")
                         .WithMany()
-                        .HasForeignKey("WallIconId");
+                        .HasForeignKey("IconId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BattleTanks.DB.Entities.Map", "Map")
+                        .WithMany()
+                        .HasForeignKey("MapId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.Photo", b =>
+                {
+                    b.HasOne("BattleTanks.DB.Entities.Map")
+                        .WithMany("Photos")
+                        .HasForeignKey("MapId");
                 });
 
             modelBuilder.Entity("BattleTanks.DB.Entities.Tank", b =>

@@ -36,6 +36,32 @@ namespace BattleTanks.Core.Service
             _photoService = photoService;
         }
 
+        public async Task<OperationResult> Update(UserDto model)
+        {
+            if (string.IsNullOrEmpty(model.Email))
+            {
+                return new OperationResult(false, "EMAIL cannot be empty", "Email");
+            }
+
+            if (!_unitOfWork.UserRepo.Get().Any(u => u.Id == model.Id))
+            {
+                return new OperationResult(false, "Not found", "");
+            }
+
+            var result = _mapper.Map<UserDto, User>(model);
+            try
+            {
+                _unitOfWork.UserRepo.Update(result);
+                await _unitOfWork.SaveAsync();
+            }
+            catch (Exception e)
+            {
+                return new OperationResult(false, $"{e.Message}", "");
+            }
+            return new OperationResult(true);
+        }
+
+
         public UserDto GetByEmailOrNickname(string email)
         {
             var user = _mapper.Map<UserDto>(_unitOfWork.UserRepo.Get("Role,Photo")

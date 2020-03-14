@@ -2,7 +2,7 @@ import { RIGHT, LEFT, UP, DOWN, WIDTH, HEIGHT } from './constants'
 
 export default class Sprite{
 
-    constructor(icon, x, y, map, direct=RIGHT){
+    constructor(icon, x, y, speed, info, map=[], direct=RIGHT){
         this.img = new Image()
         this.img.src = icon;
         this.width = 50; //this.img.width;
@@ -14,6 +14,9 @@ export default class Sprite{
         this.direct = direct;
         this.angle = 0;   
         this.map = map;
+        this.info = info;
+        this.speed = speed;
+        console.log(this);
     }
 
         
@@ -38,38 +41,38 @@ export default class Sprite{
         switch(key){
             case 'a':
                 this.angle = 180;
-                this.center_x -= 1;
+                this.center_x -= this.speed * 0.2;
                 this.direct = LEFT;
                 if(this.checkColision())   
                 {
-                    this.center_x += 1; 
+                    this.center_x += this.speed * 0.2; 
                 }
                 break;
             case 'w':
                 this.angle = -90;
-                this.center_y -= 1; 
+                this.center_y -= this.speed * 0.2; 
                 this.direct = UP;
                 if(this.checkColision())   
                 {
-                    this.center_y += 1; 
+                    this.center_y += this.speed * 0.2; 
                 }
                 break;
             case 's': 
                 this.angle = 90;
-                this.center_y += 1;
+                this.center_y += this.speed * 0.2;
                 this.direct = DOWN;
                 if(this.checkColision())   
                 {
-                    this.center_y -= 1; 
+                    this.center_y -= this.speed * 0.2; 
                 }
                 break;
             case 'd': 
                 this.angle = 0;
-                this.center_x += 1;
+                this.center_x += this.speed * 0.2;
                 this.direct = RIGHT;
                 if(this.checkColision())   
                 {
-                    this.center_x -= 1; 
+                    this.center_x -= this.speed * 0.2; 
                 }
                 break;
         }    

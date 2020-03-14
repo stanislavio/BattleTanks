@@ -19,6 +19,10 @@ namespace BattleTanks.Controllers
         private readonly ITankService _tankService;
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="tankService"></param>
         public TanksController(
             ITankService tankService
         )
@@ -45,9 +49,14 @@ namespace BattleTanks.Controllers
             return Ok(_tankService.All());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("[action]")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateOrUpdate([FromForm]TankDto model)
+        public async Task<IActionResult> CreateOrUpdate([FromForm]TankLoadDto model)
         { 
             var res = await _tankService.CreateOrUpdate(model);
             if (res.Successed)
