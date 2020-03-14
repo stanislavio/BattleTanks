@@ -82,9 +82,8 @@ export default class Sprite{
         const x_wall = Math.floor(WIDTH / this.width), y_wall = Math.floor(HEIGHT / this.height) 
         switch(this.direct){
             case UP:
-
-                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width), 
-                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height),
+                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width); 
+                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height);
                 x2_coor = Math.floor((this.center_x + this.width / 2 - 1) / this.width);
                 if(x1_coor < 0 || 
                     x2_coor < 0 || 
@@ -97,8 +96,8 @@ export default class Sprite{
                     return true; 
                 break; 
             case DOWN:
-                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width), 
-                y1_coor = Math.floor((this.center_y + this.height / 2 - 1)/this.height),
+                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width);
+                y1_coor = Math.floor((this.center_y + this.height / 2 - 1)/this.height);
                 x2_coor = Math.floor((this.center_x + this.width / 2 - 1) / this.width);
                 if(x1_coor < 0 || 
                     x2_coor < 0 || 
@@ -111,8 +110,8 @@ export default class Sprite{
                     return true; 
                 break;
             case LEFT:
-                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width),
-                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height),
+                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width);
+                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height);
                 y2_coor = Math.floor((this.center_y + this.height / 2 - 1)/this.height);
                 if(x1_coor < 0 || 
                     y1_coor < 0 || 
@@ -123,8 +122,8 @@ export default class Sprite{
                 if(this.map[y1_coor][x1_coor].trim() == 1 || this.map[y2_coor][x1_coor].trim() == 1)
                     return true; 
             case RIGHT:
-                x1_coor = Math.floor((this.center_x + this.width / 2 - 1)/this.width),
-                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height),
+                x1_coor = Math.floor((this.center_x + this.width / 2 - 1)/this.width);
+                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height);
                 y2_coor = Math.floor((this.center_y + this.height / 2 - 1)/this.height);
                 if(x1_coor < 0 || 
                     y1_coor < 0 || 
