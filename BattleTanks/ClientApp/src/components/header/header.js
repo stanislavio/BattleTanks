@@ -8,6 +8,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import { Link } from "react-router-dom";
+import { setLogout } from "../../actions/login";
+import { connect } from "react-redux";
+import "./header.css";
 
 const StyledAppBar = withStyles({
   colorPrimary: {
@@ -28,25 +32,28 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const RenderProfileMenu = () => {
+const RenderProfileMenu = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
   const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const signOut = () => {
+    handleClose();
+    props.signOut();
+    localStorage.clear();
   };
 
   return (
     <div>
-      <IconButton onClick={handleMenu} color="inherit">
+      <IconButton onClick={event => handleMenu(event)} color="inherit">
         <AccountCircle />
       </IconButton>
       <Menu
-        id="menu-appbar"
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: "top",
@@ -58,16 +65,31 @@ const RenderProfileMenu = () => {
           horizontal: "right"
         }}
         open={open}
-        onClose={handleClose}
+        onClose={() => handleClose()}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        {props.user && props.user.id !== null ? (
+          <React.Fragment>
+            <MenuItem onClick={() => handleClose()}>
+              <Link style={{ textDecoration: "none" }} to={"/profile"}>
+                Profile
+              </Link>
+            </MenuItem>
+
+            <MenuItem onClick={() => signOut()}>Sign Out</MenuItem>
+          </React.Fragment>
+        ) : (
+          <MenuItem onClick={() => handleClose()}>
+            <Link style={{ textDecoration: "none" }} to="/login">
+              Sign In
+            </Link>
+          </MenuItem>
+        )}
       </Menu>
     </div>
   );
 };
 
-export default function ButtonAppBar() {
+function Header(props) {
   const classes = useStyles();
 
   return (
@@ -83,11 +105,28 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            News
+            <Link className="Logotype" to="/home">
+              Battle-Tanks
+            </Link>
           </Typography>
-          <RenderProfileMenu></RenderProfileMenu>
+          <RenderProfileMenu
+            user={props.user}
+            signOut={props.signOut}
+          ></RenderProfileMenu>
         </Toolbar>
       </StyledAppBar>
     </div>
   );
 }
+
+const mapStateToProps = state => ({
+  user: state.user
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    signOut: () => dispatch(setLogout())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
