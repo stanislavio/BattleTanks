@@ -7,12 +7,14 @@ class Profile extends Component {
 
     render(){
 
-        const { nickname, photoUrl, } = this.props.user;
+        const { nickname, photoUrl, email} = this.props.user;
 
         return <>
-
-            {nickname}
-            <img src={photoUrl} />
+            <div class="text">
+                User name: {nickname}
+                <p>Email: {email}</p>
+                <img src={photoUrl} />
+            </div>
         </>
 
     }
