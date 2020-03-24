@@ -27,13 +27,16 @@ namespace BattleTanks.Core.Service
 
         public async Task<OperationResult> CreateGame(GameLoadDto model)
         {
+            var currentOpenGame = _unitOfWork.UserGame.Get("Game").FirstOrDefault(x => x.TankerId == model.UserId && x.Author && x.Game.Finished == DateTime.MinValue);
+            if (currentOpenGame != null) return new OperationResult(false, "You have not finished game", "");
             var map = _unitOfWork.MapRepo.Get(model.MapId);
             if (map == null) return new OperationResult(false, "Map not Found", "");
             var tank = _unitOfWork.TankRepo.Get(model.TankId);
             if(tank == null) return new OperationResult(false, "Tank not Found", "");
             var game = _unitOfWork.GameRepo.Insert(new Game()
             {
-                Map = map
+                Map = map,
+                Online = model.Online
             });
             var gamer = _unitOfWork.UserGame.Insert(new UserGame()
             {
@@ -41,7 +44,7 @@ namespace BattleTanks.Core.Service
                 Author = true,
                 Game = game,
                 Tank = tank,
-                Coordinates = "I don't know"
+                Coordinates = "{'x': 25, 'y': 25}"
             });
             await _unitOfWork.SaveAsync();
             return new OperationResult(true, "",game.Id.ToString());
@@ -61,9 +64,59 @@ namespace BattleTanks.Core.Service
             return _mapper.Map<IEnumerable<GameDto>>(res);
         }
 
+        public IEnumerable<GamePreviewDto> FindGame()
+        {                             
+            var games = _unitOfWork.UserGame.Get("Tanker.Photo,Game.Users").Where(x => x.Author);
+            return _mapper.Map<IEnumerable<GamePreviewDto>>(games.AsEnumerable());
+        }
+
         public GameDto GetGameInfo(Guid gameId)
         {
             return _mapper.Map<GameDto>(_unitOfWork.GameRepo.Get("Map.Photos.Icon").FirstOrDefault(x => x.Id == gameId));
+        }
+
+        public async Task<OperationResult> SavePlayersInfo(List<PlayerInfoDto> model)
+        {
+            foreach (var item in model)
+            {
+                var player = _unitOfWork.UserGame.Get().FirstOrDefault(x => x.TankerId == item.Id);
+                if (player == null) return new OperationResult();
+                player.Coordinates = item.Position;
+            }
+
+            await _unitOfWork.SaveAsync();
+            return new OperationResult(true);
+        }
+
+        public async Task<OperationResult> SaveCurrentMap(SaveGameInfo model)
+        {
+
+            var res = _unitOfWork.GameRepo.Get().FirstOrDefault(x => x.Id == model.Id);
+            if (res == null) return new OperationResult(false, "Game not found", "");
+            res.CurrentMapCoordinates = model.CurrentMap;
+
+            await _unitOfWork.SaveAsync();
+            return  new OperationResult(true);
+        }
+
+        public async Task<OperationResult> JoinToGame(GameLoadDto model)
+        {
+            var tank = _unitOfWork.TankRepo.Get().FirstOrDefault(x => x.Id == model.TankId);
+            if (tank == null) return new OperationResult(false, "Tank not found","");
+
+            var game = _unitOfWork.GameRepo.Get().FirstOrDefault(x => x.Id == model.GameId);
+            if (game == null) return new OperationResult(false, "Game not found", "");
+            if(game.Finished != DateTime.MinValue || game.Users.Count > 1) return  new OperationResult(false, "You can't join to this game", "");
+            
+            var res = _unitOfWork.UserGame.Insert(new UserGame()
+            {
+                TankerId = model.UserId,
+                Coordinates = "{'x': 325, 'y': 275}",
+                GameId = model.GameId,
+                TankId = model.TankId
+            });
+            await _unitOfWork.SaveAsync();
+            return new OperationResult(true);
         }
 
     }

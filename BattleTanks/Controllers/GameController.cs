@@ -40,7 +40,7 @@ namespace BattleTanks.Controllers
         /// <returns></returns>
         [Authorize]
         [HttpPost("[action]")]
-        public async Task<IActionResult> CreateGame(GameLoadDto model)
+        public async Task<IActionResult> CreateGame([FromBody]GameLoadDto model)
         {
             var currentUser = GetCurrentUser(HttpContext.User);
             if (currentUser == null)
@@ -49,7 +49,25 @@ namespace BattleTanks.Controllers
             var res = await _gameService.CreateGame(model);
             if(res.Successed)
                 return Ok(res.Property);
-            return BadRequest();
+            return BadRequest(res.Message);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost("[action]")]
+        public async Task<IActionResult> JoinToGame([FromBody]GameLoadDto model)
+        {
+            var currentUser = GetCurrentUser(HttpContext.User);
+            if (currentUser == null)
+                return BadRequest();
+            model.UserId = currentUser.Id;
+            var res = await _gameService.JoinToGame(model);
+            if (res.Successed)
+                return Ok();
+            return BadRequest(res.Message);
         }
 
         /// <summary>
@@ -75,6 +93,44 @@ namespace BattleTanks.Controllers
             return Ok(_gameService.GetGames());
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("[action]")]
+        public IActionResult FindGames()
+        {
+            return Ok(_gameService.FindGame());
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost("[action]")]
+        public async Task<IActionResult> SaveGameInfo([FromBody]List<PlayerInfoDto> model)
+        {
+            var res = await _gameService.SavePlayersInfo(model);
+            if(res.Successed)
+                return Ok();
+            return BadRequest(res.Message);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpPost("[action]")]
+        public async Task<IActionResult> SaveGameMapInfo([FromBody] SaveGameInfo model)
+        {
+            var res = await _gameService.SaveCurrentMap(model);
+            if (res.Successed)
+                return Ok();
+            return BadRequest(res.Message);
+        }
 
         /// <summary>
         /// 
@@ -86,10 +142,6 @@ namespace BattleTanks.Controllers
         {
             return Ok(_gameService.GetGameInfo(gameId));
         }
-
-
-
-
-
+                                           
     }
 }

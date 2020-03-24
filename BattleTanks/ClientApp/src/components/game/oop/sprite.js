@@ -1,28 +1,43 @@
-import { RIGHT, LEFT, UP, DOWN, WIDTH, HEIGHT } from './constants'
+import { RIGHT, LEFT, UP, DOWN, WIDTH, HEIGHT, ICON_W, ICON_H } from './constants'
 
 export default class Sprite{
 
-    constructor(icon, x, y, speed, info, map=[], direct=RIGHT){
+    constructor(icon, x, y, speed, info, bullet, direct=RIGHT){
         this.img = new Image()
         this.img.src = icon;
-        this.width = 50; //this.img.width;
-        this.height = 50; //this.img.height;
+        this.width = ICON_W;
+        this.height = ICON_H;
         this.center_x = x;
         this.center_y = y;
         this.x = x - this.width / 2;
         this.y = y - this.height / 2;
         this.direct = direct;
         this.angle = 0;   
-        this.map = map;
+        this.map = [];
         this.info = info;
         this.speed = speed;
-        console.log(this);
+        this.bullet = bullet;
+        this.died = false;
     }
 
         
     draw(ctx) {
         ctx.fillStyle = '#000000';
         ctx.fillRect(this.x, this.y, this.width, this.height);
+        switch(this.direct){
+            case UP:
+                this.angle = -90;
+                break;
+            case DOWN:
+                this.angle = 90;
+                break;
+            case LEFT:
+                this.angle = 180;
+                break;
+            case RIGHT: 
+                this.angle = 0;
+                break;
+        }
         this.drawRotatedImage(ctx, this.img, this.angle, this.center_x, this.center_y)
     }
 
@@ -40,7 +55,6 @@ export default class Sprite{
         this.y = this.center_y - this.height / 2;
         switch(key){
             case 'a':
-                this.angle = 180;
                 this.center_x -= this.speed * 0.2;
                 this.direct = LEFT;
                 if(this.checkColision())   
@@ -49,7 +63,6 @@ export default class Sprite{
                 }
                 break;
             case 'w':
-                this.angle = -90;
                 this.center_y -= this.speed * 0.2; 
                 this.direct = UP;
                 if(this.checkColision())   
@@ -58,7 +71,6 @@ export default class Sprite{
                 }
                 break;
             case 's': 
-                this.angle = 90;
                 this.center_y += this.speed * 0.2;
                 this.direct = DOWN;
                 if(this.checkColision())   
@@ -67,7 +79,6 @@ export default class Sprite{
                 }
                 break;
             case 'd': 
-                this.angle = 0;
                 this.center_x += this.speed * 0.2;
                 this.direct = RIGHT;
                 if(this.checkColision())   
@@ -86,22 +97,24 @@ export default class Sprite{
         switch(this.direct){
             case UP:
 
-                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width), 
-                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height),
+                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width); 
+                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height);
                 x2_coor = Math.floor((this.center_x + this.width / 2 - 1) / this.width);
                 if(x1_coor < 0 || 
                     x2_coor < 0 || 
                     y1_coor < 0 || 
                     x1_coor >= x_wall ||
                     x2_coor >= x_wall ||
-                    y1_coor >= y_wall)
+                    y1_coor >= y_wall){
                     return true;
-                if(this.map[y1_coor][x1_coor].trim() == 1 || this.map[y1_coor][x2_coor].trim() == 1)
+                    }
+                if(this.map[y1_coor][x1_coor] != 0 || this.map[y1_coor][x2_coor] != 0){
                     return true; 
+                }
                 break; 
             case DOWN:
-                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width), 
-                y1_coor = Math.floor((this.center_y + this.height / 2 - 1)/this.height),
+                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width);
+                y1_coor = Math.floor((this.center_y + this.height / 2 - 1)/this.height);
                 x2_coor = Math.floor((this.center_x + this.width / 2 - 1) / this.width);
                 if(x1_coor < 0 || 
                     x2_coor < 0 || 
@@ -110,12 +123,12 @@ export default class Sprite{
                     x2_coor >= x_wall ||
                     y1_coor >= y_wall)
                     return true;
-                if(this.map[y1_coor][x1_coor].trim() == 1 || this.map[y1_coor][x2_coor].trim() == 1)
+                if(this.map[y1_coor][x1_coor] != 0 || this.map[y1_coor][x2_coor] != 0)
                     return true; 
                 break;
             case LEFT:
-                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width),
-                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height),
+                x1_coor = Math.floor((this.center_x - this.width / 2 + 1)/this.width);
+                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height);
                 y2_coor = Math.floor((this.center_y + this.height / 2 - 1)/this.height);
                 if(x1_coor < 0 || 
                     y1_coor < 0 || 
@@ -123,11 +136,11 @@ export default class Sprite{
                     y2_coor >= y_wall ||
                     y1_coor >= y_wall)
                     return true;
-                if(this.map[y1_coor][x1_coor].trim() == 1 || this.map[y2_coor][x1_coor].trim() == 1)
+                if(this.map[y1_coor][x1_coor] != 0 || this.map[y2_coor][x1_coor] != 0)
                     return true; 
             case RIGHT:
-                x1_coor = Math.floor((this.center_x + this.width / 2 - 1)/this.width),
-                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height),
+                x1_coor = Math.floor((this.center_x + this.width / 2 - 1)/this.width);
+                y1_coor = Math.floor((this.center_y - this.height / 2 + 1)/this.height);
                 y2_coor = Math.floor((this.center_y + this.height / 2 - 1)/this.height);
                 if(x1_coor < 0 || 
                     y1_coor < 0 || 
@@ -135,7 +148,7 @@ export default class Sprite{
                     y2_coor >= y_wall ||
                     y1_coor >= y_wall)
                     return true;
-                if(this.map[y1_coor][x1_coor].trim() == 1 || this.map[y2_coor][x1_coor].trim() == 1)
+                if(this.map[y1_coor][x1_coor] != 0 || this.map[y2_coor][x1_coor] != 0)
                     return true; 
         }
         return false;

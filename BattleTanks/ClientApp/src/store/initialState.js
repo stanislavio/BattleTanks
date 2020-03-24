@@ -53,7 +53,14 @@ const initialState = {
         isError: false,
         isSuccess: false,
         data: null 
-    }
+    },
+    findGame: {
+        isPending: true,
+        isError: false,
+        isSuccess: false,
+        data: null 
+    },
+    hub: null
 }
 
 export default initialState;

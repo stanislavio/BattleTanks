@@ -1,5 +1,5 @@
 import Service from '../service/BattleTanksService';
-
+import {initialConnection} from './game';
 const api_serv = new Service();
 
 export const SET_LOGIN_PENDING = "SET_LOGIN_PENDING";
@@ -17,13 +17,14 @@ export default function login(email, password) {
     const res = api_serv.setLogin({Email: email, Password: password});
     res.then(response => {
       if(response.error == null){
-          dispatch(setUser(response));
-          dispatch(setLoginSuccess(true));
-         
           localStorage.setItem('token', response.token);
           
           localStorage.setItem('id', response.id);
 
+          dispatch(initialConnection());
+          dispatch(setUser(response));
+          dispatch(setLoginSuccess(true));
+         
         }else{
           dispatch(setLoginError(response.error));
         }
@@ -78,6 +79,7 @@ export async function Authentification(store, token){
     if(res.ok){
       const user = await res.json();
       store.dispatch(setUser(user));
+      store.dispatch(initialConnection());
     }else{
       localStorage.clear();
   }

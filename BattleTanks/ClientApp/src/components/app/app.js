@@ -14,6 +14,7 @@ import MapsWrapper from '../../containers/maps';
 import AddMapWrapper from '../../containers/add_map';
 import TanksWrapper from '../../containers/tanks';
 import AddTankWrapper from '../../containers/add_tank';
+import FindGameWrapper from '../../containers/find_game';
 import Users from '../users';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import '../login/login.css';
@@ -44,6 +45,7 @@ class App extends Component {
                         <Route path="/profile" component={Profile} />
                         <Route path="/login" component={Login} />
                         <Route path="/registration" component={Registration} />
+                        <Route path="/find-game" component={FindGameWrapper} />
                         <Route path="/confirm_email/:id/:token" component={ConfirmEmail} />
                         <Route component={NotFound} />
                     </Switch>

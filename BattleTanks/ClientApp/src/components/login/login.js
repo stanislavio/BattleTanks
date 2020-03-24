@@ -31,12 +31,13 @@ class Login extends Component {
                 <Field name="password" label='Password' className="mt-2" component={renderTextField} type="password" />
 
                 <p className="mt-4 text-danger text-center">{isError}</p>
-
+           
+                <Button fullWidth={true} disabled={pristine || submitting} type="submit" value="Login" color="primary">Sign In</Button>
+           
+                <p className="mt-4"><Link to={"/forgot_password"}>Forgot password?</Link></p>  
+                
                 <p className="mt-4"><Link to={"/registration"}>Sign Up</Link></p>   
                 
-                <p className="mt-4"><Link to={"/forgot_password"}>Forgot password?</Link></p>  
-
-                <Button fullWidth={true} disabled={pristine || submitting} type="submit" value="Login" color="primary">Sign In</Button>
             </form>
         }
         </>

@@ -9,7 +9,7 @@ namespace BattleTanks.Core.Infrastructure
         public bool Successed { get; set; }
         public string Message { get; set; }
         public string Property { get; set; }
-
+                                                
         public OperationResult()
         {
             Successed = false;

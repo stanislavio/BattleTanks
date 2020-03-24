@@ -38,6 +38,9 @@ export default class BattleTanksService{
         return await this.getResource(`game/getPlayers?gameId=${gameId}`);
     }
 
+    findGame = async () => {
+        return await this.getResource('game/findGames');
+    }
 
     getResource = async (url) => {
         const res = await fetch(this._baseUrl + url, {
@@ -114,8 +117,25 @@ export default class BattleTanksService{
         }
     );
 
+    saveGameData = async (data) => {
+        const res = await this.setResource('game/saveGameInfo', data);
+        if (!res.ok) {
+            return { error: await res.text() };
+        }
+        return "Success";
+    }
+
+    
+    saveGameMapData = async (data) => {
+        const res = await this.setResource('game/saveGameMapInfo', data);
+        if (!res.ok) {
+            return { error: await res.text() };
+        }
+        return "Success";
+    }
+
     createGame = async (data) => {
-        const res = await this.setResource('game', data);
+        const res = await this.setResource('game/createGame', data);
         if (!res.ok) {
             return { error: await res.text() };
         }

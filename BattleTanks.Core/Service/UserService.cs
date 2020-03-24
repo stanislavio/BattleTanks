@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using BattleTanks.Core.Notifications;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace BattleTanks.Core.Service
 {
@@ -64,8 +65,8 @@ namespace BattleTanks.Core.Service
 
         public UserDto GetByEmailOrNickname(string email)
         {
-            var user = _mapper.Map<UserDto>(_unitOfWork.UserRepo.Get("Role,Photo")
-                .FirstOrDefault(o => o.Email == email || o.Nickname == email));
+            var user = _mapper.Map<UserDto>(_unitOfWork.UserRepo.Get("Photo,Role").AsNoTracking()
+                .FirstOrDefault(o => ((o.Email == email) || (o.Nickname == email))));
             return user;
         }
 

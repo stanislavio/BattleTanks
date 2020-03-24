@@ -30,9 +30,10 @@ namespace BattleTanks.Controllers
         
         [AllowAnonymous]
         [HttpPost("[action]")]
-        public IActionResult Login([FromBody]LoginDto model)
+        [Produces("application/json")]
+        public async Task<IActionResult> Login([FromBody]LoginDto model)
         {
-            var result = _authService.Authenticate(model.Email, model.Password);
+            var result = await _authService.Authenticate(model.Email, model.Password);
             if (!result.Successed)
             {
                 return BadRequest(result.Message);
@@ -106,8 +107,8 @@ namespace BattleTanks.Controllers
         /// </summary>
         /// <param name="changePasswordDto">Required</param>
         /// <returns></returns>
-        /// <response code="200">Password change succesful</response> 
-        /// <response code="400">If assword change process failed</response>
+        /// <response code="200">Password change successful</response> 
+        /// <response code="400">If as-sword change process failed</response>
         [HttpPost("[action]")]
         public async Task<IActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
         {

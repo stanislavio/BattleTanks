@@ -4,14 +4,16 @@ using BattleTanks.DB.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BattleTanks.DB.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200319191151_ChangeGameTable")]
+    partial class ChangeGameTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,8 +61,6 @@ namespace BattleTanks.DB.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CurrentMapCoordinates");
 
                     b.Property<DateTime>("Finished");
 
@@ -324,7 +324,7 @@ namespace BattleTanks.DB.Migrations
             modelBuilder.Entity("BattleTanks.DB.Entities.UserGame", b =>
                 {
                     b.HasOne("BattleTanks.DB.Entities.Game", "Game")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("GameId");
 
                     b.HasOne("BattleTanks.DB.Entities.Tank", "Tank")

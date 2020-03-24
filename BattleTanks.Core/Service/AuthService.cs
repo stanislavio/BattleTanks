@@ -45,7 +45,7 @@ namespace BattleTanks.Core.Service
             return await _userService.Update(userDto);
         }
 
-        public OperationResult Authenticate(string email, string password)
+        public async Task<OperationResult> Authenticate(string email, string password)
         {
             var user = _userService.GetByEmailOrNickname(email);
             if (user == null)
@@ -72,8 +72,8 @@ namespace BattleTanks.Core.Service
 
             var res = _unitOfWork.UserActivity.Insert(new UserActivity() {UserId = user.Id});
 
-            _unitOfWork.SaveAsync();
-
+            await _unitOfWork.SaveAsync();
+             
             return new OperationResult(true, token, "");
         }
 

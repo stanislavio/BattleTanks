@@ -12,5 +12,11 @@ namespace BattleTanks.DB.Entities
         public DateTime Started { get; set; } = DateTime.Now;
         public DateTime Finished { get; set; }
 
+        public bool Online { get; set; }
+
+        public string CurrentMapCoordinates { get; set; }
+
+        public List<UserGame> Users { get; set; }
+
     }
 }

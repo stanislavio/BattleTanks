@@ -3,12 +3,17 @@ import { connect } from 'react-redux';
 import Home from '../components/home';
 import { get_tanks } from '../actions/tanks';
 import { get_maps } from '../actions/maps';
+import { createGame } from '../actions/game';
 import Spinner from '../components/spinner';
  
 class HomeWrapper extends Component {
 
     onSubmit = val => {
-        console.log(val);       
+        this.props.create_game({
+            TankId: val.tankId,
+            MapId: val.mapId,
+            Online: parseInt(val.online)
+       });      
     }
     
     componentDidMount(){
@@ -38,7 +43,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     get_tanks: () => dispatch(get_tanks()),
-    get_maps: () => dispatch(get_maps())
+    get_maps: () => dispatch(get_maps()),
+    create_game: (data) => dispatch(createGame(data))
   };
 };
 export default connect(

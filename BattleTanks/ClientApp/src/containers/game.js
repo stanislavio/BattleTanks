@@ -3,9 +3,7 @@ import { connect } from 'react-redux';
 
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 
-import {setPlayers, setGame, set_canvas, reset_game} from '../actions/game';
-import { get_tanks } from '../actions/tanks';
-import { get_maps } from '../actions/maps';
+import {setPlayers, setGame, set_canvas, reset_game, saveGameData, saveGameMapData} from '../actions/game';
 import { WIDTH, HEIGHT } from '../components/game/oop/constants';
 import Game from '../components/game';
 import Spinner from '../components/spinner';
@@ -20,9 +18,24 @@ class GameWrapper extends Component{
       const { gameId } = this.props.match.params;
       this.props.set_players(gameId);
       this.props.set_game(gameId);
+      this.props.hubConnection
+      .invoke('GameStarted', gameId)
+      .catch(err => { console.log('error'); console.log(err)});
     }
 
     componentWillUnmount(){
+      const map = this.props.game.map.data.coor;
+      const coor = map.map((x) => (
+        x.join(',')  
+      )).join('|');
+      this.props.saveGameMapData({
+        Id: this.props.match.params.gameId,
+        CurrentMap: coor
+      });
+      this.props.saveGameData(this.props.game.players.data.map((el) => ({
+        Id: el.info.id,
+        Position: '{"x": ' + el.center_x + ', "y":' + el.center_y + ', "direct": "'+ el.direct +'"}'
+      })));
         this.props.reset_game();
     }
 
@@ -50,7 +63,8 @@ class GameWrapper extends Component{
 const mapStateToProps = state => {
     return {
         game: state.game,
-        user: state.user
+        user: state.user,
+        hubConnection: state.hub
     }
 }
 
@@ -59,7 +73,9 @@ const mapDispatchToProps = dispatch => {
     set_canvas: (ctx) => dispatch(set_canvas(ctx)),
     reset_game: () => dispatch(reset_game()),
     set_game: (gameId) => dispatch(setGame(gameId)),
-    set_players: (gameId) => dispatch(setPlayers(gameId))
+    set_players: (gameId) => dispatch(setPlayers(gameId)),
+    saveGameData: (data) => dispatch(saveGameData(data)),
+    saveGameMapData: (data) => dispatch(saveGameMapData(data))
   }
 }
 

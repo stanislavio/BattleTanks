@@ -10,8 +10,8 @@
             </summary>
             <param name="changePasswordDto">Required</param>
             <returns></returns>
-            <response code="200">Password change succesful</response> 
-            <response code="400">If assword change process failed</response>
+            <response code="200">Password change successful</response> 
+            <response code="400">If as-sword change process failed</response>
         </member>
         <member name="T:BattleTanks.Controllers.GameController">
             <summary>
@@ -29,6 +29,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:BattleTanks.Controllers.GameController.JoinToGame(BattleTanks.Core.DTOs.GameLoadDto)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:BattleTanks.Controllers.GameController.GetPlayers(System.Guid)">
             <summary>
             
@@ -37,6 +43,24 @@
             <returns></returns>
         </member>
         <member name="M:BattleTanks.Controllers.GameController.GetGames">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BattleTanks.Controllers.GameController.FindGames">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BattleTanks.Controllers.GameController.SaveGameInfo(System.Collections.Generic.List{BattleTanks.Core.DTOs.PlayerInfoDto})">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BattleTanks.Controllers.GameController.SaveGameMapInfo(BattleTanks.Core.DTOs.SaveGameInfo)">
             <summary>
             
             </summary>

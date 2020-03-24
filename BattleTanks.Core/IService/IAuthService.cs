@@ -10,7 +10,7 @@ namespace BattleTanks.Core.IService
 {
     public interface IAuthService
     {
-        OperationResult Authenticate(string email, string password);
+        Task<OperationResult> Authenticate(string email, string password);
         UserDto GetCurrentUser(ClaimsPrincipal userClaims);
         OperationResult FirstAuthenticate(UserDto userDto);
         Task<OperationResult> ChangePasswordAsync(UserDto userDto, string oldPassword, string newPassword);

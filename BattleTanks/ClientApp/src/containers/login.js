@@ -7,8 +7,7 @@ import login from '../actions/login';
 class LoginWrapper extends Component {
 
     onSubmit = val => {
-        this.props.login(val.email, val.password);
-        
+        this.props.login(val.email, val.password);        
     }
 
     componentDidUpdate = () => {
@@ -34,7 +33,8 @@ class LoginWrapper extends Component {
 
 const mapStateToProps = state => {
     return {
-        user: state.user
+        user: state.user, 
+        login: state.login
     }
 };
 

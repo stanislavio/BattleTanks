@@ -53,13 +53,31 @@ namespace BattleTanks.Mapping
                     opts => opts.MapFrom(src => src.Tank))
                 ;
 
+            CreateMap<UserGame, GamePreviewDto>()
+                .ForMember(dest => dest.Author,
+                    opts => opts.MapFrom(src => new UserInfo()
+                        {
+                            Id = src.Tanker.Id,
+                            PhotoUrl = src.Tanker.Photo.Img.ToRenderablePictureString(),
+                            Role = "",
+                            Gender = src.Tanker.Gender,
+                            Email = src.Tanker.Email,
+                            Nickname = src.Tanker.Nickname,
+                            AfterEmailConfirmation = src.Tanker.EmailConfirmed,
+                            Token = ""            
+                        })
+                    )
+                .ForMember(dest => dest.Id,
+                    opts => opts.MapFrom(src => src.GameId));
+
+
             CreateMap<Game, GameDto>()
                 .ForMember(dest => dest.Map,
                     opts => opts.MapFrom(src => new MapDto()
                     {
                         Id = src.MapId,
                         Name = src.Map.Name,
-                        Coordinates = src.Map.Coordinates,
+                        Coordinates = string.IsNullOrEmpty(src.CurrentMapCoordinates) ? src.Map.Coordinates : src.CurrentMapCoordinates,
                         Photos = src.Map.Photos.Select(x => new PhotoDto()
                         {
                             Id = x.Id,

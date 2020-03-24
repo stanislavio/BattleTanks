@@ -14,5 +14,9 @@ namespace BattleTanks.Core.IService
         Task<OperationResult> CreateGame(GameLoadDto model);
         IEnumerable<GameDto> GetGames();
         GameDto GetGameInfo(Guid gameId);
+        IEnumerable<GamePreviewDto> FindGame();
+        Task<OperationResult> SavePlayersInfo(List<PlayerInfoDto> model);
+        Task<OperationResult> SaveCurrentMap(SaveGameInfo model);
+        Task<OperationResult> JoinToGame(GameLoadDto model);
     }
 }
