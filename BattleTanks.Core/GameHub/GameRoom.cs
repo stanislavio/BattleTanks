@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace BattleTanks.Core.GameHub
 {
-    public class GameRoom : Hub
+    public class GameRoom : Hub 
     {
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
@@ -28,11 +28,8 @@ namespace BattleTanks.Core.GameHub
 
         public async Task GameStarted(Guid gameId)
         {
-            var currentUser = _authService.GetCurrentUser(Context.User);
-
             var users = _gameService.GetPlayers(gameId);
-
-            await Clients.All.SendAsync("GameOpen", "hello");
+            await Clients.Users(users.Select(x => x.UserInfo.Id.ToString()).ToList()).SendAsync("ReceiveMsg", users);
         }
 
     }

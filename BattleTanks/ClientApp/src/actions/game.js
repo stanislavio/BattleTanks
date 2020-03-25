@@ -35,7 +35,8 @@ export function initialConnection() {
           .start()
           .then(() =>{ 
             console.log('Connection Success');
-            hubConnection.on('gameOpen', (data) => {
+            hubConnection.on('ReceiveMsg', (data) => {
+                  console.log('receive data')
                   console.log(data);
                   // dispatch(ReceiveMsg(data));
           });
