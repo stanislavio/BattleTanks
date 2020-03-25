@@ -8,6 +8,13 @@ import Button from "@material-ui/core/Button";
 import "./login.css";
 import { resetLogin } from "../../actions/login";
 import Spinner from "../spinner";
+import { withStyles } from "@material-ui/core/styles";
+
+const StyledButton = withStyles({
+  textPrimary: {
+    color: "white"
+  }
+})(Button);
 
 class Login extends Component {
   componentWillUnmount = () => {
@@ -25,6 +32,7 @@ class Login extends Component {
         ) : (
           <form className="login-form text-center" onSubmit={handleSubmit}>
             <Field
+              className="login-field"
               name="email"
               label="Nickname or Email"
               component={renderTextField}
@@ -32,9 +40,9 @@ class Login extends Component {
             />
 
             <Field
+              className="login-field mt-2"
               name="password"
               label="Password"
-              className="mt-2"
               component={renderTextField}
               type="password"
             />
@@ -42,14 +50,19 @@ class Login extends Component {
             <p className="mt-4 text-danger text-center">{isError}</p>
 
             <p className="mt-4">
-              <Link to={"/registration"}>Sign Up</Link>
+              <Link to={"/registration"} className="text">
+                Sign Up
+              </Link>
             </p>
 
             <p className="mt-4">
-              <Link to={"/forgot_password"}>Forgot password?</Link>
+              <Link to={"/forgot_password"} className="text">
+                Forgot password?
+              </Link>
             </p>
 
-            <Button
+            <StyledButton
+              className="text"
               fullWidth={true}
               disabled={pristine || submitting}
               type="submit"
@@ -57,7 +70,7 @@ class Login extends Component {
               color="primary"
             >
               Sign In
-            </Button>
+            </StyledButton>
           </form>
         )}
       </>

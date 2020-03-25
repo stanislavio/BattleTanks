@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 class Profile extends Component {
   render() {
     const { nickname, photoUrl, email } = this.props.user;
-
     return (
       <>
         <div className="text">
