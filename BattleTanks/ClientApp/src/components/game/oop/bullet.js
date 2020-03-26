@@ -2,8 +2,8 @@ import { RIGHT, LEFT, UP, DOWN, WIDTH, HEIGHT, ICON_H, ICON_W } from './constant
 
 export default class Bullet{
 
-    constructor(icon, speed){
-        this.img = new Image()
+    constructor(icon, speed, owner_id){
+        this.img = new Image();
         this.img.src = icon;
         this.width = ICON_H;
         this.height = ICON_W;
@@ -11,6 +11,7 @@ export default class Bullet{
         this.map = [];
         this.radius = Math.floor((ICON_W + ICON_H) / 2);
         this.enemies = [];
+        this.owner_id = owner_id;
     }
 
     position(x, y){

@@ -21,6 +21,8 @@ namespace BattleTanks.Core.DTOs
 
         public float BulletSpeed { get; set; }
 
+        public int RechargeTime { get; set; }
+
 
     }
 }

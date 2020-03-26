@@ -16,7 +16,9 @@ namespace BattleTanks.DB.Entities
         public Guid? TankId { get; set; }
 
         public string Coordinates { get; set; }
-        public bool Died { get; set; }
+        public int DiedCount { get; set; }
         public bool Author { get; set; }
+
+        public DateTime LastShoot { get; set; } = DateTime.Now;
     }
 }

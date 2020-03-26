@@ -19,5 +19,7 @@ namespace BattleTanks.Core.DTOs
         public IFormFile BulletPhoto { get; set; }
                     
         public float BulletSpeed { get; set; }
+
+        public int RechargeTime { get; set; }
     }
 }

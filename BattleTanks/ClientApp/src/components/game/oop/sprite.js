@@ -2,7 +2,7 @@ import { RIGHT, LEFT, UP, DOWN, WIDTH, HEIGHT, ICON_W, ICON_H } from './constant
 
 export default class Sprite{
 
-    constructor(icon, x, y, speed, info, bullet, direct=RIGHT){
+    constructor(icon, x, y, speed, info, bullet, direct=RIGHT,  recharge_time=6000){
         this.img = new Image()
         this.img.src = icon;
         this.width = ICON_W;
@@ -18,6 +18,8 @@ export default class Sprite{
         this.speed = speed;
         this.bullet = bullet;
         this.died = false;
+        this.recharge_time = recharge_time;
+        this.last_shoot = new Date().getTime();
     }
 
         
@@ -54,7 +56,7 @@ export default class Sprite{
         this.x = this.center_x - this.width / 2;
         this.y = this.center_y - this.height / 2;
         switch(key){
-            case 'a':
+            case LEFT:
                 this.center_x -= this.speed * 0.2;
                 this.direct = LEFT;
                 if(this.checkColision())   
@@ -62,7 +64,7 @@ export default class Sprite{
                     this.center_x += this.speed * 0.2; 
                 }
                 break;
-            case 'w':
+            case UP:
                 this.center_y -= this.speed * 0.2; 
                 this.direct = UP;
                 if(this.checkColision())   
@@ -70,7 +72,7 @@ export default class Sprite{
                     this.center_y += this.speed * 0.2; 
                 }
                 break;
-            case 's': 
+            case DOWN: 
                 this.center_y += this.speed * 0.2;
                 this.direct = DOWN;
                 if(this.checkColision())   
@@ -78,7 +80,7 @@ export default class Sprite{
                     this.center_y -= this.speed * 0.2; 
                 }
                 break;
-            case 'd': 
+            case RIGHT: 
                 this.center_x += this.speed * 0.2;
                 this.direct = RIGHT;
                 if(this.checkColision())   

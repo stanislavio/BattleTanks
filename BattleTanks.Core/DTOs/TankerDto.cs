@@ -12,6 +12,8 @@ namespace BattleTanks.Core.DTOs
         public TankDto Tank { get; set; }
         public Guid TankId { get; set; }
 
+        public DateTime LastShoot { get; set; }
+
         public string Coordinates { get; set; }
     }
 }

@@ -18,9 +18,11 @@ class GameWrapper extends Component{
       const { gameId } = this.props.match.params;
       this.props.set_players(gameId);
       this.props.set_game(gameId);
+      if(this.props.hubConnection != null){
       this.props.hubConnection
       .invoke('GameStarted', gameId)
       .catch(err => { console.log('error'); console.log(err)});
+      }
     }
 
     componentWillUnmount(){
@@ -48,7 +50,7 @@ class GameWrapper extends Component{
         ctx.fillStyle = "black";
         ctx.fill();
       }
-      const content = players.isSuccess & map.isSuccess ? <Game game={this.props.game} current_user={this.props.user} /> : null;
+      const content = players.isSuccess & map.isSuccess ? <Game hub={this.props.hubConnection} game={this.props.game} current_user={this.props.user} /> : null;
       const spinner = players.isPending & map.isPending ? <Spinner /> : null;
       
       return <div className='mt-2 col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2'>    

@@ -14,7 +14,9 @@ namespace BattleTanks.DB.Entities
         public Bullet Bullet { get; set; }
         public Guid? BulletId { get; set; }
 
-        public float Speed { get; set; }   
+        public float Speed { get; set; }
+
+        public int RechargeTime { get; set; } = 6000;
 
     }
 }

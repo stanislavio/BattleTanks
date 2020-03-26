@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BattleTanks.Core.DTOs;
 using BattleTanks.Core.IService;
 using Microsoft.AspNetCore.SignalR;
 
@@ -30,6 +31,16 @@ namespace BattleTanks.Core.GameHub
         {
             var users = _gameService.GetPlayers(gameId);
             await Clients.Users(users.Select(x => x.UserInfo.Id.ToString()).ToList()).SendAsync("ReceiveMsg", users);
+        }
+
+        public async Task Shoot(ShootDto model)
+        {                
+            await Clients.Users(model.Players.Split(",")).SendAsync("ReceiveShoot", model);
+        }
+
+        public async Task Move(MoveDto model)
+        {
+            await Clients.Users(model.Players.Split(",")).SendAsync("ReceiveMove", model);
         }
 
     }
