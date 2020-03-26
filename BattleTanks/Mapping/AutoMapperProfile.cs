@@ -26,7 +26,9 @@ namespace BattleTanks.Mapping
                 .ForMember(dest => dest.Role, opts => opts.MapFrom(src => src.Role.Name))
                 .ForMember(dest => dest.PhotoUrl,
                     opts => opts.MapFrom(src => src.Photo.Img.ToRenderablePictureString()))
-                .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender));
+                .ForMember(dest => dest.Gender, opts => opts.MapFrom(src => src.Gender))
+            .ForMember(dest => dest.Age, opts => opts.MapFrom(src => src.Age))
+            .ForMember(dest => dest.Money, opts => opts.MapFrom(src => src.Money));
 
 
             CreateMap<UserDto, UserInfo>()
