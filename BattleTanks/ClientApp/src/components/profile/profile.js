@@ -1,35 +1,31 @@
-import React, { Component } from 'react';
-import './profile.css';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import "./profile.css";
+import { connect } from "react-redux";
 
 class Profile extends Component {
+  render() {
+    const { nickname, photoUrl, email, age, gender } = this.props.user;
 
-
-    render(){
-
-        const { nickname, photoUrl, } = this.props.user;
-
-        return <>
-
-            {nickname}
-            <img src={photoUrl} />
-        </>
-
-    }
+    return (
+      <>
+        <div className="frame-container">
+          <p className="text-container"> User name: {nickname} </p>
+          <p className="text-container"> Email: {email} </p>
+          <p className="text-container"> Age: {age} </p>
+          <p className="text-container"> Gender: {gender}</p>
+          <img className="img-container" src={photoUrl} />
+        </div>
+      </>
+    );
+  }
 }
 
+const mapStateToProps = state => ({
+  user: state.user
+});
 
+const mapDispatchToProps = () => {
+  return {};
+};
 
-const mapStateToProps = (state) => ({
-    user: state.user
-  });
-  
-  const mapDispatchToProps = (dispatch) => {
-    return {
-
-    }
-  };
-  
-  Profile = connect(mapStateToProps, mapDispatchToProps)(Profile);
-  
-  export default Profile;
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);
