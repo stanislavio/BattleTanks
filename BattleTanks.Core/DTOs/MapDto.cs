@@ -9,7 +9,7 @@ namespace BattleTanks.Core.DTO
 {
     public class MapDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
 
         public string Coordinates { get; set; }
 

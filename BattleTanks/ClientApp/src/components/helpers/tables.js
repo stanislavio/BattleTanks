@@ -46,25 +46,29 @@ const useStyles = makeStyles({
 
 export default function CustomizedTables(props) {
   const classes = useStyles();
-  const { rows } = props;
+  const { columns, rows } = props;
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="customized table">
         <TableHead>
           <TableRow>
-            <StyledTableCell>DataTable</StyledTableCell>
-            <StyledTableCell align="right">Count</StyledTableCell>
+            {columns.map(column => (
+              <StyledTableCell>{column}</StyledTableCell>
+            ))}
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <StyledTableRow key={row.name}>
-              <StyledTableCell component="th" scope="row">
-                {row.name}
+           <StyledTableRow key={row[0]}>
+            {Object.entries(row).map(([key, value]) => (
+              columns.includes(key[0].toUpperCase() + key.slice(1) ) ? <StyledTableCell align='left'>
+                  {value}
               </StyledTableCell>
-              <StyledTableCell align="right">{row.count}</StyledTableCell>
-            </StyledTableRow>
+              : null
+              ))}
+           
+           </StyledTableRow>
           ))}
         </TableBody>
       </Table>

@@ -8,6 +8,7 @@ import * as Register from './register';
 import * as Game from './game';
 import * as Admin from './admin';
 import * as Tank from './tanks';
+import * as Users from './users';
 
 const rootReducers = {
     routing: routerReducer,
@@ -17,7 +18,8 @@ const rootReducers = {
     register: Register.reducer,
     game: Game.reducer,
     admin:  Admin.reducer,
-    tanks: Tank.reducer
+    tanks: Tank.reducer, 
+    users: Users.reducer
 }
 
 export default rootReducers;

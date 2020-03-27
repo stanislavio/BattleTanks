@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url("../../photo/10.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: initial;
+  position: relative;
+}
+.text {
+  font-size: 20px;
+  position: relative;
+  color: #ffffff;
+  margin: 5% 15%;
+}

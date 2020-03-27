@@ -4,7 +4,8 @@ using BattleTanks.Core.Infrastructure;
 using BattleTanks.Core.IService;
 using BattleTanks.DB.Entities;
 using BattleTanks.DB.IRepo;
-using System;                         
+using System;
+using System.Collections.Generic;
 using System.Linq;           
 using System.Threading.Tasks;
 using BattleTanks.Core.Notifications;
@@ -127,6 +128,11 @@ namespace BattleTanks.Core.Service
             {
                 return new OperationResult(false, "Bad image file", "Id");
             }
+        }
+
+        public IEnumerable<UserInfo> GetUsers()
+        {
+            return _mapper.Map<IEnumerable<UserInfo>>(_unitOfWork.UserRepo.Get("Photo,Role"));
         }
     }
 }

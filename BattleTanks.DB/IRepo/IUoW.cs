@@ -12,6 +12,13 @@ namespace BattleTanks.DB.IRepo
         IRoleRepo RoleRepo { get; }
         IMapRepo MapRepo { get; }
         ITankRepo TankRepo { get; }
+        IBulletRepo BulletRepo { get; }
+        IGameRepo GameRepo { get; }
+        IUserGame UserGame { get; }
+        IUserActivity UserActivity { get; }
+        IFriendRepo FriendRepo { get; }
+        IUserTankAccess UserTankAccess { get; }
+        
 
         Task SaveAsync();
     }

@@ -8,5 +8,12 @@ namespace BattleTanks.DB.Entities
     {
         public Photo Icon { get; set; }
         public Guid? IconId { get; set; }
+
+        public Bullet Bullet { get; set; }
+        public Guid? BulletId { get; set; }
+
+        public float Speed { get; set; }
+        public int Weight { get; set; }
+
     }
 }

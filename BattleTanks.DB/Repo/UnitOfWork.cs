@@ -9,35 +9,59 @@ namespace BattleTanks.DB.Repo
 {
     public class UnitOfWork : IUoW
     {
-        private AppDbContext DB;
+        private readonly AppDbContext _db;
 
-        private IUserRepo userRepo;
-        private IPhotoRepo photoRepo;
-        private IRoleRepo roleRepo;
-        private IMapRepo mapRepo;
-        private ITankRepo tankRepo;
+        private IUserRepo _userRepo;
+        private IPhotoRepo _photoRepo;
+        private IRoleRepo _roleRepo;
+        private IMapRepo _mapRepo;
+        private ITankRepo _tankRepo;
+        private IBulletRepo _bulletRepo;
+        private IGameRepo _gameRepo;
+        private IUserGame _userGame;
+        private IUserActivity _userActivity;
+        private IFriendRepo _friendRepo;
+        private IUserTankAccess _userTankAccess;
 
         public UnitOfWork(
             AppDbContext context
             )
         {
-            DB = context;
+            _db = context;
         }
 
         public IUserRepo UserRepo =>
-            userRepo ?? (userRepo = new UserRepo(DB));
+            _userRepo ?? (_userRepo = new UserRepo(_db));
                                                
-        public IPhotoRepo PhotoRepo => 
-            photoRepo ?? (photoRepo = new PhotoRepo(DB));
+        public IPhotoRepo PhotoRepo =>                                         
+            _photoRepo ?? (_photoRepo = new PhotoRepo(_db));
 
         public IRoleRepo RoleRepo => 
-            roleRepo ?? (roleRepo = new RoleRepo(DB));
+            _roleRepo ?? (_roleRepo = new RoleRepo(_db));
 
         public IMapRepo MapRepo =>
-            mapRepo ?? (mapRepo = new MapRepo(DB));
+            _mapRepo ?? (_mapRepo = new MapRepo(_db));
 
         public ITankRepo TankRepo =>
-            tankRepo ?? (tankRepo = new TankRepo(DB));
+            _tankRepo ?? (_tankRepo = new TankRepo(_db));
+
+        public IBulletRepo BulletRepo =>
+            _bulletRepo ?? (_bulletRepo = new BulletRepo(_db));
+
+        public IGameRepo GameRepo =>
+            _gameRepo ?? (_gameRepo = new GameRepo(_db));
+
+        public IUserGame UserGame =>
+            _userGame ?? (_userGame = new UserGameRepo(_db));
+
+        public IUserActivity UserActivity =>
+            _userActivity ?? (_userActivity = new UserActivityRepo(_db));
+
+        public IFriendRepo FriendRepo =>
+            _friendRepo ?? (_friendRepo = new FriendRepo(_db));
+
+        public IUserTankAccess UserTankAccess =>
+            _userTankAccess ?? (_userTankAccess = new UserTankAccessRepo(_db));
 
         public void Dispose()
         {
@@ -59,7 +83,7 @@ namespace BattleTanks.DB.Repo
 
         public async Task SaveAsync()
         {
-            await DB.SaveChangesAsync();
+            await _db.SaveChangesAsync();
         }
     }
 }

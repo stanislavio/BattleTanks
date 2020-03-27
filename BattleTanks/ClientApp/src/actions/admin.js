@@ -29,7 +29,6 @@ export function get_map(){
         const res = api_serv.getMaps();
         res.then(response => {
         if(response.error == null){
-            console.log(response);
             dispatch(set_maps(response));
             dispatch(Success());
         }else{

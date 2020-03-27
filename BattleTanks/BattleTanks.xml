@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BattleTanks</name>
+    </assembly>
+    <members>
+        <member name="M:BattleTanks.Controllers.TanksController.All">
+            <summary>
+            This method have to return TankDto
+            </summary>
+            <param name="filter">Required</param>
+            <returns></returns>
+            <response code="200">Return  Tanks</response>
+            <response code="400">Return failed</response>
+        </member>
+        <member name="M:BattleTanks.Controllers.UserController.All">
+            <summary>
+            This method have to return UsersData and Columns what draw
+            </summary>]
+            <returns></returns>
+            <response code="200">Return  List UserDTO</response>
+            <response code="400">Return failed</response>
+        </member>
+    </members>
+</doc>

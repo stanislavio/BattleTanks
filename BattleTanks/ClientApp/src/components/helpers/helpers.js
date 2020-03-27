@@ -20,6 +20,10 @@ export const DefaultLink = (props) => {
 return <Link className='default-link color-link-white' to={props.to}>{props.children}</Link>
 }
 
+export const DefaultLinkBlack = (props) => {
+  return <Link className='default-link' to={props.to}>{props.children}</Link>
+  }
+
 export const validate = values => {
   const errors = {}
   const requiredFields = [

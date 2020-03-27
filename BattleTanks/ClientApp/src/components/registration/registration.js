@@ -1,59 +1,94 @@
-import React, { Component } from 'react';
-import { reduxForm, Field } from 'redux-form';
-import renderTextField from '../fields/input_text_field';
-import { connect } from 'react-redux';
-import validate from '../fields/validate';
+import React, { Component } from "react";
+import { reduxForm, Field } from "redux-form";
+import renderTextField from "../fields/input_text_field";
+import { connect } from "react-redux";
+import validate from "../fields/validate";
 import Button from "@material-ui/core/Button";
-import { resetRegister } from '../../actions/register';
-class Registration extends Component{
+import { resetRegister } from "../../actions/register";
+import "./registration.css";
+import { withStyles } from "@material-ui/core/styles";
 
-    componentWillUnmount = () => {
-        this.props.resetRegister();
-    }
+const StyledButton = withStyles({
+  textPrimary: {
+    color: "white"
+  }
+})(Button);
 
-    render() {
-        
-        const { pristine, reset, submitting, handleSubmit } = this.props;
-        const { isSuccess, isError, isPending } = this.props.register;
+class Registration extends Component {
+  componentWillUnmount = () => {
+    this.props.resetRegister();
+  };
 
-        return <>
-            <form
-                className="login-form text-center"
-                onSubmit={handleSubmit}>
+  render() {
+    const { pristine, reset, submitting, handleSubmit } = this.props;
+    const { isSuccess, isError, isPending } = this.props.register;
 
-                <Field name="nickname" label='Nickname' component={renderTextField} type="text" />
+    return (
+      <>
+        <form className="login-form text-center" onSubmit={handleSubmit}>
+          <Field
+            className="login-field mt-2"
+            name="nickname"
+            label="Nickname"
+            component={renderTextField}
+            type="text"
+          />
 
-                <Field name="email" label='Email' component={renderTextField} type="text" />
+          <Field
+            className="login-field mt-2"
+            name="email"
+            label="Email"
+            component={renderTextField}
+            type="text"
+          />
 
-                <Field name="password" label='Password' className="mt-2" component={renderTextField} type="password" />
+          <Field
+            name="password"
+            label="Password"
+            className="login-field mt-2"
+            component={renderTextField}
+            type="password"
+          />
 
-                <Field name="repeat_password" label='Confirm password' className="mt-2" component={renderTextField} type="password" />
+          <Field
+            name="repeat_password"
+            label="Confirm password"
+            className="login-field mt-2"
+            component={renderTextField}
+            type="password"
+          />
 
-                <p className="text-danger mt-2">{isError}</p>
+          <p className="text-danger mt-2">{isError}</p>
 
-                <Button fullWidth={true} disabled={pristine || submitting} type="submit" value="Registration" color="primary">Sign Up</Button>
-            </form>
- 
-        </>
-
-    }
-
+          <StyledButton
+            className="text"
+            fullWidth={true}
+            disabled={pristine || submitting}
+            type="submit"
+            value="Registration"
+            color="primary"
+          >
+            Sign Up
+          </StyledButton>
+        </form>
+      </>
+    );
+  }
 }
 
-
-const mapStateToProps = (state) => ({
-    register: state.register
+const mapStateToProps = state => ({
+  register: state.register
 });
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        resetRegister: () => dispatch(resetRegister())
-    }
+const mapDispatchToProps = dispatch => {
+  return {
+    resetRegister: () => dispatch(resetRegister())
+  };
 };
 
 Registration = reduxForm({
-    form: 'registr',
-    validate: validate,
+  form: "registr",
+  validate: validate
 })(Registration);
 
 Registration = connect(mapStateToProps, mapDispatchToProps)(Registration);

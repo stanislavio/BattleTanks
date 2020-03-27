@@ -66,7 +66,6 @@ return {
 }
 
 export async function Authentification(store, token){
-  console.log(token);
   if(!token)
     return;
     const res = await fetch('api/Authentication/loginToken', {

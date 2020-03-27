@@ -12,7 +12,7 @@ export default class AdminPanel extends Component{
             return <div className='mt-2 container'>
                     <div className='row'>
                         <div className='m-1 col-3 btn btn-info'>
-                            Users
+                            <DefaultLink to={'/admin-users'}>Users</DefaultLink>
                         </div>
                         <div className='m-1 col-3 btn btn-info'>
                             <DefaultLink to={'/maps'}>Maps</DefaultLink>

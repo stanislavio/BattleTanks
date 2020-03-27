@@ -1,6 +1,7 @@
 ﻿using BattleTanks.Core.DTOs;
 using BattleTanks.Core.Infrastructure;
-using System;                        
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -13,5 +14,6 @@ namespace BattleTanks.Core.IService
         Task<OperationResult> ConfirmEmail(CacheDto cacheDto);
         UserDto GetById(Guid id);                           
         Task<OperationResult> ChangeAvatar(Guid uId, IFormFile avatar);
+        IEnumerable<UserInfo> GetUsers();
     }
 }

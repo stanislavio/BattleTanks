@@ -19,6 +19,58 @@ namespace BattleTanks.DB.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("BattleTanks.DB.Entities.Bullet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<float>("Radius");
+
+                    b.Property<float>("Speed");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bullets");
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.Friend", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Deleted");
+
+                    b.Property<Guid?>("ForWhoId");
+
+                    b.Property<Guid?>("WhoId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ForWhoId");
+
+                    b.HasIndex("WhoId");
+
+                    b.ToTable("Friends");
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.Game", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Finished");
+
+                    b.Property<Guid?>("MapId");
+
+                    b.Property<DateTime>("Started");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MapId");
+
+                    b.ToTable("Games");
+                });
+
             modelBuilder.Entity("BattleTanks.DB.Entities.Map", b =>
                 {
                     b.Property<Guid>("Id")
@@ -66,9 +118,17 @@ namespace BattleTanks.DB.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid?>("BulletId");
+
                     b.Property<Guid?>("IconId");
 
+                    b.Property<float>("Speed");
+
+                    b.Property<int>("Weight");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("BulletId");
 
                     b.HasIndex("IconId");
 
@@ -105,6 +165,86 @@ namespace BattleTanks.DB.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("BattleTanks.DB.Entities.UserActivity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("Login");
+
+                    b.Property<DateTime>("Logout");
+
+                    b.Property<Guid?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserActivities");
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.UserGame", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Coordinates");
+
+                    b.Property<bool>("Died");
+
+                    b.Property<Guid?>("GameId");
+
+                    b.Property<Guid?>("TankId");
+
+                    b.Property<Guid?>("TankerId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("TankId");
+
+                    b.HasIndex("TankerId");
+
+                    b.ToTable("UserGames");
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.UserTankAccess", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid?>("TankId");
+
+                    b.Property<Guid?>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TankId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserTankAccesses");
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.Friend", b =>
+                {
+                    b.HasOne("BattleTanks.DB.Entities.User", "ForWho")
+                        .WithMany()
+                        .HasForeignKey("ForWhoId");
+
+                    b.HasOne("BattleTanks.DB.Entities.User", "Who")
+                        .WithMany()
+                        .HasForeignKey("WhoId");
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.Game", b =>
+                {
+                    b.HasOne("BattleTanks.DB.Entities.Map", "Map")
+                        .WithMany()
+                        .HasForeignKey("MapId");
+                });
+
             modelBuilder.Entity("BattleTanks.DB.Entities.Map", b =>
                 {
                     b.HasOne("BattleTanks.DB.Entities.Photo", "WallIcon")
@@ -114,6 +254,10 @@ namespace BattleTanks.DB.Migrations
 
             modelBuilder.Entity("BattleTanks.DB.Entities.Tank", b =>
                 {
+                    b.HasOne("BattleTanks.DB.Entities.Bullet", "Bullet")
+                        .WithMany()
+                        .HasForeignKey("BulletId");
+
                     b.HasOne("BattleTanks.DB.Entities.Photo", "Icon")
                         .WithMany()
                         .HasForeignKey("IconId");
@@ -129,6 +273,39 @@ namespace BattleTanks.DB.Migrations
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.UserActivity", b =>
+                {
+                    b.HasOne("BattleTanks.DB.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.UserGame", b =>
+                {
+                    b.HasOne("BattleTanks.DB.Entities.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId");
+
+                    b.HasOne("BattleTanks.DB.Entities.Tank", "Tank")
+                        .WithMany()
+                        .HasForeignKey("TankId");
+
+                    b.HasOne("BattleTanks.DB.Entities.User", "Tanker")
+                        .WithMany()
+                        .HasForeignKey("TankerId");
+                });
+
+            modelBuilder.Entity("BattleTanks.DB.Entities.UserTankAccess", b =>
+                {
+                    b.HasOne("BattleTanks.DB.Entities.Tank", "Tank")
+                        .WithMany()
+                        .HasForeignKey("TankId");
+
+                    b.HasOne("BattleTanks.DB.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }
