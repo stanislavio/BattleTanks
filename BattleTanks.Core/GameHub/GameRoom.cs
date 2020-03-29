@@ -27,10 +27,27 @@ namespace BattleTanks.Core.GameHub
             _gameService = gameService;
         }
 
-        public async Task GameStarted(Guid gameId)
-        {
-            var users = _gameService.GetPlayers(gameId);
-            await Clients.Users(users.Select(x => x.UserInfo.Id.ToString()).ToList()).SendAsync("ReceiveMsg", users);
+        public async Task OnConnect(Guid gameId, Guid userId)
+        {                                                                
+
+            await _gameService.SavePlayerOnline(userId, true);
+
+            var enemies = _gameService.GetEnemies(userId);  
+
+            if(_gameService.CanStartGame(gameId))
+                await Clients.Users(_gameService.GetPlayers(gameId).Select(x => x.UserInfo.Id.ToString()).ToList()).SendAsync("StartGame", userId);
+
+
+            await Clients.Users(enemies.Select(x => x.ToLower()).ToList()).SendAsync("ReceiveOnline", userId);
+        }
+
+        public async Task OnDisconnect(Guid userId)
+        { 
+            await _gameService.SavePlayerOnline(userId, false);
+
+            var enemies = _gameService.GetEnemies(userId);
+
+            await Clients.Users(enemies.Select(x => x.ToLower()).ToList()).SendAsync("ReceiveOffline", userId);
         }
 
         public async Task Shoot(ShootDto model)
@@ -42,6 +59,8 @@ namespace BattleTanks.Core.GameHub
         {
             await Clients.Users(model.Players.Split(",")).SendAsync("ReceiveMove", model);
         }
+
+
 
     }
 }

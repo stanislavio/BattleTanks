@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using BattleTanks.Core.DTOs;
@@ -49,7 +50,6 @@ namespace BattleTanks.Core.Service
             await _unitOfWork.SaveAsync();
             return new OperationResult(true, "",game.Id.ToString());
         }
-
 
         public IEnumerable<TankerDto> GetPlayers(Guid gameId)
         {                            
@@ -119,5 +119,30 @@ namespace BattleTanks.Core.Service
             return new OperationResult(true);
         }
 
+        public async Task<OperationResult> SavePlayerOnline(Guid playerId, bool online)
+        {
+            var player = _unitOfWork.UserGame.Get("Game")
+                .FirstOrDefault(x => x.TankerId == playerId && x.Game.Finished == DateTime.MinValue);
+            if (player == null) return new OperationResult(false);
+            player.Online = online;
+            await _unitOfWork.SaveAsync();
+
+            return new OperationResult(true);
+        }
+
+        public List<string> GetEnemies(Guid playerId)
+        {
+            var player = _unitOfWork.UserGame.Get("Game")
+                .FirstOrDefault(x => x.TankerId == playerId && x.Game.Finished == DateTime.MinValue);
+            var enemies = _unitOfWork.UserGame.Get("")
+                .Where(x => x.GameId == player.GameId && x.TankerId != player.TankerId);
+            return enemies.Select(x => x.TankerId.ToString()).ToList();
+        }
+
+        public bool CanStartGame(Guid gameId)
+        {
+            var res = _unitOfWork.UserGame.Get("").Where(x => x.Online);
+            return res.Count() == 2;
+        }
     }
 }

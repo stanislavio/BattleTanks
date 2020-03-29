@@ -46,7 +46,7 @@ namespace BattleTanks.Core.Service
                 var currentMap = _unitOfWork.MapRepo.Get(model.Id.Value);
                 if(currentMap == null) return new OperationResult(false, "Map not found", "");
 
-                currentMap.Name = model.Name != "" ? model.Name : currentMap.Name;
+                currentMap.Name = !string.IsNullOrEmpty(model.Name) ? model.Name : currentMap.Name;
                 currentMap.Coordinates = model.Coordinates != string.Empty ? model.Coordinates : currentMap.Coordinates;
                 await _unitOfWork.SaveAsync();
                 return new OperationResult(true, "Map data was saved", "");

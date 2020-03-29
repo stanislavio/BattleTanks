@@ -18,5 +18,8 @@ namespace BattleTanks.Core.IService
         Task<OperationResult> SavePlayersInfo(List<PlayerInfoDto> model);
         Task<OperationResult> SaveCurrentMap(SaveGameInfo model);
         Task<OperationResult> JoinToGame(GameLoadDto model);
+        Task<OperationResult> SavePlayerOnline(Guid playerId, bool online);
+        List<string> GetEnemies(Guid playerId);
+        bool CanStartGame(Guid gameId);
     }
 }

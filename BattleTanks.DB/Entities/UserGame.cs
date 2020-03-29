@@ -18,6 +18,7 @@ namespace BattleTanks.DB.Entities
         public string Coordinates { get; set; }
         public int DiedCount { get; set; }
         public bool Author { get; set; }
+        public bool Online { get; set; }
 
         public DateTime LastShoot { get; set; } = DateTime.Now;
     }

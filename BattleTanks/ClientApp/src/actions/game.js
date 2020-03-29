@@ -150,6 +150,7 @@ export function setPlayers(gameId){
             let players = response.map((x) => {
               const bullet = new Bullet(x.tank.bulletPhotoUrl, x.tank.bulletSpeed);
               const coor = JSON.parse(x.coordinates);
+              x.userInfo.online = x.online;
               return new Sprite(x.tank.tankPhotoUrl, coor.x, coor.y, x.tank.tankSpeed, x.userInfo, bullet, coor.direct)
             });
             dispatch({

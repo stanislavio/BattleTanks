@@ -15,5 +15,9 @@ namespace BattleTanks.Core.DTOs
         public DateTime LastShoot { get; set; }
 
         public string Coordinates { get; set; }
+
+        public bool Online { get; set; }
+
+        public int DiedCount { get; set; }
     }
 }

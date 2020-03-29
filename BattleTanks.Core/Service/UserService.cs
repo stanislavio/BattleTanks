@@ -107,7 +107,7 @@ namespace BattleTanks.Core.Service
 
             return new OperationResult(true, "Registration success", "");
         }
-
+                                                                   
         public async Task<OperationResult> ConfirmEmail(CacheDto cacheDto)
         {
             var user = _unitOfWork.UserRepo.Get(cacheDto.UserId);
