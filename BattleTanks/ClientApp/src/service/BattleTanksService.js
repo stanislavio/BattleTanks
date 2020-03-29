@@ -143,17 +143,10 @@ export default class BattleTanksService{
     }
 
     addMap = async (data) => {
+    console.log(data);
     let file = new FormData();
-    if(data.id){
-        file.append('Id', data.id);
-    }
-
-    if(data.image != null){
     file.append('Photo', data.image.file);
-    }
-    file.append('Coordinates', data.coordinates);
-   
-    const res = await this.setResourceWithData('map/createOrUpdate', file);
+    const res = await this.setResourceWithData('user/changeAvatar', file);
     if (!res.ok) {
         return { error: await res.text() };
     }

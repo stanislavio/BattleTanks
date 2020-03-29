@@ -39,10 +39,11 @@ namespace BattleTanks.Controllers
             _emailService = emailService;
             _mediator = mediator;
         }
-
+        
         [HttpPost("[action]")]
-        public async Task<IActionResult> ChangeAvatar([FromForm]IFormFile newAva)
+        public async Task<IActionResult> ChangeAvatar([FromForm]AvatarDto model)
         {
+            var newAva = model.Photo;
             if (newAva == null) return BadRequest("Image not found");
             var user = GetCurrentUser(HttpContext.User);
             if (user == null)

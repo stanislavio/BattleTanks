@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  padding: 0;
+  background: url("../../photo/10.jpg") no-repeat fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: initial;
+  position: relative;
+}
+
+* {
+  box-sizing: border-box;
+}
+.frame-container {
+  margin-left: 15%;
+  margin-top: 5%;
+}
+
+.text-container {
+  font-size: 20px;
+  float: left;
+  color: white;
+  width: 70%;
+}
+
+.img-container {
+  width: 10%;
+}
