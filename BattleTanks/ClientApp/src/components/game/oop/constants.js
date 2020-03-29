@@ -1,9 +1,10 @@
+export const RIGHT = "right",
+  LEFT = "left",
+  UP = "up",
+  DOWN = "down";
 
-export const RIGHT = 'right', LEFT = 'left', UP = 'up', DOWN = 'down';
-
-export const WIDTH = Math.floor(window.screen.width/10) * 10 - 60, 
-            HEIGHT = Math.floor(window.screen.height/10) * 10 - 210;
-
+export const WIDTH = Math.floor(window.screen.width / 10) * 10 - 60,
+  HEIGHT = Math.floor(window.screen.height / 10) * 10 - 210;
 
 export const ICON_W = WIDTH / 26,
-             ICON_H = HEIGHT / 11;
+  ICON_H = HEIGHT / 11;
