@@ -28,8 +28,6 @@ class Home extends Component{
                     <br/>
                     <Field name='mapId' component={renderSelectTankField} data={this.props.maps.data} text={'Map'}/>
                     <br/>
-                    <Field name='online' component={renderSelectTankField} data={[{'id': 1, 'name': 'Play online'}, {'id': 0, 'name': 'Play ofline'}]} text={'Type of game'} />
-                    <br/>
                     <Button disabled={submitting} type="submit" value="New Game" color="primary">Create Game</Button>
             </form>
             

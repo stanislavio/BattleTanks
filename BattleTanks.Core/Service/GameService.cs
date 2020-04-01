@@ -30,14 +30,13 @@ namespace BattleTanks.Core.Service
         {
             var currentOpenGame = _unitOfWork.UserGame.Get("Game").FirstOrDefault(x => x.TankerId == model.UserId && x.Author && x.Game.Finished == DateTime.MinValue);
             if (currentOpenGame != null) return new OperationResult(false, "You have not finished game", "");
-            var map = _unitOfWork.MapRepo.Get(model.MapId);
+            var map = _unitOfWork.MapRepo.Get(model.MapId.Value);
             if (map == null) return new OperationResult(false, "Map not Found", "");
             var tank = _unitOfWork.TankRepo.Get(model.TankId);
             if(tank == null) return new OperationResult(false, "Tank not Found", "");
             var game = _unitOfWork.GameRepo.Insert(new Game()
             {
-                Map = map,
-                Online = model.Online
+                Map = map
             });
             var gamer = _unitOfWork.UserGame.Insert(new UserGame()
             {
@@ -45,7 +44,7 @@ namespace BattleTanks.Core.Service
                 Author = true,
                 Game = game,
                 Tank = tank,
-                Coordinates = "{'x': 25, 'y': 25}"
+                Coordinates = "{\"x\": 25, \"y\": 25}"
             });
             await _unitOfWork.SaveAsync();
             return new OperationResult(true, "",game.Id.ToString());
@@ -104,14 +103,22 @@ namespace BattleTanks.Core.Service
             var tank = _unitOfWork.TankRepo.Get().FirstOrDefault(x => x.Id == model.TankId);
             if (tank == null) return new OperationResult(false, "Tank not found","");
 
-            var game = _unitOfWork.GameRepo.Get().FirstOrDefault(x => x.Id == model.GameId);
+            var game = _unitOfWork.GameRepo.Get("Users").FirstOrDefault(x => x.Id == model.GameId.Value);
             if (game == null) return new OperationResult(false, "Game not found", "");
             if(game.Finished != DateTime.MinValue || game.Users.Count > 1) return  new OperationResult(false, "You can't join to this game", "");
-            
+
+            var userGame = _unitOfWork.UserGame.Get("Game")
+                .FirstOrDefault(x => x.TankerId == model.GameId && x.Game.Finished == DateTime.MinValue);
+
+            if (userGame == null)
+            {
+                return new OperationResult(false, "You already play", "");
+            }
+
             var res = _unitOfWork.UserGame.Insert(new UserGame()
             {
                 TankerId = model.UserId,
-                Coordinates = "{'x': 325, 'y': 275}",
+                Coordinates = "{\"x\": -1, \"y\": -1}",
                 GameId = model.GameId,
                 TankId = model.TankId
             });

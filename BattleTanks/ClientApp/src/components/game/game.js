@@ -75,7 +75,7 @@ export default class Game extends Component{
                 const map = this.props.game.map.data.coor;
                 const players = this.props.game.players.data;
                 const current_player = players.find((x) => (x.info.id == data.ownerId));
-                current_player.map = map;
+                current_player.setMap(map);
                 current_player.enemies = players.filter((x) => (x.info.id != data.ownerId));
                 current_player.move(data.direct, this.props.game.ctx);
             });
@@ -113,7 +113,7 @@ export default class Game extends Component{
         const { current_user } = this.props;
 
         players = players.data.map((x) => {
-            x.map = map.data.coor;
+            x.setMap(map.data.coor);
             return x;
         });
 
@@ -123,11 +123,23 @@ export default class Game extends Component{
 
         players.forEach((x) => {if(!x.died) x.draw(ctx)});
 
+        const rechargeRender = ({ hours, minutes, seconds, completed }) => {
+            console.log(hours, minutes, seconds, completed);
+            console.log(current_player.last_shoot, current_player.recharge_time);
+                if(completed){
+                    return <div>Ready to shoot</div>
+                }
+                else{
+                    return <div>Recharged through: {hours} {minutes} {seconds} s</div>
+                }
+        }
+
         const renderer = ({ hours, minutes, seconds, completed }) => {
 
             if (completed) {
               // Render a completed state
-              return <><KeyboardEventHandler
+              return <>
+              <KeyboardEventHandler
               handleKeys={['w', 'a', 's', 'd', 'space']}
               onKeyEvent={(key, e) => {
                   if(key == 'space' && current_player.last_shoot + current_player.recharge_time < new Date().getTime()){
@@ -205,7 +217,7 @@ export default class Game extends Component{
                                   this.deleteBullet(bullet);
                                   players = players.map((x) => {
                                       if(!x.died){
-                                          x.map = this.props.game.map.data.coor;
+                                          x.setMap(this.props.game.map.data.coor);
                                           x.draw(ctx);
                                       }else{
                                           ctx.fillStyle = '#000000';
@@ -217,6 +229,7 @@ export default class Game extends Component{
                           }
                       );
                   }} /> : null}
+                
           </> 
             } else {
               // Render a countdown

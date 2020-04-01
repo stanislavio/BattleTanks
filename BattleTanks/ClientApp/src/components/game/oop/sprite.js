@@ -7,6 +7,8 @@ export default class Sprite{
         this.img.src = icon;
         this.width = ICON_W;
         this.height = ICON_H;
+        x = Math.ceil(x / (ICON_W / 2)) * (ICON_W / 2);
+        y = Math.ceil(y / (ICON_H / 2)) * (ICON_H / 2);
         this.center_x = x;
         this.center_y = y;
         this.x = x - this.width / 2;
@@ -18,9 +20,25 @@ export default class Sprite{
         this.speed = speed;
         this.bullet = bullet;
         this.died = false;
+        this.lives = 5;
         this.recharge_time = recharge_time;
         this.last_shoot = new Date().getTime();
         this.enemies = [];
+    }
+
+    setMap(map) {
+        this.map = map;
+        if(this.x < 0 || this.y < 0){
+            var randomX, randomY;
+            do{
+            randomX = Math.floor(Math.random() * map.length);
+            randomY = Math.floor(Math.random() * map[randomX].length);
+            }while(map[randomX][randomY] != 0);
+            this.x = randomX * ICON_W;
+            this.y = randomY * ICON_H;
+            this.center_x = this.x + ICON_W / 2;
+            this.center_y = this.y + ICON_H / 2;
+        }
     }
 
         
@@ -49,7 +67,7 @@ export default class Sprite{
         ctx.save();
         ctx.translate(x, y);
         ctx.rotate(angle / 180 * Math.PI);
-        ctx.drawImage(image, -this.width / 2, -this.height / 2 - 1);
+        ctx.drawImage(image, -this.width / 2, -this.height / 2 - 1, this.width, this.height);
         ctx.restore();
     }
 
@@ -107,12 +125,14 @@ export default class Sprite{
                 x2 = this.center_x + this.width / 2;
                 y1 = this.center_y - this.height / 2;
                 x1_coor = Math.floor((x1 + 1) / this.width); 
-                y1_coor = Math.floor((y1 - 1) / this.height);
-                x2_coor = Math.floor((x2 + 1) / this.width);
+                y1_coor = Math.floor((y1 + 1) / this.height);
+                x2_coor = Math.floor((x2 - 1) / this.width);
                 for(var i = 0;i < this.enemies.length;i++){
-                    if(this._getDistance(x1, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_W / 2 ||
-                       this._getDistance(x2, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_H / 2)
-                       return true;
+                    if(this._getDistance(x1, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_W / 2 - 1 ||
+                       this._getDistance(x2, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_H / 2 - 1){
+                        console.log(x1, y1, this.enemies[i].center_x, this.enemies[i].center_y);
+                        return true;
+                       }
                 }
                 if(x1_coor < 0 || 
                     x2_coor < 0 || 
@@ -134,8 +154,8 @@ export default class Sprite{
                 y1_coor = Math.floor((y1 - 1) / this.height);
                 x2_coor = Math.floor((x2 - 1) / this.width);
                 for(var i = 0;i < this.enemies.length;i++){
-                    if(this._getDistance(x1, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_W / 2 ||
-                       this._getDistance(x2, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_H / 2)
+                    if(this._getDistance(x1, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_W / 2 - 1 ||
+                       this._getDistance(x2, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_H / 2 - 1)
                        return true;
                 }
                 if(x1_coor < 0 || 
@@ -156,8 +176,8 @@ export default class Sprite{
                 y1_coor = Math.floor((y1 + 1)/this.height);
                 y2_coor = Math.floor((y2 - 1)/this.height);
                 for(var i = 0;i < this.enemies.length;i++){
-                    if(this._getDistance(x1, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_W / 2 ||
-                       this._getDistance(x1, y2, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_H / 2)
+                    if(this._getDistance(x1, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_W / 2 - 1 ||
+                       this._getDistance(x1, y2, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_H / 2 - 1)
                        return true;
                 }
                 if(x1_coor < 0 || 
@@ -176,8 +196,8 @@ export default class Sprite{
                 y1_coor = Math.floor((y1 + 1)/this.height);
                 y2_coor = Math.floor((y2 - 1)/this.height);
                 for(var i = 0;i < this.enemies.length;i++){
-                    if(this._getDistance(x1, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_W / 2 ||
-                       this._getDistance(x1, y2, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_H / 2)
+                    if(this._getDistance(x1, y1, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_W / 2 - 1 ||
+                       this._getDistance(x1, y2, this.enemies[i].center_x, this.enemies[i].center_y) <= ICON_H / 2 - 1)
                        return true;
                 }
                 if(x1_coor < 0 || 

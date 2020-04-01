@@ -4,7 +4,9 @@ using BattleTanks.DB.Entities;
 using System;
 using System.Linq;
 using BattleTanks.Core.Extensions;
+using BattleTanks.Core.IService;
 using BattleTanks.DB.Helpers;
+using Microsoft.AspNetCore.Hosting.Internal;
 
 namespace BattleTanks.Mapping
 {
@@ -17,7 +19,8 @@ namespace BattleTanks.Mapping
         /// 
         /// </summary>
         public AutoMapperProfile()
-        {
+        {               
+
             CreateMap<Map, MapDto>()
                 .ForMember(dest => dest.Name, 
                     opts => opts.MapFrom(src => src.Name))
@@ -58,7 +61,7 @@ namespace BattleTanks.Mapping
                     opts => opts.MapFrom(src => new UserInfo()
                         {
                             Id = src.Tanker.Id,
-                            PhotoUrl = src.Tanker.Photo.Img.ToRenderablePictureString(),
+                            PhotoUrl = src.Tanker.PhotoId != null ? src.Tanker.Photo.Img.ToRenderablePictureString() : null,
                             Role = "",
                             Gender = src.Tanker.Gender,
                             Email = src.Tanker.Email,
@@ -68,7 +71,13 @@ namespace BattleTanks.Mapping
                         })
                     )
                 .ForMember(dest => dest.Id,
-                    opts => opts.MapFrom(src => src.GameId));
+                    opts => opts.MapFrom(src => src.GameId))
+                .ForMember(dest => dest.Players,
+                    opts => opts.MapFrom(src => src.Game.Users.Select(x => new PlayerInfoDto()
+                    {
+                        Id = x.TankerId.Value,
+                        Position = x.Coordinates
+                    })));
 
 
             CreateMap<Game, GameDto>()

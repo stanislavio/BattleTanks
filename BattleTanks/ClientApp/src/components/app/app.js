@@ -20,6 +20,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import '../login/login.css';
 import { connect } from 'react-redux';
 import history from '../../history';
+
 class App extends Component {
 
     render() {

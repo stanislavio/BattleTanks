@@ -60,6 +60,12 @@ const initialState = {
         isSuccess: false,
         data: null 
     },
+    infoStatus: {
+        isPending: false,
+        isError: false,
+        isSuccess: false,
+        data: null
+    },
     hub: null
 }
 

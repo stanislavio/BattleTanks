@@ -26,7 +26,7 @@ export default class Map{
                 if(el != 0){
                     let img = this.photos.find((e) => (parseInt(e.title) == el));
                     if(img != null)
-                    ctx.drawImage(img.icon, j*ICON_H, i*ICON_W);
+                    ctx.drawImage(img.icon, j*ICON_H, i*ICON_W, ICON_H, ICON_W);
                 }
                 else{
                     ctx.fillStyle = '#000000';
