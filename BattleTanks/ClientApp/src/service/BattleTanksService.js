@@ -171,4 +171,12 @@ export default class BattleTanksService{
         return res;
         }
 
+    joinToGame = async (data) => {
+        const res = await this.setResource('game/joinToGame', data);
+        if (!res.ok) {
+            return { error: await res.text() };
+        }
+        return "Success";
+    }
+
 }

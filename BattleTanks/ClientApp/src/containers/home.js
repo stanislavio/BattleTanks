@@ -12,7 +12,7 @@ class HomeWrapper extends Component {
         this.props.create_game({
             TankId: val.tankId,
             MapId: val.mapId,
-            Online: parseInt(val.online)
+            Online: true
        });      
     }
     

@@ -12,6 +12,7 @@ import * as Users from './users';
 import * as Maps from './maps';
 import * as FindGame from './find_game';
 import * as Hub from './hub';
+import * as InfoStatus from './infoStatus';
 
 const rootReducers = {
     routing: routerReducer,
@@ -25,7 +26,8 @@ const rootReducers = {
     users: Users.reducer,
     maps: Maps.reducer,
     findGame: FindGame.reducer,
-    hub: Hub.reducer
+    hub: Hub.reducer,
+    infoStatus: InfoStatus.reducer
 }
 
 export default rootReducers;

@@ -8,6 +8,7 @@ namespace BattleTanks.Core.DTOs
     {
         public Guid Id { get; set; }
         public UserInfo Author { get; set; }
+        public List<PlayerInfoDto> Players { get; set; }
         // public MapDto Map { get; set; }
     }
 }

@@ -23,7 +23,11 @@ export const SET_DEFAULT_GAME = "SET_DEFAULT_GAME",
             FIND_GAME_ERROR = "FIND_GAME_ERROR",
             
             INITIAL_CONNECTION = "INITIAL_CONNECTION",
-            RESET_HUB = "RESET_HUB";
+            RESET_HUB = "RESET_HUB"
+            ,JOINTOGAME_PENDING="JOINTOGAME_PENDING"
+            ,JOINTOGAME_SUCCESS="JOINTOGAME_SUCCESS"
+            ,JOINTOGAME_ERROR = "JOINTOGAME_ERROR"
+            ;
 
 export function initialConnection() {
   return dispatch => {
@@ -166,11 +170,38 @@ export function setPlayers(gameId){
     }
 }
 
-
 export function reset_game(){
   return dispatch => {
     dispatch({
       type: RESET_GAME
     });
   }
+}
+
+export function joinToGame(gameId, tankId){
+    return dispatch => {
+      dispatch({
+        type: JOINTOGAME_PENDING
+      });
+      
+      const data = {
+        GameId: gameId,
+        TankId: tankId
+      }
+      console.log(data);
+      var res = api_serv.joinToGame(data);
+      res.then(response => {
+        if(response.error == null){
+        
+            dispatch({
+              type: JOINTOGAME_SUCCESS,
+              payload: gameId
+            });
+          }else{
+              dispatch({
+                type: JOINTOGAME_ERROR
+              });
+          }
+        });
+    }
 }

@@ -1,39 +1,42 @@
-import React from "react";
-import { ICON_W, ICON_H, WIDTH, HEIGHT } from "../oop/constants";
+import React from 'react';
+import { ICON_W, ICON_H } from '../oop/constants';
 
-export default class Map {
-  constructor(photos, coordinates) {
-    this.photos = photos.map(x => {
-      let img = new Image();
-      img.src = x.photoUrl;
-      return {
-        title: x.title,
-        icon: img
-      };
-    });
-    this.coor = coordinates;
-    console.log("Map");
-    console.log(ICON_W, ICON_H);
-    console.log(WIDTH, HEIGHT);
-    console.log(this.coor);
-  }
+export default class Map{
 
-  draw(ctx) {
-    var i = 0;
-    this.coor.forEach(element => {
-      var j = 0;
-      element.forEach(el => {
-        if (el != 0) {
-          let img = this.photos.find(e => parseInt(e.title) == el);
-          if (img != null)
-            ctx.drawImage(img.icon, j * ICON_H, i * ICON_W, ICON_H, ICON_W);
-        } else {
-          ctx.fillStyle = "#000000";
-          ctx.fillRect(j * ICON_H, i * ICON_W, ICON_H, ICON_W);
-        }
-        j++;
-      });
-      i++;
-    });
-  }
+    constructor(
+        photos, coordinates
+    ){
+        this.photos = photos.map((x) => {
+            let img = new Image();
+            img.src = x.photoUrl;
+            return {
+            title: x.title,
+            icon: img
+            }
+        });
+        this.coor = coordinates;
+        
+    }
+
+    draw(ctx){
+        var i = 0;
+        this.coor.forEach(element => {
+            var j = 0;
+            element.forEach(el => {
+                if(el != 0){
+                    let img = this.photos.find((e) => (parseInt(e.title) == el));
+                    if(img != null)
+                    ctx.drawImage(img.icon, j*ICON_H, i*ICON_W, ICON_H, ICON_W);
+                }
+                else{
+                    ctx.fillStyle = '#000000';
+                    ctx.fillRect(j*ICON_H, i*ICON_W, ICON_W, ICON_H);
+                }
+                j++;
+            });
+            i++;
+        });
+
+    }
+
 }
