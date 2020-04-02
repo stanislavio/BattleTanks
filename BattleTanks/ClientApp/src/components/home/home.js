@@ -1,53 +1,81 @@
-import React, { Component }  from 'react';
-import NotFound from '../Route guard/404';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import ModalWind from '../modal';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
-import './home.css';
-import { renderSelectTankField, DefaultLinkBlack } from '../helpers/helpers';
+import React, { Component } from "react";
+import NotFound from "../Route guard/404";
+import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import ModalWind from "../modal";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { connect } from "react-redux";
+import { reduxForm, Field } from "redux-form";
+import "./home.css";
+import { renderSelectTankField, DefaultLinkBlack } from "../helpers/helpers";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 
-class Home extends Component{
+const StyledButton = withStyles({
+  textPrimary: {
+    color: "white"
+  }
+})(Button);
 
-    render() {
-        
-        const { pristine, reset, submitting, handleSubmit, onCompSubmit } = this.props;
-        console.log(this.props);
-        return <div className="row width-100 height-100 justify-content-center align-items-center">
-            <DefaultLinkBlack to="/find-game">Find game</DefaultLinkBlack>
-            <form
-                className="text-center w-100"
-                onSubmit={handleSubmit}>
-                    <Field name='tankId' component={renderSelectTankField} data={this.props.tanks.data} text={'Tank'}/>
-                    <br/>
-                    <Field name='mapId' component={renderSelectTankField} data={this.props.maps.data} text={'Map'}/>
-                    <br/>
-                    <Button disabled={submitting} type="submit" value="New Game" color="primary">Create Game</Button>
-            </form>
-            
-        </div>
-    }
+class Home extends Component {
+  render() {
+    const {
+      pristine,
+      reset,
+      submitting,
+      handleSubmit,
+      onCompSubmit
+    } = this.props;
+    console.log(this.props);
+    return (
+      //className="row width-100 height-100 justify-content-center align-items-center"
+      <div className="frame">
+        <form className="text-center w-100" onSubmit={handleSubmit}>
+          <Field
+            className="back"
+            name="tankId"
+            component={renderSelectTankField}
+            data={this.props.tanks.data}
+            text={"Select tank"}
+          />
+          <br />
+          <Field
+            className="back"
+            name="mapId"
+            component={renderSelectTankField}
+            data={this.props.maps.data}
+            text={"Select map"}
+          />
+          <br />
+          <StyledButton
+            disabled={submitting}
+            type="submit"
+            value="New Game"
+            color="primary"
+          >
+            Create Game
+          </StyledButton>
+        </form>
+        <DefaultLinkBlack to="/find-game">Find game</DefaultLinkBlack>
+      </div>
+    );
+  }
 }
 
-
-const mapStateToProps = (state) => ({
-    tanks: state.tanks,
-    maps: state.maps
+const mapStateToProps = state => ({
+  tanks: state.tanks,
+  maps: state.maps
 });
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-    }
+const mapDispatchToProps = dispatch => {
+  return {};
 };
 
 Home = reduxForm({
-    form: 'game'
+  form: "game"
 })(Home);
 
 Home = connect(mapStateToProps, mapDispatchToProps)(Home);

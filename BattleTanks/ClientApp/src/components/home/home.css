@@ -1,35 +1,56 @@
-.notification-msg{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 24px;
-    font-weight: 700;
-    
+.notification-msg {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
 }
-
 
 .round-button {
-	box-sizing: border-box;
-	display:inline-block;
-	width:160px;
-    height:160px;
-	line-height: 20px;
-	border: 6px solid #fff;
-	border-radius: 50%;
-	color:#f5f5f5;
-    text-align:center;
-	text-decoration:none;
-	background-color: rgba(0,0,0,0.5);
-	font-size:40px;
-	font-weight:bold;
-	transition: all 0.3s ease;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 160px;
+  height: 160px;
+  line-height: 20px;
+  border: 6px solid #fff;
+  border-radius: 50%;
+  color: #f5f5f5;
+  text-align: center;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 40px;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 .round-button:hover {
-	background-color: rgba(0,0,0,0.8);
-	box-shadow: 0px 0px 10px rgba(255,255,100,1);
-	text-shadow: 0px 0px 10px rgba(255,255,100,1);
+  background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 0px 10px rgba(255, 255, 100, 1);
+  text-shadow: 0px 0px 10px rgba(255, 255, 100, 1);
 }
 
-.round-button > i{
-    margin-left: 20px;
-    margin-top: 30px;
-    /* transform: translate(-50%, -50%); */
+.round-button > i {
+  margin-left: 20px;
+  margin-top: 30px;
+  /* transform: translate(-50%, -50%); */
+}
+
+.default-link {
+  color: white;
+}
+.default-link:hover {
+  color: rgba(232, 213, 241, 0.6);
+}
+
+.back {
+  background-color: white;
+}
+.frame {
+  text-align: center;
+  border-radius: 100px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.973);
+  margin: 350px auto;
+  width: 20%;
+  background: linear-gradient(
+    90deg,
+    rgba(30, 139, 195, 0.2),
+    rgba(255, 192, 203, 0.2)
+  );
 }
