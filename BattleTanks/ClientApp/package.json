@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.9.3",
     "@material-ui/icons": "^4.4.1",
+    "@reach/tabs": "^0.9.1",
     "history": "^4.10.1",
     "mdbreact": "^4.20.0",
     "react": "^16.8.6",

@@ -1,19 +1,34 @@
-
-.default-link{
-    text-decoration: none;    
-    color: black;
+body {
+  margin: 0;
+  padding: 0;
+  background: url("../src/photo/10.jpg") center no-repeat fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  display: initial;
+  position: relative;
 }
 
-
-.default-link:hover{
-    text-decoration: none;    
-    color: black;
+.default-link-white {
+  text-decoration: none;
+  color: white;
 }
 
-.color-link-white{
-    color: white;
+.default-link {
+  text-decoration: none;
+  color: black;
 }
 
-.color-link-white:hover{
-    color: white;
+.default-link:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.color-link-white {
+  color: white;
+}
+
+.color-link-white:hover {
+  color: white;
 }

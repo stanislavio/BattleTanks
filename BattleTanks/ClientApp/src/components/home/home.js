@@ -1,57 +1,83 @@
-import React, { Component }  from 'react';
-import NotFound from '../Route guard/404';
-import { Link } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import ModalWind from '../modal';
-import { DefaultLinkBlack } from '../helpers/helpers';
-import './home.css';
+import React, { Component } from "react";
+import NotFound from "../Route guard/404";
+import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import ModalWind from "../modal";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import { connect } from "react-redux";
+import { reduxForm, Field } from "redux-form";
+import "./home.css";
+import { renderSelectTankField, DefaultLinkWhite } from "../helpers/helpers";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 
+const StyledButton = withStyles({
+  textPrimary: {
+    color: "white"
+  }
+})(Button);
 
-export default class Home extends Component{
-
-    state = {
-        open: false
-    }
-
-    openModal = () => {
-        this.setState({open: true});
-    }
-
-    closeModal = () => {
-        this.setState({open: false});
-    }
-
-
-    render() {
-        
-        return <>
-        <div className="row width-100 height-100 justify-content-center align-items-center">
-           {/* <Link to="/game"> */}
-            <div className="btn round-button" onClick={this.openModal}>
-                <i className="fa fa-play fa-2x"></i>
-            </div>
-            {/* </Link> */}
-        </div>
-        <ModalWind open={this.state.open} title={'hello'}>
-            <DialogContent>
-
-            </DialogContent>
-            <DialogActions>
-                <Button color="primary" onClick={this.closeModal}>
-                Cancel
-                </Button>
-                
-                <DefaultLinkBlack to="/game">
-                    <Button color="primary">Play</Button>
-                </DefaultLinkBlack>
-            </DialogActions>
-        </ModalWind>
-        </>
-
-    }
+class Home extends Component {
+  render() {
+    const {
+      pristine,
+      reset,
+      submitting,
+      handleSubmit,
+      onCompSubmit
+    } = this.props;
+    console.log(this.props);
+    return (
+      //className="row width-100 height-100 justify-content-center align-items-center"
+      <div className="frame">
+        <form className="text-center w-100" onSubmit={handleSubmit}>
+          <Field
+            className="back"
+            name="tankId"
+            component={renderSelectTankField}
+            data={this.props.tanks.data}
+            text={"Select tank"}
+          />
+          <br />
+          <Field
+            className="back"
+            name="mapId"
+            component={renderSelectTankField}
+            data={this.props.maps.data}
+            text={"Select map"}
+          />
+          <br />
+          <StyledButton
+            disabled={submitting}
+            type="submit"
+            value="New Game"
+            color="primary"
+          >
+            Create Game
+          </StyledButton>
+        </form>
+        <DefaultLinkWhite to="/find-game">Find game</DefaultLinkWhite>
+      </div>
+    );
+  }
 }
 
+const mapStateToProps = state => ({
+  tanks: state.tanks,
+  maps: state.maps
+});
+
+const mapDispatchToProps = dispatch => {
+  return {};
+};
+
+Home = reduxForm({
+  form: "game"
+})(Home);
+
+Home = connect(mapStateToProps, mapDispatchToProps)(Home);
+
+export default Home;

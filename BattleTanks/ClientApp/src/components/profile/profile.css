@@ -1,15 +1,18 @@
-body {
-  margin: 0;
-  padding: 0;
-  background: url("../../photo/10.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: initial;
-  position: relative;
+.frame-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
 }
-.text {
+
+.text-container {
+  color: white;
+  list-style-type: none;
   font-size: 20px;
-  position: relative;
-  color: #ffffff;
-  margin: 5% 15%;
+}
+
+.img-container {
+  margin: 5vh;
+  border-radius: 20%;
+  width: 20%;
+  box-shadow: 0 0 5px white;
 }
