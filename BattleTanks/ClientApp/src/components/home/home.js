@@ -16,8 +16,8 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 const StyledButton = withStyles({
   textPrimary: {
-    color: "white"
-  }
+    color: "white",
+  },
 })(Button);
 
 class Home extends Component {
@@ -27,7 +27,7 @@ class Home extends Component {
       reset,
       submitting,
       handleSubmit,
-      onCompSubmit
+      onCompSubmit,
     } = this.props;
     console.log(this.props);
     return (
@@ -65,19 +65,21 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   tanks: state.tanks,
-  maps: state.maps
+  maps: state.maps,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
+// eslint-disable-next-line no-class-assign
 Home = reduxForm({
-  form: "game"
+  form: "game",
 })(Home);
 
+// eslint-disable-next-line no-class-assign
 Home = connect(mapStateToProps, mapDispatchToProps)(Home);
 
 export default Home;
