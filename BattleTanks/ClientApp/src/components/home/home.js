@@ -23,13 +23,9 @@ const StyledButton = withStyles({
 class Home extends Component {
   render() {
     const {
-      pristine,
-      reset,
       submitting,
-      handleSubmit,
-      onCompSubmit
+      handleSubmit
     } = this.props;
-    console.log(this.props);
     return (
       //className="row width-100 height-100 justify-content-center align-items-center"
       <div className="frame">

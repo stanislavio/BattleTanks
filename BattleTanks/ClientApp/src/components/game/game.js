@@ -17,7 +17,8 @@ export default class Game extends Component{
     state = {
         bullets: [],
         game: true,
-        connectedTime: null
+        connectedTime: null,
+        gameOver: false
     }
 
     componentWillUnmount(){
@@ -28,6 +29,10 @@ export default class Game extends Component{
 
     componentWillMount(){
         const players = this.props.game.players.data;
+
+        this.props.setFirstPlayer(players.find(el => (el.info.id == this.props.current_user.id)));
+        this.props.setSecondPlayer(players.find(el => (el.info.id != this.props.current_user.id)));
+        
 
         if(players.length < 2){
             this.setOnline(false);
@@ -86,6 +91,13 @@ export default class Game extends Component{
         }
     }
 
+    gameOver = (val) => {
+        this.setState({
+            gameOver: true,
+            winner: val
+        });
+    }
+
     addBullet = (bullet) => {
         this.setState({
             bullets: this.state.bullets.concat([bullet]), 
@@ -112,27 +124,36 @@ export default class Game extends Component{
         let { players, ctx, map } = this.props.game;
         const { current_user } = this.props;
 
+        let current_player = players.data.find((x) => (x.info.id == current_user.id));
+
         players = players.data.map((x) => {
-            x.setMap(map.data.coor);
+            if(x.x < 0 || x.y < 0){
+                x.setMap(map.data.coor);
+                this.props.hub.invoke(
+                    'FirstPosition',
+                    {
+                       Id: x.info.id,
+                       Position: '{"x": ' + x.center_x + ', "y": ' + x.center_y + '}',    
+                       Players: players.data.filter((x) => (x.info.id != current_player.info.id)).map(x => (x.info.id)).join(',') 
+                    }
+                )} else
+                {
+                    x.setMap(map.data.coor);
+                }
             return x;
         });
 
-        let current_player = players.find((x) => (x.info.id == current_user.id));
-
         map.data.draw(ctx);
 
-        players.forEach((x) => {if(!x.died) x.draw(ctx)});
+        players.forEach((x) => {
+            x.draw(ctx);
+            if(x.lives <= 0 && !this.state.gameOver)
+            {console.log('info1');
+            console.log(x.info);
+                this.gameOver(x.info);
+            }
+        });
 
-        const rechargeRender = ({ hours, minutes, seconds, completed }) => {
-            console.log(hours, minutes, seconds, completed);
-            console.log(current_player.last_shoot, current_player.recharge_time);
-                if(completed){
-                    return <div>Ready to shoot</div>
-                }
-                else{
-                    return <div>Recharged through: {hours} {minutes} {seconds} s</div>
-                }
-        }
 
         const renderer = ({ hours, minutes, seconds, completed }) => {
 
@@ -177,6 +198,7 @@ export default class Game extends Component{
                       .catch(err => { console.log('error'); console.log(err)});
 
                       current_player.last_shoot = new Date().getTime();
+                      this.props.setFirstPlayer(current_player);
                   }else{            
                       const model = {
                           OwnerId: current_player.info.id,
@@ -202,10 +224,26 @@ export default class Game extends Component{
                                 if(Object.keys(b).includes('enemy')){
                                       players = players.map(x => {
                                           if(x == b.enemy){
-                                              x.died = true;
+                                              x.lives --;
+                                              const model = {
+                                                  GameId: this.props.gameId,
+                                                  PlayerId: x.info.id
+                                              }
+                                              if(current_player.info.id != x.info.id){                                              this.props.hub
+                                              .invoke('Kill', model)
+                                              .catch(err => { console.log('error'); console.log(err)});
+                                              }
+                                              if(x.lives <= 0){
+                                                  const info = players.find(y => y.info.id != x.info.id);
+                                                  this.gameOver(info);
+                                              }
                                           }
                                           return x;
-                                      });  
+                                      });
+                                      
+                                    this.props.setFirstPlayer(current_player);
+                                    this.props.setSecondPlayer(players.find(el => (el.info.id != current_player.info.id)));
+
                                   }
                                   const coor_x = b.coor.x;
                                   const coor_y = b.coor.y;
@@ -215,16 +253,6 @@ export default class Game extends Component{
                                           map.data.coor[coor_y][coor_x] --;
                                   }
                                   this.deleteBullet(bullet);
-                                  players = players.map((x) => {
-                                      if(!x.died){
-                                          x.setMap(this.props.game.map.data.coor);
-                                          x.draw(ctx);
-                                      }else{
-                                          ctx.fillStyle = '#000000';
-                                          ctx.fillRect(x.x, x.y, x.width, x.height);
-                                      }
-                                      return x;
-                                  });
                               }
                           }
                       );
@@ -233,19 +261,19 @@ export default class Game extends Component{
           </> 
             } else {
               // Render a countdown
-              return <span>{hours}:{minutes}:{seconds}</span>;
+              return <div className="game-pause"><span>{hours}:{minutes}:{seconds}</span></div>;
             }
           };
           
-        const game = this.state.game ? <Countdown
+        const game = this.state.game ? <Countdown 
                                         date={this.state.connectedTime + 5000}
                                         renderer={renderer}
-                                    /> : <div>
-                Wait for other players
+                                    /> : <div className="game-pause">
+               Wait for other players
             </div>;
 
             return <>
-                {game}
+                {!this.state.gameOver ? game : <div className='game-pause'>Game Over</div>}
             </>
             
     }

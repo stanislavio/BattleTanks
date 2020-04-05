@@ -44,7 +44,7 @@ namespace BattleTanks.Core.Service
                 Author = true,
                 Game = game,
                 Tank = tank,
-                Coordinates = "{\"x\": 25, \"y\": 25}"
+                Coordinates = "{\"x\": -1, \"y\": -1}"
             });
             await _unitOfWork.SaveAsync();
             return new OperationResult(true, "",game.Id.ToString());
@@ -71,14 +71,14 @@ namespace BattleTanks.Core.Service
 
         public GameDto GetGameInfo(Guid gameId)
         {
-            return _mapper.Map<GameDto>(_unitOfWork.GameRepo.Get("Map.Photos.Icon").FirstOrDefault(x => x.Id == gameId));
+            return _mapper.Map<GameDto>(_unitOfWork.GameRepo.Get("Users,Map.Photos.Icon").FirstOrDefault(x => x.Id == gameId));
         }
 
         public async Task<OperationResult> SavePlayersInfo(List<PlayerInfoDto> model)
         {
             foreach (var item in model)
             {
-                var player = _unitOfWork.UserGame.Get().FirstOrDefault(x => x.TankerId == item.Id);
+                var player = _unitOfWork.UserGame.Get("Game").FirstOrDefault(x => x.TankerId == item.Id && x.Game.Finished == DateTime.MinValue);
                 if (player == null) return new OperationResult();
                 player.Coordinates = item.Position;
             }
@@ -108,9 +108,9 @@ namespace BattleTanks.Core.Service
             if(game.Finished != DateTime.MinValue || game.Users.Count > 1) return  new OperationResult(false, "You can't join to this game", "");
 
             var userGame = _unitOfWork.UserGame.Get("Game")
-                .FirstOrDefault(x => x.TankerId == model.GameId && x.Game.Finished == DateTime.MinValue);
+                .FirstOrDefault(x => x.TankerId == model.UserId && x.Game.Finished == DateTime.MinValue);
 
-            if (userGame == null)
+            if (userGame != null)
             {
                 return new OperationResult(false, "You already play", "");
             }
@@ -146,10 +146,38 @@ namespace BattleTanks.Core.Service
             return enemies.Select(x => x.TankerId.ToString()).ToList();
         }
 
-        public bool CanStartGame(Guid gameId)
+        public async Task<bool> CanStartGame(Guid gameId)
         {
-            var res = _unitOfWork.UserGame.Get("").Where(x => x.Online);
-            return res.Count() == 2;
+            var res = _unitOfWork.UserGame.Get("").Where(x => x.Online && x.GameId == gameId);
+            if (res.Count() == 2)
+            {
+                var game = _unitOfWork.GameRepo.Get().FirstOrDefault(x => x.Id == gameId);
+                if(game.Started == DateTime.MinValue) { 
+                    game.Started = DateTime.Now;
+                    await _unitOfWork.SaveAsync();
+                }
+                return true;
+            }    
+            return false;
+        }
+
+        public async Task<OperationResult> KillPlayer(KillDto model)
+        {
+            var userGame = _unitOfWork.UserGame.Get().FirstOrDefault(x => x.GameId == model.GameId && x.TankerId == model.PlayerId);
+
+            if(userGame == null) return new OperationResult(false, "Tanker not found", "");
+
+            userGame.DiedCount++;
+
+            if (userGame.DiedCount == 5)
+            {
+                var game = _unitOfWork.GameRepo.Get().FirstOrDefault(x => x.Id == model.GameId);
+                game.Finished = DateTime.Now;
+            }
+
+            await _unitOfWork.SaveAsync();
+
+            return new OperationResult(false);
         }
     }
 }

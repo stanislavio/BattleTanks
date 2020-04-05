@@ -12,5 +12,6 @@ namespace BattleTanks.Core.DTOs
                                          
         public DateTime Started { get; set; }
         public DateTime Finished { get; set; }
+        public Guid? WinnerId { get; set; }
     }
 }

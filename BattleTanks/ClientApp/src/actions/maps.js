@@ -19,7 +19,6 @@ export const get_maps = () => {
         var res = api_serv.getMaps();
         res.then(response => {
             if(response.error == null){
-                console.log(response);
                 dispatch({
                     type: GET_MAPS,
                     payload: response

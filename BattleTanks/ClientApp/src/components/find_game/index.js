@@ -6,7 +6,6 @@ import "./find_game.css";
 
 export default class FindGame extends Component {
   onClick = el => {
-    console.log(el, this.refs.tank.value);
     this.props.joinToGame(el, this.refs.tank.value);
   };
 
@@ -41,8 +40,6 @@ export default class FindGame extends Component {
 
   render() {
     const { data } = this.props;
-
-    console.log(this.refs.tank);
 
     const { isPending, isSuccess, isError } = this.props.info;
 

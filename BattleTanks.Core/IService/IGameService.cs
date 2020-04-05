@@ -20,6 +20,7 @@ namespace BattleTanks.Core.IService
         Task<OperationResult> JoinToGame(GameLoadDto model);
         Task<OperationResult> SavePlayerOnline(Guid playerId, bool online);
         List<string> GetEnemies(Guid playerId);
-        bool CanStartGame(Guid gameId);
+        Task<bool> CanStartGame(Guid gameId);
+        Task<OperationResult> KillPlayer(KillDto model);
     }
 }

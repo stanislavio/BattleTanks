@@ -17,6 +17,3 @@ export const WIDTH = icon_w * 26,
 
 export const ICON_W = icon_w,
   ICON_H = icon_h;
-
-console.log(ICON_W, ICON_H);
-console.log(WIDTH, HEIGHT);

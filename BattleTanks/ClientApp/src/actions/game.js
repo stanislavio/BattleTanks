@@ -32,7 +32,6 @@ export const CREATEGAME_PENDING = "CREATEGAME_PENDING",
 
 export function initialConnection() {
   return dispatch => {
-    console.log(`${window.location.origin}/gameRoom`);
     const hubConnection = new SignalR.HubConnectionBuilder()
       .withUrl(`/gameroom`, {
         accessTokenFactory: () => localStorage.getItem("token")
@@ -43,11 +42,6 @@ export function initialConnection() {
       .start()
       .then(() => {
         console.log("Connection Success");
-        hubConnection.on("ReceiveMsg", data => {
-          console.log("receive data");
-          console.log(data);
-          // dispatch(ReceiveMsg(data));
-        });
       })
       .catch(err => console.log("Error while establishing connection :(", err));
 
@@ -74,7 +68,6 @@ export function findGame() {
     });
     var res = api_serv.findGame();
     res.then(response => {
-      console.log(response);
       if (response.error == null) {
         dispatch({
           type: FIND_GAME_SUCCESS,
@@ -112,9 +105,15 @@ export function setGame(gameId) {
     var res = api_serv.getGameInfo(gameId);
     res.then(response => {
       if (response.error == null) {
+        console.log('response');
+        console.log(response);
         let coor = response.map.coordinates.split("|");
         coor = coor.map(e => e.split(",").map(x => parseInt(x.trim())));
         let map = new Map(response.map.photos, coor);
+        dispatch({
+          type:SET_GAME_SUCCESS,
+          payload: response
+        });
         dispatch({
           type: SET_MAP_SUCCESS,
           payload: map
@@ -148,12 +147,11 @@ export function setPlayers(gameId) {
     var res = api_serv.getPlayers(gameId);
     res.then(response => {
       if (response.error == null) {
-        console.log(response);
         let players = response.map(x => {
           const bullet = new Bullet(x.tank.bulletPhotoUrl, x.tank.bulletSpeed);
           const coor = JSON.parse(x.coordinates);
           x.userInfo.online = x.online;
-          return new Sprite(
+          let p = new Sprite(
             x.tank.tankPhotoUrl,
             coor.x,
             coor.y,
@@ -162,6 +160,8 @@ export function setPlayers(gameId) {
             bullet,
             coor.direct
           );
+          p.lives = 5 - x.diedCount;
+          return p;
         });
         dispatch({
           type: SET_PLAYERS_SUCCESS,
@@ -194,7 +194,6 @@ export function joinToGame(gameId, tankId) {
       GameId: gameId,
       TankId: tankId
     };
-    console.log(data);
     var res = api_serv.joinToGame(data);
     res.then(response => {
       if (response.error == null) {

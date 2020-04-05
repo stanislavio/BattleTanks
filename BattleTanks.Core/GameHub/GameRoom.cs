@@ -34,7 +34,7 @@ namespace BattleTanks.Core.GameHub
 
             var enemies = _gameService.GetEnemies(userId);  
 
-            if(_gameService.CanStartGame(gameId))
+            if(await _gameService.CanStartGame(gameId))
                 await Clients.Users(_gameService.GetPlayers(gameId).Select(x => x.UserInfo.Id.ToString()).ToList()).SendAsync("StartGame", userId);
 
 
@@ -60,7 +60,16 @@ namespace BattleTanks.Core.GameHub
             await Clients.Users(model.Players.Split(",")).SendAsync("ReceiveMove", model);
         }
 
+        public async Task Kill(KillDto model)
+        {
+            await _gameService.KillPlayer(model);                         
+        }
 
+        public async Task FirstPosition(PlayerInfoDto model)
+        {
 
+            await _gameService.SavePlayersInfo(new List<PlayerInfoDto>() {model});
+            await Clients.Users(model.Players).SendAsync("Position", model);
+        }
     }
 }

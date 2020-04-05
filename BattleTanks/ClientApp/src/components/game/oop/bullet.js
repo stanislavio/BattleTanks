@@ -5,11 +5,10 @@ export default class Bullet{
     constructor(icon, speed, owner_id){
         this.img = new Image();
         this.img.src = icon;
-        this.width = ICON_H;
-        this.height = ICON_W;
+        this.width = ICON_W;
+        this.height = ICON_H;
         this.speed = speed;
         this.map = [];
-        this.radius = Math.floor((ICON_W + ICON_H) / 2);
         this.enemies = [];
         this.owner_id = owner_id;
     }
@@ -22,8 +21,6 @@ export default class Bullet{
     }
         
     draw(ctx) {
-        ctx.fillStyle = '#000000';
-        ctx.fillRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
@@ -39,8 +36,8 @@ export default class Bullet{
                 if(res.colision)   
                 {
                     this.center_x += this.speed * 0.2;
-                    ctx.fillStyle = '#000000';
-                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                    // ctx.fillStyle = '#000000';
+                    // ctx.fillRect(this.x, this.y, this.width, this.height);
                     return res;
                 }
                 break;
@@ -50,8 +47,8 @@ export default class Bullet{
                 if(res.colision)   
                 {
                     this.center_y += this.speed * 0.2; 
-                    ctx.fillStyle = '#000000';
-                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                    // ctx.fillStyle = '#000000';
+                    // ctx.fillRect(this.x, this.y, this.width, this.height);
                     return res;
                 }
                 break;
@@ -61,8 +58,8 @@ export default class Bullet{
                 if(res.colision)   
                 {
                     this.center_y -= this.speed * 0.2; 
-                    ctx.fillStyle = '#000000';
-                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                    // ctx.fillStyle = '#000000';
+                    // ctx.fillRect(this.x, this.y, this.width, this.height);
                     return res;
                 }
                 break;
@@ -72,8 +69,8 @@ export default class Bullet{
                 if(res.colision)   
                 {
                     this.center_x -= this.speed * 0.2; 
-                    ctx.fillStyle = '#000000';
-                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                    // ctx.fillStyle = '#000000';
+                    // ctx.fillRect(this.x, this.y, this.width, this.height);
                     return res;
                 }
                 break;
@@ -98,7 +95,6 @@ export default class Bullet{
             case UP:
                 x1_coor = Math.floor((this.center_x - this.width / 4 + 1)/this.width); 
                 y1_coor = Math.floor((this.center_y - this.height / 4 + 1)/this.height);
-                x2_coor = Math.floor((this.center_x + this.width / 4 - 1) / this.width);
                 if(x1_coor < 0 || 
                     x2_coor < 0 || 
                     y1_coor < 0 || 
@@ -107,9 +103,7 @@ export default class Bullet{
                     y1_coor >= y_wall)
                     return {colision: true, coor: {x: -1, y: -1}};
                 if(this.map[y1_coor][x1_coor] != 0)
-                    return {colision: true, coor: {x: x1_coor, y: y1_coor}}; 
-                if(this.map[y1_coor][x2_coor] != 0)
-                    return {colision: true, coor: {x: x2_coor, y: y1_coor}}; 
+                    return {colision: true, coor: {x: x1_coor, y: y1_coor}};
                 break; 
             case DOWN:
                 x1_coor = Math.floor((this.center_x - this.width / 4 + 1)/this.width); 

@@ -34,7 +34,8 @@ const initialState = {
       isError: false,
       isSuccess: false,
       data: null
-    }
+    },
+    data: null
   },
   tanks: {
     isPending: true,

@@ -7,6 +7,7 @@ namespace BattleTanks.Core.DTOs
     public class PlayerInfoDto
     {
         public Guid Id { get; set; }
-        public string Position { get; set; }                     
+        public string Position { get; set; }
+        public string Players { get; set; } = "";
     }
 }

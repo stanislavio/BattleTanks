@@ -1,7 +1,7 @@
 
 export default class BattleTanksService{
 
-    _baseUrl = 'api/'
+    _baseUrl = 'api/';
 
 
     //Get methods
@@ -143,7 +143,6 @@ export default class BattleTanksService{
     }
 
     addMap = async (data) => {
-    console.log(data);
     let file = new FormData();
     file.append('Photo', data.image.file);
     const res = await this.setResourceWithData('user/changeAvatar', file);

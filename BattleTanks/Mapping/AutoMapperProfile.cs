@@ -86,7 +86,9 @@ namespace BattleTanks.Mapping
                     {
                         Id = src.MapId,
                         Name = src.Map.Name,
-                        Coordinates = string.IsNullOrEmpty(src.CurrentMapCoordinates) ? src.Map.Coordinates : src.CurrentMapCoordinates,
+                        Coordinates = string.IsNullOrEmpty(src.CurrentMapCoordinates)
+                            ? src.Map.Coordinates
+                            : src.CurrentMapCoordinates,
                         Photos = src.Map.Photos.Select(x => new PhotoDto()
                         {
                             Id = x.Id,
@@ -98,7 +100,12 @@ namespace BattleTanks.Mapping
                     opts => opts.MapFrom(src => src.Finished))
                 .ForMember(dest => dest.Started,
                     opts => opts.MapFrom(src => src.Started))
-                ;
+                .ForMember(dest => dest.WinnerId,
+                    opts => opts.MapFrom(src =>
+                        src.Finished != DateTime.MinValue ? 
+                        src.Users.FirstOrDefault(x => x.DiedCount != 5).TankerId     
+                        : null
+                ));
 
 
             //TODO

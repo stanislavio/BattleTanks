@@ -9,7 +9,8 @@ namespace BattleTanks.DB.Entities
         public Map Map { get; set; }
         public Guid? MapId { get; set; }
 
-        public DateTime Started { get; set; } = DateTime.Now;
+        public DateTime Created { get; set; } = DateTime.Now;
+        public DateTime Started { get; set; }
         public DateTime Finished { get; set; }
 
         public bool Online { get; set; }

@@ -36,7 +36,6 @@ export default class Sprite {
     this.info = info;
     this.speed = speed;
     this.bullet = bullet;
-    this.died = false;
     this.lives = 5;
     this.recharge_time = recharge_time;
     this.last_shoot = new Date().getTime();
@@ -47,17 +46,16 @@ export default class Sprite {
     this.map = map;
     if (map == null) return;
     if (map == []) return;
-    console.log(map);
     if (this.x < 0 || this.y < 0) {
       var randomX, randomY;
       do {
         randomX = Math.floor(Math.random() * map.length);
         randomY = Math.floor(Math.random() * map[randomX].length);
       } while (map[randomX][randomY] != 0);
-      this.x = randomX * ICON_H;
-      this.y = randomY * ICON_W;
-      this.center_x = this.x + ICON_H / 2;
-      this.center_y = this.y + ICON_W / 2;
+      this.x = randomX * ICON_W;
+      this.y = randomY * ICON_H;
+      this.center_x = this.x + ICON_W / 2;
+      this.center_y = this.y + ICON_H / 2;
     }
   }
 
@@ -94,7 +92,7 @@ export default class Sprite {
     ctx.drawImage(
       image,
       -this.width / 2,
-      -this.height / 2 - 1,
+      -this.height / 2,
       this.width,
       this.height
     );
@@ -156,27 +154,13 @@ export default class Sprite {
         x2_coor = Math.floor((x2 - 1) / this.width);
         for (var i = 0; i < this.enemies.length; i++) {
           if (
-            this._getDistance(
-              x1,
-              y1,
+            this.checkColisionWithEnemy(
+              this.center_x,
+              this.center_y,
               this.enemies[i].center_x,
               this.enemies[i].center_y
-            ) <=
-              ICON_W / 2 - 1 ||
-            this._getDistance(
-              x2,
-              y1,
-              this.enemies[i].center_x,
-              this.enemies[i].center_y
-            ) <=
-              ICON_H / 2 - 1
+            )
           ) {
-            console.log(
-              x1,
-              y1,
-              this.enemies[i].center_x,
-              this.enemies[i].center_y
-            );
             return true;
           }
         }
@@ -201,25 +185,17 @@ export default class Sprite {
         x1 = this.center_x - this.width / 2;
         x2 = this.center_x + this.width / 2;
         y1 = this.center_y + this.height / 2;
-        x1_coor = Math.floor((x1 + 1) / this.width);
+        x1_coor = Math.floor((x1 + 2) / this.width);
         y1_coor = Math.floor((y1 - 1) / this.height);
-        x2_coor = Math.floor((x2 - 1) / this.width);
-        for (var i = 0; i < this.enemies.length; i++) {
+        x2_coor = Math.floor((x2 - 2) / this.width);
+        for (var p = 0; p < this.enemies.length; p++) {
           if (
-            this._getDistance(
-              x1,
-              y1,
-              this.enemies[i].center_x,
-              this.enemies[i].center_y
-            ) <=
-              ICON_W / 2 - 1 ||
-            this._getDistance(
-              x2,
-              y1,
-              this.enemies[i].center_x,
-              this.enemies[i].center_y
-            ) <=
-              ICON_H / 2 - 1
+            this.checkColisionWithEnemy(
+              this.center_x,
+              this.center_y,
+              this.enemies[p].center_x,
+              this.enemies[p].center_y
+            )
           )
             return true;
         }
@@ -239,25 +215,17 @@ export default class Sprite {
         x1 = this.center_x - this.width / 2;
         y1 = this.center_y - this.height / 2;
         y2 = this.center_y + this.height / 2;
-        x1_coor = Math.floor((x1 + 1) / this.width);
-        y1_coor = Math.floor((y1 + 1) / this.height);
-        y2_coor = Math.floor((y2 - 1) / this.height);
-        for (var i = 0; i < this.enemies.length; i++) {
+        x1_coor = Math.floor((x1 + 2) / this.width);
+        y1_coor = Math.floor((y1 + 2) / this.height);
+        y2_coor = Math.floor((y2 - 2) / this.height);
+        for (var j = 0; j < this.enemies.length; j++) {
           if (
-            this._getDistance(
-              x1,
-              y1,
-              this.enemies[i].center_x,
-              this.enemies[i].center_y
-            ) <=
-              ICON_W / 2 - 1 ||
-            this._getDistance(
-              x1,
-              y2,
-              this.enemies[i].center_x,
-              this.enemies[i].center_y
-            ) <=
-              ICON_H / 2 - 1
+            this.checkColisionWithEnemy(
+              this.center_x,
+              this.center_y,
+              this.enemies[j].center_x,
+              this.enemies[j].center_y
+            )
           )
             return true;
         }
@@ -271,30 +239,22 @@ export default class Sprite {
           return true;
         if (this.map[y1_coor][x1_coor] != 0 || this.map[y2_coor][x1_coor] != 0)
           return true;
+        break;
       case RIGHT:
         x1 = this.center_x + this.width / 2;
         y1 = this.center_y - this.height / 2;
         y2 = this.center_y + this.height / 2;
         x1_coor = Math.floor((x1 - 1) / this.width);
-        y1_coor = Math.floor((y1 + 1) / this.height);
-        y2_coor = Math.floor((y2 - 1) / this.height);
-        for (var i = 0; i < this.enemies.length; i++) {
+        y1_coor = Math.floor((y1 + 2) / this.height);
+        y2_coor = Math.floor((y2 - 2) / this.height);
+        for (var k = 0; k < this.enemies.length; k++) {
           if (
-            this._getDistance(
-              x1,
-              y1,
-              this.enemies[i].center_x,
-              this.enemies[i].center_y
-            ) <=
-              ICON_W / 2 - 1 ||
-            this._getDistance(
-              x1,
-              y2,
-              this.enemies[i].center_x,
-              this.enemies[i].center_y
-            ) <=
-              ICON_H / 2 - 1
-          )
+            this.checkColisionWithEnemy(
+              this.center_x,
+              this.center_y,
+              this.enemies[k].center_x,
+              this.enemies[k].center_y
+            ) )
             return true;
         }
         if (
@@ -307,7 +267,26 @@ export default class Sprite {
           return true;
         if (this.map[y1_coor][x1_coor] != 0 || this.map[y2_coor][x1_coor] != 0)
           return true;
+        break;
     }
     return false;
   }
+
+
+  checkColisionWithEnemy(x1, y1, x2, y2){
+
+      x1 = x1 - ICON_W / 2;
+      y1 = y1 - ICON_H / 2;
+      x2 = x2 - ICON_W / 2;
+      y2 = y2 - ICON_H / 2;
+
+    if (x1 < x2 + ICON_W - 1 &&
+      x1 + ICON_W - 1 > x2 &&
+      y1 < y2 + ICON_H - 1 &&
+      y1 + ICON_H - 1 > y2) {
+        return true;
+   }
+   return false;
+  }
+
 }

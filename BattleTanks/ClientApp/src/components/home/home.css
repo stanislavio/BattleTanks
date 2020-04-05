@@ -46,8 +46,9 @@
   text-align: center;
   border-radius: 100px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.973);
-  margin: 350px auto;
-  width: 20%;
+  margin: 30vh auto;
+  width: 30%;
+  padding: 20px;
   background: linear-gradient(
     90deg,
     rgba(30, 139, 195, 0.2),

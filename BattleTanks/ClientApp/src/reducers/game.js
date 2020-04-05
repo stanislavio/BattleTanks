@@ -95,9 +95,7 @@ export const reducer = (
         });
     case SET_GAME_SUCCESS: 
     return Object.assign({}, state, {
-      isSuccess: true,
-      isError: null,
-      isPending: false,
+      data: action.payload
     });
     case SET_GAME_ERROR: 
     return Object.assign({}, state, {

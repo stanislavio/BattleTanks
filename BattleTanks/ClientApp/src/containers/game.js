@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 
+import Countdown from 'react-countdown-now';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 
 import {setPlayers, setGame, set_canvas, reset_game, saveGameData, saveGameMapData} from '../actions/game';
@@ -8,7 +9,34 @@ import { WIDTH, HEIGHT } from '../components/game/oop/constants';
 import Game from '../components/game';
 import Spinner from '../components/spinner';
 
+import Grid from '@material-ui/core/Grid';
+
 class GameWrapper extends Component{
+
+
+    state = {
+      firstPlayer: {},
+      secondPlayer: {},
+      render: true
+    }
+
+    setFirstPlayer = (data) => {
+      this.setState({
+        firstPlayer: data
+      });
+    }
+
+    setSecondPlayer = (data) => {
+      this.setState({
+        secondPlayer: data
+      });
+    }
+
+    setRender = (val) => {
+        this.setState({
+          render: val
+        });
+    }
 
     componentDidMount(){
       const canvas = this.refs.canvas;
@@ -37,7 +65,7 @@ class GameWrapper extends Component{
     }
 
     render(){
-      let { players, map, ctx } = this.props.game;
+      let { players, map, ctx, data } = this.props.game;
      
       if(ctx != null){ 
       ctx.beginPath();
@@ -45,12 +73,74 @@ class GameWrapper extends Component{
         ctx.fillStyle = "black";
         ctx.fill();
       }
-      const content = players.isSuccess & map.isSuccess ? <Game gameId={this.props.match.params.gameId} hub={this.props.hubConnection} game={this.props.game} current_user={this.props.user} /> : null;
+      const content = players.isSuccess & map.isSuccess ? <Game setFirstPlayer={this.setFirstPlayer} setSecondPlayer={this.setSecondPlayer} gameId={this.props.match.params.gameId} hub={this.props.hubConnection} game={this.props.game} current_user={this.props.user} /> : null;
       const spinner = players.isPending & map.isPending ? <Spinner /> : null;
       
-      return <div className='mt-2 col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2'>    
+      const gameOver = data != null && data.winnerId != null ? <div>Game Over</div> : null;
+      console.log(data != null ? data.started : null);
+      const renderer = ({ hours, minutes, seconds, completed }) => {
+        if(completed){
+          return <div>Game Over</div>
+        }
+        else{
+            return <div>{minutes}:{seconds} s</div>
+        }
+      }
+
+      const rechargeRender = (props) => {
+ 
+        if(props.api.isCompleted()){
+            return <div>Ready to shoot</div>
+        }
+        else{
+            return <div>Recharged through: {props.total / 1000} s</div>
+        }
+      }
+
+      const renderPlayerInfo = (player) => {
+        console.log('rendering');
+        if(player.info != null){
+          console.log('time');
+          console.log(player.last_shoot + player.recharge_time);
+          return <div>{player.info.nickname}: {player.lives} 
+                                                            </div>
+        }
+        return <div></div>
+    }
+
+
+      return <div>    
+        
+        <Grid container 
+        direction="row"
+        justify="space-between"
+        >
+
+        {data != null ?
+        
+         <> 
+          <Grid item xs={4} className="text-center">
+            {this.state.firstPlayer != {} ? renderPlayerInfo(this.state.firstPlayer) : null}
+          </Grid>
+
+          <Grid item xs={4} className="text-center">
+            <Countdown
+                date={new Date(data.started).getTime() + 600000}
+                renderer={renderer}
+              />
+          </Grid>
+
+          <Grid item xs={4} className="text-center">
+            {this.state.secondPlayer != {} ? renderPlayerInfo(this.state.secondPlayer) : null}
+          </Grid>
+        </>
+        : null}
         {spinner || content}
+
         <canvas ref="canvas" width={WIDTH} height={HEIGHT} />
+
+        </Grid>
+
       </div>
     }
 
