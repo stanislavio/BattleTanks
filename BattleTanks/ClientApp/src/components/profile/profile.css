@@ -1,28 +1,43 @@
-body {
-  margin: 0;
-  padding: 0;
-  background: url("../../photo/10.jpg") top left no-repeat fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: initial;
-  position: relative;
-}
-
-* {
-  box-sizing: border-box;
-}
 .frame-container {
-  margin-left: 15%;
-  margin-top: 5%;
+  margin: 10vh;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .text-container {
-  font-size: 20px;
-  float: left;
   color: white;
-  width: 70%;
+  list-style-type: none;
+  font-size: 20px;
 }
 
 .img-container {
-  width: 10%;
+  border-radius: 20%;
+  width: 20%;
+  box-shadow: 0 0 5px white;
+}
+
+.PrivateTabIndicator-colorPrimary-126 {
+  background-color: white !important;
+}
+
+.tab {
+  color: white !important;
+}
+.tab:focus {
+  outline: 0px;
+  color: white !important;
+}
+.center {
+  width: 30%;
+  margin: auto;
+  margin-top: 5vh;
+}
+
+.MuiTypography-body1 {
+  background: linear-gradient(
+    90deg,
+    rgba(30, 139, 195, 0.2),
+    rgba(255, 192, 203, 0.2)
+  ) !important;
 }

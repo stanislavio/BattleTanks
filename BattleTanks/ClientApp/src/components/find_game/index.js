@@ -5,19 +5,19 @@ import Button from "@material-ui/core/Button";
 import "./find_game.css";
 
 export default class FindGame extends Component {
-  onClick = el => {
+  onClick = (el) => {
     this.props.joinToGame(el, this.refs.tank.value);
   };
 
-  renderGameCart = arr => {
-    return arr.map(el => {
-      var player = el.players.find(x => x.id == this.props.user.id);
+  renderGameCart = (arr) => {
+    return arr.map((el) => {
+      var player = el.players.find((x) => x.id == this.props.user.id);
       if (player == null)
         return (
           <>
             <label for="tanks">Choose a tank:</label>
             <select id="tanks" ref="tank">
-              {this.props.tanks.map(x => (
+              {this.props.tanks.map((x) => (
                 <option value={x.id}>{x.name}</option>
               ))}
             </select>

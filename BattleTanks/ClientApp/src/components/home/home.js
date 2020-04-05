@@ -16,16 +16,13 @@ import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 const StyledButton = withStyles({
   textPrimary: {
-    color: "white"
-  }
+    color: "white",
+  },
 })(Button);
 
 class Home extends Component {
   render() {
-    const {
-      submitting,
-      handleSubmit
-    } = this.props;
+    const { submitting, handleSubmit } = this.props;
     return (
       //className="row width-100 height-100 justify-content-center align-items-center"
       <div className="frame">
@@ -61,17 +58,17 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   tanks: state.tanks,
-  maps: state.maps
+  maps: state.maps,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {};
 };
 
 Home = reduxForm({
-  form: "game"
+  form: "game",
 })(Home);
 
 Home = connect(mapStateToProps, mapDispatchToProps)(Home);
