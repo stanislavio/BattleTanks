@@ -95,6 +95,7 @@ export default class Bullet{
             case UP:
                 x1_coor = Math.floor((this.center_x - this.width / 4 + 1)/this.width); 
                 y1_coor = Math.floor((this.center_y - this.height / 4 + 1)/this.height);
+                x2_coor = Math.floor((this.center_x + this.width / 4 - 1) / this.width);
                 if(x1_coor < 0 || 
                     x2_coor < 0 || 
                     y1_coor < 0 || 
@@ -104,6 +105,9 @@ export default class Bullet{
                     return {colision: true, coor: {x: -1, y: -1}};
                 if(this.map[y1_coor][x1_coor] != 0)
                     return {colision: true, coor: {x: x1_coor, y: y1_coor}};
+                if(this.map[y1_coor][x2_coor] != 0)
+                    return {colision: true, coor: {x: x2_coor, y: y1_coor}};
+                    
                 break; 
             case DOWN:
                 x1_coor = Math.floor((this.center_x - this.width / 4 + 1)/this.width); 

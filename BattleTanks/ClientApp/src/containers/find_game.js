@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import {findGame, joinToGame} from '../actions/game';
+import {findGame, joinToGame, resetFindGame} from '../actions/game';
 import { get_tanks } from '../actions/tanks';
 import Spinner from '../components/spinner';
 import FindGame from '../components/find_game';
@@ -12,6 +12,10 @@ class FindGameWrapper extends Component{
         if(this.props.tanks.data == null){
             this.props.get_tanks();
         }
+    }
+
+    componentWillUnmount(){
+        this.props.reset_find_game();
     }
 
     render(){
@@ -39,6 +43,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+      reset_find_game: () => dispatch(resetFindGame()),
       find_game: () => dispatch(findGame()),
       get_tanks: () => dispatch(get_tanks()),
       join_to_game: (gameId, tankId) => dispatch(joinToGame(gameId, tankId))

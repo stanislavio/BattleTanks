@@ -11,7 +11,7 @@ import Select from "@material-ui/core/Select";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
 import "./home.css";
-import { renderSelectTankField, DefaultLinkBlack } from "../helpers/helpers";
+import { renderSelectTankField, DefaultLinkBlack, renderTextField } from "../helpers/helpers";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 const StyledButton = withStyles({
@@ -22,7 +22,11 @@ const StyledButton = withStyles({
 
 class Home extends Component {
   render() {
-    const { submitting, handleSubmit } = this.props;
+    const {
+      submitting,
+      handleSubmit,
+      loadInfo
+    } = this.props;
     return (
       //className="row width-100 height-100 justify-content-center align-items-center"
       <div className="frame">
@@ -43,6 +47,17 @@ class Home extends Component {
             text={"Select map"}
           />
           <br />
+          <Field
+            className="back"
+            name="Money"
+            component={'input'}
+            type='number'
+            placeholder={"Your Bet"}
+            step='10'
+            min='10'
+            max={this.props.money}
+          />
+          <br />
           <StyledButton
             disabled={submitting}
             type="submit"
@@ -51,6 +66,8 @@ class Home extends Component {
           >
             Create Game
           </StyledButton>
+          <br />
+          {loadInfo.isError ? <div className='error-text'>{loadInfo.data.error}</div> : null}
         </form>
         <DefaultLinkBlack to="/find-game">Find game</DefaultLinkBlack>
       </div>

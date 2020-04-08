@@ -77,7 +77,10 @@ namespace BattleTanks.Mapping
                     {
                         Id = x.TankerId.Value,
                         Position = x.Coordinates
-                    })));
+                    })))
+                .ForMember(dest => dest.Bet,
+                    opts => opts.MapFrom(src => src.Game.Bet))
+                ;
 
 
             CreateMap<Game, GameDto>()

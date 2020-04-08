@@ -10,5 +10,6 @@ namespace BattleTanks.Core.DTOs
         public Guid TankId { get; set; }
         public Guid? MapId { get; set; }
         public Guid? UserId { get; set; }  
+        public int Bet { get; set; }
     }
 }

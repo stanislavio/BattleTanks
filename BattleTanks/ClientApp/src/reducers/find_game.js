@@ -1,7 +1,8 @@
 import {
     FIND_GAME_ERROR,
     FIND_GAME_PENDING,
-    FIND_GAME_SUCCESS
+    FIND_GAME_SUCCESS,
+    RESET_FIND_GAME
  } from "../actions/game";
 import initialState from '../store/initialState';
 
@@ -33,6 +34,8 @@ export const reducer = (
             data: action.payload
         });
         
+    case RESET_FIND_GAME: 
+        return initialState.findGame;
 
     default:
       return state;
