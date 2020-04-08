@@ -131,7 +131,7 @@ class GameWrapper extends Component{
           </Grid>
 
           <Grid item xs={4} className="text-center">
-            {this.state.secondPlayer != {} ? renderPlayerInfo(this.state.secondPlayer) : null}
+            {this.state.secondPlayer != {} && this.state.secondPlayer != null ? renderPlayerInfo(this.state.secondPlayer) : null}
           </Grid>
         </>
         : null}

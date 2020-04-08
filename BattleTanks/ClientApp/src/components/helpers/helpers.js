@@ -188,7 +188,7 @@ export const renderSelectTankField = ({
         id: "age-native-simple"
       }}
     >
-      <option value="">{text}</option>
+      <option >{text}</option>
       {data.map(x => (
         <option key={x.id} value={x.id}>
           {x.name}

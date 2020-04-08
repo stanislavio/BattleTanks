@@ -28,15 +28,29 @@ namespace BattleTanks.Core.Service
 
         public async Task<OperationResult> CreateGame(GameLoadDto model)
         {
+            if (model.Bet <= 0)
+            {
+                return new OperationResult(false, "Bad request", "");
+            }
             var currentOpenGame = _unitOfWork.UserGame.Get("Game").FirstOrDefault(x => x.TankerId == model.UserId && x.Author && x.Game.Finished == DateTime.MinValue);
             if (currentOpenGame != null) return new OperationResult(false, "You have not finished game", "");
             var map = _unitOfWork.MapRepo.Get(model.MapId.Value);
             if (map == null) return new OperationResult(false, "Map not Found", "");
             var tank = _unitOfWork.TankRepo.Get(model.TankId);
             if(tank == null) return new OperationResult(false, "Tank not Found", "");
+
+            var user = _unitOfWork.UserRepo.Get(model.UserId.Value);
+            if (model.Bet > user.Money)
+            {
+                return new OperationResult(false, "You haven't money", "");
+            }
+            user.Money -= model.Bet;
+
             var game = _unitOfWork.GameRepo.Insert(new Game()
             {
-                Map = map
+                Map = map,
+                Bet = model.Bet
+                
             });
             var gamer = _unitOfWork.UserGame.Insert(new UserGame()
             {
@@ -115,6 +129,10 @@ namespace BattleTanks.Core.Service
                 return new OperationResult(false, "You already play", "");
             }
 
+            var user = _unitOfWork.UserRepo.Get(model.UserId.Value);
+
+            user.Money -= game.Bet;
+
             var res = _unitOfWork.UserGame.Insert(new UserGame()
             {
                 TankerId = model.UserId,
@@ -171,8 +189,10 @@ namespace BattleTanks.Core.Service
 
             if (userGame.DiedCount == 5)
             {
-                var game = _unitOfWork.GameRepo.Get().FirstOrDefault(x => x.Id == model.GameId);
+                var game = _unitOfWork.GameRepo.Get("Users").FirstOrDefault(x => x.Id == model.GameId);
                 game.Finished = DateTime.Now;
+                var user = _unitOfWork.UserRepo.Get(game.Users.FirstOrDefault(x => x.TankerId != model.PlayerId).TankerId.Value);
+                user.Money += game.Bet * 2;
             }
 
             await _unitOfWork.SaveAsync();

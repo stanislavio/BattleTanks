@@ -12,6 +12,7 @@ class HomeWrapper extends Component {
     this.props.create_game({
       TankId: val.tankId,
       MapId: val.mapId,
+      Bet: val.Money,
       Online: true
     });
   };
@@ -27,12 +28,13 @@ class HomeWrapper extends Component {
     const { maps } = this.props;
     const content =
       isSuccess & maps.isSuccess ? (
-        <Home onSubmit={this.onSubmit} onCompSubmit={this.ComputerGame} />
+        <Home onSubmit={this.onSubmit} loadInfo={loadInfo} money={this.props.user.money} onCompSubmit={this.ComputerGame} />
       ) : null;
     const spinner =
       isPending | loadInfo.isPending | maps.isPending ? <Spinner /> : null;
 
-    return <>{loadInfo.isError ? loadInfo.data.error : spinner || content}</>;
+    return <> {spinner || content}
+    </>;
   }
 }
 

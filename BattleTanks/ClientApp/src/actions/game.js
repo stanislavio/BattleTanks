@@ -24,6 +24,7 @@ export const CREATEGAME_PENDING = "CREATEGAME_PENDING",
   FIND_GAME_PENDING = "FIND_GAME_PENDING",
   FIND_GAME_SUCCESS = "FIND_GAME_SUCCESS",
   FIND_GAME_ERROR = "FIND_GAME_ERROR",
+  RESET_FIND_GAME = "RESET_FIND_GAME",
   INITIAL_CONNECTION = "INITIAL_CONNECTION",
   RESET_HUB = "RESET_HUB",
   JOINTOGAME_PENDING = "JOINTOGAME_PENDING",
@@ -61,6 +62,12 @@ export function set_canvas(ctx) {
   };
 }
 
+export function resetFindGame(){
+  return dispatch => {
+    dispatch({type: RESET_FIND_GAME});
+  }
+}
+
 export function findGame() {
   return dispatch => {
     dispatch({
@@ -88,6 +95,7 @@ export function createGame(data) {
     dispatch({ type: CREATEGAME_PENDING });
     var res = api_serv.createGame(data);
     res.then(response => {
+      console.log(response);
       if (response.error == null) {
         dispatch({ type: CREATEGAME_SUCCESS, payload: response });
       } else {

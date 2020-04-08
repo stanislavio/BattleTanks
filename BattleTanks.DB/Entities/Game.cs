@@ -17,6 +17,8 @@ namespace BattleTanks.DB.Entities
 
         public string CurrentMapCoordinates { get; set; }
 
+        public int Bet { get; set; }
+
         public List<UserGame> Users { get; set; }
 
     }

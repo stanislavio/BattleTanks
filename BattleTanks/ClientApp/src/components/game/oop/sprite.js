@@ -46,14 +46,14 @@ export default class Sprite {
     this.map = map;
     if (map == null) return;
     if (map == []) return;
-    if (this.x < 0 || this.y < 0) {
+    if (this.x < 0 && this.y < 0) {
       var randomX, randomY;
       do {
         randomX = Math.floor(Math.random() * map.length);
         randomY = Math.floor(Math.random() * map[randomX].length);
       } while (map[randomX][randomY] != 0);
-      this.x = randomX * ICON_W;
-      this.y = randomY * ICON_H;
+      this.x = randomY * ICON_H;
+      this.y = randomX * ICON_W;
       this.center_x = this.x + ICON_W / 2;
       this.center_y = this.y + ICON_H / 2;
     }

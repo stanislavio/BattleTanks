@@ -22,6 +22,8 @@ export default class FindGame extends Component {
               ))}
             </select>
             <br />
+            <div>Bet: {el.bet}</div>
+            <br/>
             <Button onClick={() => this.onClick(el.id)}>
               Play with {el.author.nickname}
             </Button>
