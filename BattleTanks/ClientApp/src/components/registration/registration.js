@@ -10,8 +10,8 @@ import { withStyles } from "@material-ui/core/styles";
 
 const StyledButton = withStyles({
   textPrimary: {
-    color: "white"
-  }
+    color: "white",
+  },
 })(Button);
 
 class Registration extends Component {
@@ -84,19 +84,19 @@ class Registration extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  register: state.register
+const mapStateToProps = (state) => ({
+  register: state.register,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    resetRegister: () => dispatch(resetRegister())
+    resetRegister: () => dispatch(resetRegister()),
   };
 };
 
 Registration = reduxForm({
   form: "registr",
-  validate: validate
+  validate: validate,
 })(Registration);
 
 Registration = connect(mapStateToProps, mapDispatchToProps)(Registration);
