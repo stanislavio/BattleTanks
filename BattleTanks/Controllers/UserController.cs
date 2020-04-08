@@ -87,9 +87,10 @@ namespace BattleTanks.Controllers
         }
 
         [HttpGet("[action]")]
-        public IActionResult Get([FromForm]Guid id)
+        public IActionResult Get([FromQuery]Guid id)
         {
-            return Ok(_userService.GetById(id));
+            var res = _userService.GetById(id);
+            return Ok(_mapper.Map<UserInfo>(res));
         }
     }
 }

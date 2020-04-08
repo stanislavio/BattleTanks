@@ -3,6 +3,8 @@ import { DefaultLinkBlack } from "../helpers/helpers";
 import Spinner from "../spinner";
 import Button from "@material-ui/core/Button";
 import "./find_game.css";
+import Grid from "@material-ui/core/Grid";
+import Card from "../card";
 
 export default class FindGame extends Component {
   onClick = (el) => {
@@ -15,26 +17,36 @@ export default class FindGame extends Component {
       if (player == null)
         return (
           <>
-            <label for="tanks">Choose a tank:</label>
-            <select id="tanks" ref="tank">
-              {this.props.tanks.map((x) => (
-                <option value={x.id}>{x.name}</option>
-              ))}
-            </select>
-            <br />
-            <div>Bet: {el.bet}</div>
-            <br/>
-            <Button onClick={() => this.onClick(el.id)}>
-              Play with {el.author.nickname}
-            </Button>
-            <br />
+            <Grid item xs={4}>
+              <Card
+                img={el.author.photoUrl}
+                title={
+                  <DefaultLinkBlack to={"profile/" + el.author.id}>
+                    {el.author.nickname}{" "}
+                  </DefaultLinkBlack>
+                }
+                body={<p>Bet: {el.bet}</p>}
+              >
+                <label for="tanks">Choose a tank:</label>
+                <select id="tanks" ref="tank">
+                  {this.props.tanks.map((x) => (
+                    <option value={x.id}>{x.name}</option>
+                  ))}
+                </select>
+                <Button onClick={() => this.onClick(el.id)}>
+                  Play with {el.author.nickname}
+                </Button>
+              </Card>
+            </Grid>
           </>
         );
       return (
         <>
-          <DefaultLinkBlack to={"game/" + el.id}>
-            <p>Play with {el.author.nickname}</p>
-          </DefaultLinkBlack>
+          <Grid item xs={4}>
+            <DefaultLinkBlack to={"game/" + el.id}>
+              <p>Play with {el.author.nickname}</p>
+            </DefaultLinkBlack>
+          </Grid>
         </>
       );
     });
@@ -60,7 +72,9 @@ export default class FindGame extends Component {
         {content}
         {error}
         {pending}
-        {!isSuccess & !isPending ? this.renderGameCart(data) : null}
+        <Grid container direction="row" justify="space-between">
+          {!isSuccess & !isPending ? this.renderGameCart(data) : null}
+        </Grid>
       </>
     );
   }

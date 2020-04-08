@@ -69,7 +69,10 @@ const RenderProfileMenu = (props) => {
         {props.user && props.user.id !== null ? (
           <React.Fragment>
             <MenuItem onClick={() => handleClose()}>
-              <Link style={{ textDecoration: "none" }} to={"/profile"}>
+              <Link
+                style={{ textDecoration: "none" }}
+                to={"/profile/" + props.user.id}
+              >
                 Profile
               </Link>
             </MenuItem>

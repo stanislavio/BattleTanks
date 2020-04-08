@@ -1,25 +1,25 @@
 const initialState = {
   user: {
-    id: null
+    id: null,
   },
   loading: {
-    info: []
+    info: [],
   },
   login: {
     isPending: false,
     isError: false,
-    isSuccess: false
+    isSuccess: false,
   },
   register: {
     isPending: false,
     isError: false,
-    isSuccess: false
+    isSuccess: false,
   },
   createGameInfo: {
     isPending: false,
     isError: false,
     isSuccess: false,
-    data: null
+    data: null,
   },
   game: {
     ctx: null,
@@ -27,53 +27,59 @@ const initialState = {
       isPending: true,
       isError: false,
       isSuccess: false,
-      data: []
+      data: [],
     },
     map: {
       isPending: true,
       isError: false,
       isSuccess: false,
-      data: null
+      data: null,
     },
-    data: null
+    data: null,
   },
   tanks: {
     isPending: true,
     isError: false,
     isSuccess: false,
-    data: null
+    data: null,
   },
   admin: {
     isPending: false,
     isError: false,
     isSuccess: false,
-    maps: null
+    maps: null,
   },
   users: {
     isPending: true,
     isError: false,
     isSuccess: false,
-    data: null
+    data: null,
   },
   maps: {
     isPending: true,
     isError: false,
     isSuccess: false,
-    data: null
+    data: null,
   },
   findGame: {
     isPending: true,
     isError: false,
     isSuccess: false,
-    data: null
+    data: null,
   },
   infoStatus: {
     isPending: false,
     isError: false,
     isSuccess: false,
-    data: null
+    data: null,
   },
-  hub: null
+  profile: {
+    isPending: true,
+    isError: false,
+    isSuccess: false,
+    data: null,
+  },
+  hub: null,
 };
 
 export default initialState;

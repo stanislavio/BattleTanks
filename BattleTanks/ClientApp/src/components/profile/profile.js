@@ -9,6 +9,8 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import PropTypes from "prop-types";
+import get_user from "../../actions/profile";
+import Spinner from "../spinner";
 
 const StyledPaper = withStyles({
   root: {
@@ -65,13 +67,13 @@ function CenteredTabs() {
         <Tab className="tab" label="Stats" />
         <Tab className="tab" label="Other" />
       </Tabs>
-      <TabPanel value={value} index={0}>
+      <TabPanel className="tab" value={value} index={0}>
         Item One
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel className="tab" value={value} index={1}>
         Item Two
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel className="tab" value={value} index={2}>
         Item Three
       </TabPanel>
     </StyledPaper>
@@ -79,21 +81,34 @@ function CenteredTabs() {
 }
 
 class Profile extends Component {
+  componentWillMount() {
+    this.props.get_user(this.props.match.params.userId);
+  }
+
   render() {
-    const { nickname, photoUrl, email, age, gender } = this.props.user;
+    const { data } = this.props.profile;
+
+    const { isSuccess, isPending } = this.props.profile;
+
+    const spinner = isPending ? <Spinner /> : null;
 
     return (
       <>
-        <div className="frame-container">
-          <ul className="text-container">
-            <li> User name: {nickname} </li>
-            <li> Email: {email} </li>
-            <li> Age: {age} </li>
-            <li> Gender: {gender ? "Male" : "Female"}</li>
-          </ul>
-          <img className="img-container" src={photoUrl} />
-        </div>
-        <CenteredTabs />
+        {isSuccess ? (
+          <>
+            <div className="frame-container">
+              <ul className="text-container">
+                <li> User name: {data.nickname} </li>
+                <li> Email: {data.email} </li>
+                <li> Age: {data.age} </li>
+                <li> Gender: {data.gender ? "Male" : "Female"}</li>
+              </ul>
+              <img className="img-container" src={data.photoUrl} />
+            </div>
+            <CenteredTabs />
+          </>
+        ) : null}
+        {spinner}
       </>
     );
   }
@@ -101,10 +116,13 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  profile: state.profile,
 });
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    get_user: (userId) => dispatch(get_user(userId)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
