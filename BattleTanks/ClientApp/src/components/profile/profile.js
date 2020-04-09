@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./profile.css";
 import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
 import AppBar from "@material-ui/core/AppBar";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
@@ -17,6 +18,20 @@ const StyledPaper = withStyles({
     background: "rgba(0,0,0,0)",
   },
 })(Paper);
+
+const StyledButton = withStyles({
+  textPrimary: {
+    color: "white",
+  },
+  label: {
+    boxShadow: "0px 2px 20px pink",
+    fontSize: "15px",
+    borderRadius: "15px",
+    padding: "10px",
+    marginBottom: "10px",
+    marginTop: "10px",
+  },
+})(Button);
 
 const useStyles = makeStyles({
   root: {
@@ -104,6 +119,26 @@ class Profile extends Component {
                 <li> Gender: {data.gender ? "Male" : "Female"}</li>
               </ul>
               <img className="img-container" src={data.photoUrl} />
+              {this.props.user.id == data.id ? null : (
+                <div>
+                  <StyledButton
+                    className="follow"
+                    fullWidth={true}
+                    type="submit"
+                    color="primary"
+                  >
+                    Follow
+                  </StyledButton>
+                  <StyledButton
+                    className="follow"
+                    fullWidth={true}
+                    type="submit"
+                    color="primary"
+                  >
+                    Unfollow
+                  </StyledButton>
+                </div>
+              )}
             </div>
             <CenteredTabs />
           </>

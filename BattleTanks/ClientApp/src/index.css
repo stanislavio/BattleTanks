@@ -10,21 +10,20 @@ body {
 }
 
 .default-link {
-  text-decoration: none;
-  color: black;
+  color: white;
 }
-
 .default-link:hover {
+  color: rgb(189, 224, 252);
   text-decoration: none;
+}
+
+.color-link-black {
   color: black;
 }
 
-.color-link-white {
-  color: white;
-}
-
-.color-link-white:hover {
-  color: white;
+.color-link-black:hover {
+  color: rgb(97, 29, 29);
+  text-decoration: none;
 }
 
 body {

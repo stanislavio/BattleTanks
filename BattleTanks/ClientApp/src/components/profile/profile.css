@@ -41,3 +41,13 @@
     rgba(255, 192, 203, 0.2)
   ) !important;
 }
+
+.follow {
+  color: white !important;
+  border-style: solid !important;
+  border-color: red !important;
+}
+.follow:focus {
+  outline: 0px;
+  color: white !important;
+}

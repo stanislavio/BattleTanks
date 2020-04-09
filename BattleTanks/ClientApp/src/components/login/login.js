@@ -12,8 +12,8 @@ import { withStyles } from "@material-ui/core/styles";
 
 const StyledButton = withStyles({
   textPrimary: {
-    color: "white"
-  }
+    color: "white",
+  },
 })(Button);
 
 class Login extends Component {
@@ -78,19 +78,19 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  login: state.login
+const mapStateToProps = (state) => ({
+  login: state.login,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    resetLogin: () => dispatch(resetLogin())
+    resetLogin: () => dispatch(resetLogin()),
   };
 };
 
 Login = reduxForm({
   form: "login",
-  validate: validate
+  validate: validate,
 })(Login);
 
 Login = connect(mapStateToProps, mapDispatchToProps)(Login);

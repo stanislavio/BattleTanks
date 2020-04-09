@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { DefaultLinkBlack } from "../helpers/helpers";
+import { DefaultLinkBlack, DefaultLink } from "../helpers/helpers";
 import Spinner from "../spinner";
 import Button from "@material-ui/core/Button";
 import "./find_game.css";
@@ -21,9 +21,12 @@ export default class FindGame extends Component {
               <Card
                 img={el.author.photoUrl}
                 title={
-                  <DefaultLinkBlack to={"profile/" + el.author.id}>
+                  <DefaultLink
+                    className="font-color"
+                    to={"profile/" + el.author.id}
+                  >
                     {el.author.nickname}{" "}
-                  </DefaultLinkBlack>
+                  </DefaultLink>
                 }
                 body={<p>Bet: {el.bet}</p>}
               >

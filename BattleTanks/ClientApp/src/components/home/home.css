@@ -31,14 +31,6 @@
   margin-top: 30px;
   /* transform: translate(-50%, -50%); */
 }
-
-.default-link {
-  color: white;
-}
-.default-link:hover {
-  color: rgba(232, 213, 241, 0.6);
-}
-
 .back {
   background-color: white;
 }
@@ -59,5 +51,9 @@
 .error-text {
   color: red;
   font-size: 24px;
-  text-align: center;
+}
+
+.MuiFormControl-root {
+  width: 60%;
+  float: left;
 }

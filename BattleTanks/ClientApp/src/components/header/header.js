@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { setLogout } from "../../actions/login";
 import { connect } from "react-redux";
 import "./header.css";
+import { DefaultLinkBlack } from "../helpers/helpers";
 
 const StyledAppBar = withStyles({
   colorPrimary: {
@@ -101,9 +102,10 @@ function Header(props) {
       <StyledAppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Link className="Logotype" to="/home">
-              Battle-Tanks
-            </Link>
+            <DefaultLinkBlack className="Logotype" to="/home">
+              Battle-Tanks  | 
+            </DefaultLinkBlack>
+            <DefaultLinkBlack to="/find-game"> Find game</DefaultLinkBlack>
           </Typography>
           <RenderProfileMenu
             user={props.user}

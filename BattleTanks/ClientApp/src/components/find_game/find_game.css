@@ -11,9 +11,6 @@
   ) !important;
 }
 
-/* style={{
-    margin: "350px auto",
-    textAlign: "center",
-    borderRadius: "100px",
-    background: "red"
-  }} */
+.font-color {
+  color: black !important;
+}
