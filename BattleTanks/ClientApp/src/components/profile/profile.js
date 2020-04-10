@@ -12,6 +12,7 @@ import Box from "@material-ui/core/Box";
 import PropTypes from "prop-types";
 import get_user from "../../actions/profile";
 import Spinner from "../spinner";
+import { Link } from "react-router-dom";
 
 const StyledPaper = withStyles({
   root: {
@@ -118,7 +119,17 @@ class Profile extends Component {
                 <li> Age: {data.age} </li>
                 <li> Gender: {data.gender ? "Male" : "Female"}</li>
               </ul>
-              <img className="img-container" src={data.photoUrl} />
+
+              {this.props.user.id == data.id ? (
+                <Link to="/edit_profile" className="img-container">
+                  <img className="img-adjust edit-prof" src={data.photoUrl} />{" "}
+                </Link>
+              ) : (
+                <>
+                  <img className="img-adjust" src={data.photoUrl} />{" "}
+                </>
+              )}
+
               {this.props.user.id == data.id ? null : (
                 <div>
                   <StyledButton

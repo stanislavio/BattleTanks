@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import register from "../actions/register";
-import Registration from "../components/registration";
+import EditProfile from "../components/edit_profile";
 
-class RegistrationWrapper extends Component {
+class EditProfileWrapper extends Component {
   onSubmit = (val) => {
     this.props.register({
       Nickname: val.nickname,

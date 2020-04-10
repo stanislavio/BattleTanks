@@ -94,6 +94,16 @@ const RenderProfileMenu = (props) => {
   );
 };
 
+const SearchPanel = () => {
+  return (
+    <input
+      type="text"
+      className="search-panel"
+      placeholder="Find your friends"
+    />
+  );
+};
+
 function Header(props) {
   const classes = useStyles();
 
@@ -107,6 +117,7 @@ function Header(props) {
             </DefaultLinkBlack>
             <DefaultLinkBlack to="/find-game"> Find game</DefaultLinkBlack>
           </Typography>
+          <SearchPanel />
           <RenderProfileMenu
             user={props.user}
             signOut={props.signOut}

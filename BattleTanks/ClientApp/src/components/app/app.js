@@ -15,6 +15,7 @@ import AddMapWrapper from "../../containers/add_map";
 import TanksWrapper from "../../containers/tanks";
 import AddTankWrapper from "../../containers/add_tank";
 import FindGameWrapper from "../../containers/find_game";
+import EditProfile from "../../components/edit_profile";
 import Users from "../users";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "../login/login.css";
@@ -35,6 +36,7 @@ class App extends Component {
               }
             />
             <Route exact path="/" render={() => <Redirect to="/home" />} />
+            <Route path="/edit-profile" component={EditProfile} />
             <Route path="/admin" component={AdminPanel} />
             <Route path="/admin-users" component={Users} />
             <Route path="/maps" component={MapsWrapper} />
