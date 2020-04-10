@@ -32,6 +32,10 @@ class Home extends Component {
       <div className="frame">
         <form className="text-center w-100" onSubmit={handleSubmit}>
           <Field
+            style={{
+              marginRight: "1vw",
+              borderRadius: "10px",
+            }}
             className="back"
             name="tankId"
             component={renderSelectTankField}
@@ -40,7 +44,12 @@ class Home extends Component {
           />
           <Field
             className="back"
-            style={{ width: "30%", marginTop: "17px", borderRadius: "5px" }}
+            style={{
+              width: "30%",
+              marginTop: "17px",
+              borderRadius: "10px",
+              marginRight: "1vw",
+            }}
             name="Money"
             component={"input"}
             type="number"
@@ -49,8 +58,10 @@ class Home extends Component {
             min="10"
             max={this.props.money}
           />
-          <br />
           <Field
+            style={{
+              borderRadius: "10px",
+            }}
             className="back"
             name="mapId"
             component={renderSelectTankField}
@@ -60,7 +71,7 @@ class Home extends Component {
           <br />
           <StyledButton
             disabled={submitting}
-            style={{ marginTop: "-5px" }}
+            style={{ marginTop: "20px" }}
             type="submit"
             value="New Game"
             color="primary"
