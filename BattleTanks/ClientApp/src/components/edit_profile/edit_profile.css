@@ -1,0 +1,12 @@
+.hove:hover {
+  outline: 0px !important;
+}
+.form-field {
+  margin-left: 20vw;
+  margin-top: 10vh;
+}
+.image-right {
+  float: right;
+  margin-top: 10vh;
+  width: 30%;
+}

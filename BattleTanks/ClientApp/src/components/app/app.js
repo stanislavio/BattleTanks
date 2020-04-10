@@ -36,7 +36,7 @@ class App extends Component {
               }
             />
             <Route exact path="/" render={() => <Redirect to="/home" />} />
-            <Route path="/edit-profile" component={EditProfile} />
+            <Route path="/edit_profile" component={EditProfile} />
             <Route path="/admin" component={AdminPanel} />
             <Route path="/admin-users" component={Users} />
             <Route path="/maps" component={MapsWrapper} />

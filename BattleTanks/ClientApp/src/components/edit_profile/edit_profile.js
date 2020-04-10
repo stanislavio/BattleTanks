@@ -1,12 +1,32 @@
 import React, { Component } from "react";
 import { reduxForm, Field } from "redux-form";
-import renderTextField from "../fields/input_text_field";
 import { connect } from "react-redux";
 import validate from "../fields/validate";
 import Button from "@material-ui/core/Button";
-import { resetRegister } from "../../actions/register";
 import "./edit_profile.css";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
+import { TextField } from "@material-ui/core";
+
+const ValidationTextField = withStyles({
+  root: {
+    "& > *": {
+      color: "white",
+      marginTop: "1vh",
+    },
+    "& input:valid + fieldset": {
+      borderColor: "green",
+      borderWidth: 2,
+    },
+    "& input:invalid + fieldset": {
+      borderColor: "red",
+      borderWidth: 2,
+    },
+    "& input:valid:focus + fieldset": {
+      borderLeftWidth: 6,
+      padding: "4px !important", // override inline-style
+    },
+  },
+})(TextField);
 
 const StyledButton = withStyles({
   textPrimary: {
@@ -15,68 +35,53 @@ const StyledButton = withStyles({
 })(Button);
 
 class EditProfile extends Component {
-  componentWillUnmount = () => {
-    this.props.resetRegister();
-  };
-
   render() {
-    const { pristine, reset, submitting, handleSubmit } = this.props;
-    const { isSuccess, isError, isPending } = this.props.register;
-
+    const { handleSubmit } = this.props;
     return (
       <>
-        <form className="login-form text-center" onSubmit={handleSubmit}>
-          <Field
-            className="login-field mt-2"
-            name="nickname"
-            label="Nickname"
-            component={renderTextField}
-            type="text"
+        <form className="form-field" onSubmit={handleSubmit}>
+          <img className="image-right" src={""} />{" "}
+          <ValidationTextField
+            className="hove"
+            label="Username"
+            required
+            variant="outlined"
+            defaultValue=""
+            id="validation-outlined-input"
           />
-
-          <Field
-            className="login-field mt-2"
-            name="email"
+          <br />
+          <ValidationTextField
             label="Email"
-            component={renderTextField}
-            type="text"
+            required
+            variant="outlined"
+            defaultValue=""
+            id="validation-outlined-input"
           />
-
-          <Field
-            className="login-field mt-2"
-            name="age"
+          <br />
+          <ValidationTextField
             label="Age"
-            component={renderTextField}
-            type="number"
+            required
+            variant="outlined"
+            defaultValue=""
+            id="validation-outlined-input"
           />
-
-          <Field
-            name="password"
-            label="Password"
-            className="login-field mt-2"
-            component={renderTextField}
-            type="password"
+          <br />
+          <ValidationTextField
+            label="Gender"
+            required
+            variant="outlined"
+            defaultValue=""
+            id="validation-outlined-input"
           />
-
-          <Field
-            name="repeat_password"
-            label="Confirm password"
-            className="login-field mt-2"
-            component={renderTextField}
-            type="password"
-          />
-
-          <p className="text-danger mt-2">{isError}</p>
-
+          <br />
           <StyledButton
+            style={{ marginTop: "5vh" }}
             className="text"
-            fullWidth={true}
-            disabled={pristine || submitting}
             type="submit"
-            value="EditProfile"
+            value="Registration"
             color="primary"
           >
-            Sign Up
+            Change profile data
           </StyledButton>
         </form>
       </>
@@ -84,21 +89,4 @@ class EditProfile extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  register: state.register,
-});
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    resetRegister: () => dispatch(resetRegister()),
-  };
-};
-
-EditProfile = reduxForm({
-  form: "registr",
-  validate: validate,
-})(EditProfile);
-
-EditProfile = connect(mapStateToProps, mapDispatchToProps)(EditProfile);
-
-export default EditProfile;
+export default connect()(EditProfile);
