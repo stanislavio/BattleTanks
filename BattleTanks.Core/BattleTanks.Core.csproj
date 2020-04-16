@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Validate\**" />
+    <EmbeddedResource Remove="Validate\**" />
+    <None Remove="Validate\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="FluentValidation" Version="8.5.0" />
@@ -24,10 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BattleTanks.DB\BattleTanks.DB.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Validate\" />
   </ItemGroup>
 
   <ItemGroup>
