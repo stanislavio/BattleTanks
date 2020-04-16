@@ -1,23 +1,31 @@
-
-.default-link{
-    text-decoration: none;    
-    color: black;
+body {
+  margin: 0;
+  padding: 0;
+  background: url("../src/photo/10.jpg") top left no-repeat fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: initial;
+  position: relative;
+  color: white;
 }
 
-
-.default-link:hover{
-    text-decoration: none;    
-    color: black;
+.default-link {
+  color: white;
+}
+.default-link:hover {
+  color: rgb(189, 224, 252);
+  text-decoration: none;
 }
 
-.color-link-white{
-    color: white;
+.color-link-black {
+  color: black;
 }
 
-.color-link-white:hover{
-    color: white;
+.color-link-black:hover {
+  color: rgb(97, 29, 29);
+  text-decoration: none;
 }
 
-body{
-    color: white;
+body {
+  color: white;
 }

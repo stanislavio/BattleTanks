@@ -1,8 +1,11 @@
-.Logotype{
-    text-decoration: none;
-    color: white;
+.Logotype {
+  text-decoration: none;
+  color: white;
 }
-.Logotype:hover{
-    color: #73adad;
-    text-decoration: none;
+.Logotype:hover {
+  color: #73adad;
+  text-decoration: none;
+}
+.search-panel {
+  width: 10%;
 }

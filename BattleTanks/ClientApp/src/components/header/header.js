@@ -11,31 +11,32 @@ import { Link } from "react-router-dom";
 import { setLogout } from "../../actions/login";
 import { connect } from "react-redux";
 import "./header.css";
+import { DefaultLinkBlack } from "../helpers/helpers";
 
 const StyledAppBar = withStyles({
   colorPrimary: {
     background:
-      "linear-gradient(90deg, rgba(30, 139, 195, 0.2), rgba(255,192,203,0.2))"
-  }
+      "linear-gradient(90deg, rgba(30, 139, 195, 0.2), rgba(255,192,203,0.2))",
+  },
 })(AppBar);
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 }));
 
-const RenderProfileMenu = props => {
+const RenderProfileMenu = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
-  const handleMenu = event => {
+  const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -49,19 +50,19 @@ const RenderProfileMenu = props => {
 
   return (
     <div>
-      <IconButton onClick={event => handleMenu(event)} color="inherit">
+      <IconButton onClick={(event) => handleMenu(event)} color="inherit">
         <AccountCircle />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: "top",
-          horizontal: "right"
+          horizontal: "right",
         }}
         keepMounted
         transformOrigin={{
           vertical: "top",
-          horizontal: "right"
+          horizontal: "right",
         }}
         open={open}
         onClose={() => handleClose()}
@@ -69,12 +70,17 @@ const RenderProfileMenu = props => {
         {props.user && props.user.id !== null ? (
           <React.Fragment>
             <MenuItem onClick={() => handleClose()}>
-              <Link style={{ textDecoration: "none" }} to={"/profile"}>
+              <Link
+                style={{ textDecoration: "none" }}
+                to={"/profile/" + props.user.id}
+              >
                 Profile
               </Link>
             </MenuItem>
 
-            <MenuItem onClick={() => signOut()}>Sign Out</MenuItem>
+            <MenuItem style={{ color: "#007bff" }} onClick={() => signOut()}>
+              Sign Out
+            </MenuItem>
           </React.Fragment>
         ) : (
           <MenuItem onClick={() => handleClose()}>
@@ -88,6 +94,16 @@ const RenderProfileMenu = props => {
   );
 };
 
+const SearchPanel = () => {
+  return (
+    <input
+      type="text"
+      className="search-panel"
+      placeholder="Find your friends"
+    />
+  );
+};
+
 function Header(props) {
   const classes = useStyles();
 
@@ -96,10 +112,12 @@ function Header(props) {
       <StyledAppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            <Link className="Logotype" to="/home">
-              Battle-Tanks
-            </Link>
+            <DefaultLinkBlack className="Logotype" to="/home">
+              Battle-Tanks  | 
+            </DefaultLinkBlack>
+            <DefaultLinkBlack to="/find-game"> Find game</DefaultLinkBlack>
           </Typography>
+          <SearchPanel />
           <RenderProfileMenu
             user={props.user}
             signOut={props.signOut}
@@ -110,13 +128,13 @@ function Header(props) {
   );
 }
 
-const mapStateToProps = state => ({
-  user: state.user
+const mapStateToProps = (state) => ({
+  user: state.user,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    signOut: () => dispatch(setLogout())
+    signOut: () => dispatch(setLogout()),
   };
 };
 

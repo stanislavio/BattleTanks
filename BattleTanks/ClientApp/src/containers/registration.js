@@ -4,12 +4,12 @@ import register from "../actions/register";
 import Registration from "../components/registration";
 
 class RegistrationWrapper extends Component {
-  onSubmit = val => {
+  onSubmit = (val) => {
     this.props.register({
       Nickname: val.nickname,
       Email: val.email,
       Age: val.age,
-      Password: val.password
+      Password: val.password,
     });
   };
 
@@ -31,16 +31,16 @@ class RegistrationWrapper extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     user: state.user,
-    registration: state.register
+    registration: state.register,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    register: data => dispatch(register(data))
+    register: (data) => dispatch(register(data)),
   };
 };
 export default connect(

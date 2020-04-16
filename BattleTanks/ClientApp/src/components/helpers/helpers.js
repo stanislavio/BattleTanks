@@ -24,15 +24,15 @@ export const radioButton = ({ input, ...rest }) => (
   </FormControl>
 );
 
-export const DefaultLink = props => {
+export const DefaultLink = (props) => {
   return (
-    <Link className="default-link color-link-white" to={props.to}>
+    <Link className="color-link-black" to={props.to}>
       {props.children}
     </Link>
   );
 };
 
-export const DefaultLinkBlack = props => {
+export const DefaultLinkBlack = (props) => {
   return (
     <Link className="default-link" to={props.to}>
       {props.children}
@@ -40,7 +40,7 @@ export const DefaultLinkBlack = props => {
   );
 };
 
-export const validate = values => {
+export const validate = (values) => {
   const errors = {};
   const requiredFields = [
     "email",
@@ -56,9 +56,9 @@ export const validate = values => {
     "newPassword",
     "repeatPassword",
     "Birthday",
-    "UserName"
+    "UserName",
   ];
-  requiredFields.forEach(field => {
+  requiredFields.forEach((field) => {
     if (!values[field]) {
       errors[field] = "Required";
     }
@@ -88,12 +88,12 @@ export const validate = values => {
   return errors;
 };
 
-export const maxLength = max => value =>
+export const maxLength = (max) => (value) =>
   value && value.length > max ? `Must be ${max} characters or less` : undefined;
 
 export const maxLength15 = maxLength(15);
 
-export const minLength = min => value =>
+export const minLength = (min) => (value) =>
   value && value.length < min ? `Must be ${min} characters or more` : undefined;
 
 export const minLength2 = minLength(6);
@@ -142,9 +142,9 @@ export const renderTextField = ({
   />
 );
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const asyncValidate = values => {
+const asyncValidate = (values) => {
   return sleep(1000).then(() => {
     if (["foo@foo.com", "bar@bar.com"].includes(values.email)) {
       throw { email: "Email already Exists" };
@@ -185,11 +185,11 @@ export const renderSelectTankField = ({
       {...custom}
       inputProps={{
         name: text.toLowerCase() + "Id",
-        id: "age-native-simple"
+        id: "age-native-simple",
       }}
     >
-      <option >{text}</option>
-      {data.map(x => (
+      <option>{text}</option>
+      {data.map((x) => (
         <option key={x.id} value={x.id}>
           {x.name}
         </option>

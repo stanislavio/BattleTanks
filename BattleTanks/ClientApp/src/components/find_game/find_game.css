@@ -1,19 +1,16 @@
 .framePlayers {
-  text-align: center;
-  border-radius: 100px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.973);
-  margin: 350px auto;
-  width: 20%;
+  text-align: center !important;
+  border-radius: 100px !important;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.973) !important;
+  margin: 350px auto !important;
+  width: 20% !important;
   background: linear-gradient(
     90deg,
     rgba(30, 139, 195, 0.2),
     rgba(255, 192, 203, 0.2)
-  );
+  ) !important;
 }
 
-/* style={{
-    margin: "350px auto",
-    textAlign: "center",
-    borderRadius: "100px",
-    background: "red"
-  }} */
+.font-color {
+  color: black !important;
+}

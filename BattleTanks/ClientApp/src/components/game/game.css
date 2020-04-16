@@ -1,29 +1,29 @@
-.img_hidden{
-    display: none;
+.img_hidden {
+  display: none;
 }
 
-.game-pause{
-    position: absolute;
-    z-index: 100;
-    font-size: 40px;
-    background: rgba(0,0,0, 0.5);
-    padding: 23.3vh 43.2vw;
+.game-pause {
+  position: absolute;
+  z-index: 100;
+  font-size: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 33vh 45.5vw;
 }
 
-.game-info-header{
-    display: flex;
-    width: 100%;
+.game-info-header {
+  display: flex;
+  width: 100%;
 }
 
-.w-30{
-    width: 30%;
-    padding: 0;
+.w-30 {
+  width: 30%;
+  padding: 0;
 }
 
-.text-center{
-    text-align: center;
+.text-center {
+  text-align: center;
 }
 
-.text-right{
-    text-align: right;
+.text-right {
+  text-align: right;
 }
