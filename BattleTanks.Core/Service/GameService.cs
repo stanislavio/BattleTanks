@@ -10,6 +10,7 @@ using BattleTanks.Core.Infrastructure;
 using BattleTanks.Core.IService;
 using BattleTanks.DB.Entities;
 using BattleTanks.DB.IRepo;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BattleTanks.Core.Service
 {
@@ -77,9 +78,15 @@ namespace BattleTanks.Core.Service
             return _mapper.Map<IEnumerable<GameDto>>(res);
         }
 
+        public IEnumerable<GamePreviewDto> GetOpenedGames(Guid userId)
+        {
+            var games = _unitOfWork.UserGame.Get("Tanker.Photo,Game.Users").Where(x => x.TankerId == userId && x.Game.Finished == DateTime.MinValue);
+            return _mapper.Map<IEnumerable<GamePreviewDto>>(games.AsEnumerable());
+        }
+
         public IEnumerable<GamePreviewDto> FindGame()
         {                             
-            var games = _unitOfWork.UserGame.Get("Tanker.Photo,Game.Users").Where(x => x.Author);
+            var games = _unitOfWork.UserGame.Get("Tanker.Photo,Game.Users").Where(x => x.Author && x.Game.Users.Count < 2);
             return _mapper.Map<IEnumerable<GamePreviewDto>>(games.AsEnumerable());
         }
 

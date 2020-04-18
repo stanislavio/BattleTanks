@@ -72,6 +72,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:BattleTanks.Controllers.GameController.GetOpenedGames(System.Guid)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:BattleTanks.Controllers.MapController">
             <summary>
             

@@ -16,5 +16,7 @@ namespace BattleTanks.Core.IService
         Task<OperationResult> ChangeAvatar(Guid uId, IFormFile avatar);
         IEnumerable<UserInfo> GetUsers();
         Task<OperationResult> Update(UserDto model);
+        Task<OperationResult> Follow(FriendDto model);
+        List<UserInfo> GetFriends(Guid userId);
     }
 }

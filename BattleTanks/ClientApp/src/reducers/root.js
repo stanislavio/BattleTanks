@@ -15,6 +15,7 @@ import * as Hub from "./hub";
 import * as InfoStatus from "./infoStatus";
 import * as createGameInfo from "./createGameInfo";
 import * as Profile from "./profile";
+import * as MyGames from './myGames';
 
 const rootReducers = {
   routing: routerReducer,
@@ -32,6 +33,7 @@ const rootReducers = {
   infoStatus: InfoStatus.reducer,
   createGameInfo: createGameInfo.reducer,
   profile: Profile.reducer,
+  myGames: MyGames.reducer,
 };
 
 export default rootReducers;
