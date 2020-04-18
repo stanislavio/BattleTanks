@@ -3,6 +3,10 @@ export default class BattleTanksService {
 
   //Get methods
 
+  getOpenedGames = async (userId) => {
+    return await this.getResource("game/getOpenedGames?userId=" + userId);
+  }
+
   getUsers = async () => {
     return await this.getResource("user/all");
   };

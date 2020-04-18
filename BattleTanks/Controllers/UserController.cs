@@ -89,8 +89,26 @@ namespace BattleTanks.Controllers
         [HttpGet("[action]")]
         public IActionResult Get([FromQuery]Guid id)
         {
-            var res = _userService.GetById(id);
-            return Ok(_mapper.Map<UserInfo>(res));
+            var res = _mapper.Map<UserInfo>(_userService.GetById(id));
+            res.Friends = _userService.GetFriends(id);
+            return Ok(res);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Follow([FromQuery] Guid userId)
+        {
+            var currentUser = this.GetCurrentUser(HttpContext.User);
+            var res = await _userService.Follow(new FriendDto()
+            {
+                For = userId,
+                Who = currentUser.Id
+            });
+            if (res.Successed)
+            {
+                return Ok();
+            }
+
+            return BadRequest(res.Message);
         }
     }
 }

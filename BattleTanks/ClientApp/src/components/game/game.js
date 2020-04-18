@@ -50,8 +50,8 @@ export default class Game extends Component{
             this.props.hub.on('ReceiveOnline', (data) => {
                 const players = this.props.game.players.data;
                 let player = players.find((x) => (x.info.id == data));
+                if(player != null)
                 player.info.online = true;
-
             });
 
             this.props.hub.on('StartGame', (data) => {

@@ -7,13 +7,13 @@ import Grid from "@material-ui/core/Grid";
 import Card from "../card";
 
 export default class FindGame extends Component {
-  onClick = (el) => {
+  onClick = el => {
     this.props.joinToGame(el, this.refs.tank.value);
   };
 
-  renderGameCart = (arr) => {
-    return arr.map((el) => {
-      var player = el.players.find((x) => x.id == this.props.user.id);
+  renderGameCart = arr => {
+    return arr.map(el => {
+      var player = el.players.find(x => x.id == this.props.user.id);
       if (player == null)
         return (
           <>
@@ -32,7 +32,7 @@ export default class FindGame extends Component {
               >
                 <label for="tanks">Choose a tank:</label>
                 <select id="tanks" ref="tank">
-                  {this.props.tanks.map((x) => (
+                  {this.props.tanks.map(x => (
                     <option value={x.id}>{x.name}</option>
                   ))}
                 </select>
@@ -43,6 +43,28 @@ export default class FindGame extends Component {
             </Grid>
           </>
         );
+      return (
+        <>
+        <Grid item xs={4}>
+              <Card
+                img={el.author.photoUrl}
+                title={
+                  <DefaultLink
+                    className="font-color"
+                    to={"profile/" + el.author.id}
+                  >
+                    {el.author.nickname}{" "}
+                  </DefaultLink>
+                }
+                body={<p>Bet: {el.bet}</p>}
+              >
+              <DefaultLinkBlack to={"game/" + el.id}>
+                <p>Go to game</p>
+              </DefaultLinkBlack>
+              </Card>
+            </Grid>
+        </>
+      );
     });
   };
 

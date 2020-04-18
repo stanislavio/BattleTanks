@@ -79,6 +79,12 @@ const initialState = {
     isSuccess: false,
     data: null,
   },
+  myGames:{
+    isPending: true,
+    isError: false,
+    isSuccess: false,
+    data: null,
+  },
   hub: null,
 };
 
