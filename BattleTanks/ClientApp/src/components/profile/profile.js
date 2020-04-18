@@ -16,13 +16,13 @@ import { Link } from "react-router-dom";
 
 const StyledPaper = withStyles({
   root: {
-    background: "rgba(0,0,0,0)",
-  },
+    background: "rgba(0,0,0,0)"
+  }
 })(Paper);
 
 const StyledButton = withStyles({
   textPrimary: {
-    color: "white",
+    color: "white"
   },
   label: {
     boxShadow: "0px 2px 20px pink",
@@ -30,14 +30,14 @@ const StyledButton = withStyles({
     borderRadius: "15px",
     padding: "10px",
     marginBottom: "10px",
-    marginTop: "10px",
-  },
+    marginTop: "10px"
+  }
 })(Button);
 
 const useStyles = makeStyles({
   root: {
-    flexGrow: 1,
-  },
+    flexGrow: 1
+  }
 });
 
 function TabPanel(props) {
@@ -60,7 +60,7 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired
 };
 
 function CenteredTabs() {
@@ -160,14 +160,14 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   user: state.user,
-  profile: state.profile,
+  profile: state.profile
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    get_user: (userId) => dispatch(get_user(userId)),
+    get_user: userId => dispatch(get_user(userId))
   };
 };
 

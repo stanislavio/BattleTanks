@@ -14,14 +14,14 @@ import "./home.css";
 import {
   renderSelectTankField,
   DefaultLinkBlack,
-  renderTextField,
+  renderTextField
 } from "../helpers/helpers";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 
 const StyledButton = withStyles({
   textPrimary: {
-    color: "white",
-  },
+    color: "white"
+  }
 })(Button);
 
 class Home extends Component {
@@ -34,7 +34,7 @@ class Home extends Component {
           <Field
             style={{
               marginRight: "1vw",
-              borderRadius: "10px",
+              borderRadius: "10px"
             }}
             className="back"
             name="tankId"
@@ -48,7 +48,7 @@ class Home extends Component {
               width: "30%",
               marginTop: "17px",
               borderRadius: "10px",
-              marginRight: "1vw",
+              marginRight: "1vw"
             }}
             name="Money"
             component={"input"}
@@ -60,7 +60,7 @@ class Home extends Component {
           />
           <Field
             style={{
-              borderRadius: "10px",
+              borderRadius: "10px"
             }}
             className="back"
             name="mapId"
@@ -88,17 +88,17 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   tanks: state.tanks,
-  maps: state.maps,
+  maps: state.maps
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {};
 };
 
 Home = reduxForm({
-  form: "game",
+  form: "game"
 })(Home);
 
 Home = connect(mapStateToProps, mapDispatchToProps)(Home);
