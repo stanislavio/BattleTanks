@@ -30,7 +30,7 @@ export default class FindGame extends Component {
                 title={
                   <DefaultLink
                     className="font-color"
-                    to={"profile/" + el.author.id}
+                    to={"/profile/" + el.author.id}
                   >
                     {el.author.nickname}{" "}
                   </DefaultLink>
@@ -60,14 +60,14 @@ export default class FindGame extends Component {
               title={
                 <DefaultLink
                   className="font-color"
-                  to={"profile/" + el.author.id}
+                  to={"/profile/" + el.author.id}
                 >
                   {el.author.nickname}{" "}
                 </DefaultLink>
               }
               body={<p>Bet: {el.bet}</p>}
             >
-              <DefaultLink to={"game/" + el.id}>
+              <DefaultLink to={"/game/" + el.id}>
                 <p>Go to game</p>
               </DefaultLink>
             </Card>
@@ -84,7 +84,7 @@ export default class FindGame extends Component {
 
     const content = isSuccess ? (
       <div>
-        <DefaultLinkBlack to={"game/" + this.props.info.data}>
+        <DefaultLinkBlack to={"/game/" + this.props.info.data}>
           Go to game
         </DefaultLinkBlack>
       </div>
@@ -97,7 +97,7 @@ export default class FindGame extends Component {
         {content}
         {error}
         {pending}
-        <Grid container direction="row" justify="space-between">
+        <Grid container direction="row" justify="space-between  ">
           {!isSuccess & !isPending ? this.renderGameCart(data) : null}
         </Grid>
       </>

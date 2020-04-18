@@ -12,7 +12,10 @@ import Box from "@material-ui/core/Box";
 import PropTypes from "prop-types";
 import get_user, { getOpenedGames } from "../../actions/profile";
 import Spinner from "../spinner";
+import { DefaultLink } from "../helpers/helpers";
 import { Link } from "react-router-dom";
+import Card from "../card";
+import Grid from "@material-ui/core/Grid";
 
 const StyledPaper = withStyles({
   root: {
@@ -70,6 +73,27 @@ function CenteredTabs(props) {
     setValue(newValue);
   };
 
+  const renderFriendCart = (arr) => {
+    if (arr == null)
+      return <p className="text-center">You don't have friends yet</p>;
+    return arr.map((el) => {
+      return (
+        <>
+          <Grid item xs={4} className="item">
+            <Card
+              img={el.photoUrl}
+              title={
+                <DefaultLink className="font-color" to={"/profile/" + el.id}>
+                  {el.nickname}{" "}
+                </DefaultLink>
+              }
+            ></Card>
+          </Grid>
+        </>
+      );
+    });
+  };
+
   const { isPending, isError, isSuccess, data } = props.games;
 
   return (
@@ -86,7 +110,7 @@ function CenteredTabs(props) {
         <Tab className="tab" label="Stats" />
       </Tabs>
       <TabPanel className="tab" value={value} index={0}>
-        Item One
+        <Grid container> {renderFriendCart(props.profile.friends)} </Grid>
       </TabPanel>
       <TabPanel className="tab" value={value} index={1}>
         {isPending ? <Spinner /> : null}
@@ -155,7 +179,10 @@ class Profile extends Component {
                 </div>
               )}
             </div>
-            <CenteredTabs games={this.props.myGames} />
+            <CenteredTabs
+              games={this.props.myGames}
+              profile={this.props.profile.data}
+            />
           </>
         ) : null}
         {spinner}
