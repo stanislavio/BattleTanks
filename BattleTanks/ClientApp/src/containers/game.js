@@ -46,6 +46,9 @@ class GameWrapper extends Component{
       const { gameId } = this.props.match.params;
       this.props.set_players(gameId);
       this.props.set_game(gameId);
+      this.props.hubConnection.on('ReceiveOnline', (data) => {
+        this.props.set_players(gameId);
+      });
     }
 
     componentWillUnmount(){
@@ -119,18 +122,11 @@ class GameWrapper extends Component{
         {data != null ?
         
          <> 
-          <Grid item xs={4} className="text-center">
+          <Grid item xs={6} className="text-center">
             {this.state.firstPlayer != {} ? renderPlayerInfo(this.state.firstPlayer) : null}
           </Grid>
 
-          <Grid item xs={4} className="text-center">
-            <Countdown
-                date={new Date(data.started).getTime() + 600000}
-                renderer={renderer}
-              />
-          </Grid>
-
-          <Grid item xs={4} className="text-center">
+          <Grid item xs={6} className="text-center">
             {this.state.secondPlayer != {} && this.state.secondPlayer != null ? renderPlayerInfo(this.state.secondPlayer) : null}
           </Grid>
         </>

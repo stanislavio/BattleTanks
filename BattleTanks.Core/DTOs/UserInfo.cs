@@ -1,5 +1,7 @@
 ﻿using BattleTanks.DB.Enums;
-using System;                 
+using System;
+using System.Collections.Generic;
+using BattleTanks.DB.Entities;
 
 namespace BattleTanks.Core.DTOs
 {
@@ -14,7 +16,8 @@ namespace BattleTanks.Core.DTOs
         public string Role { get; set; }
         public string PhotoUrl { get; set; }
         public string Token { get; set; }
-        public bool AfterEmailConfirmation { get; set; } = false;      
+        public bool AfterEmailConfirmation { get; set; } = false;     
+        public List<UserInfo> Friends { get; set; }
 
     }
 }

@@ -5,8 +5,14 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\Nikin\Source\Repos\BattleTanks\BattleTanks.Core\BattleTanks.Core.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\Dell\source\repos\BattleTanks\BattleTanks.Core\BattleTanks.Core.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Validate\**" />
+    <EmbeddedResource Remove="Validate\**" />
+    <None Remove="Validate\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
@@ -24,10 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BattleTanks.DB\BattleTanks.DB.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Validate\" />
   </ItemGroup>
 
   <ItemGroup>

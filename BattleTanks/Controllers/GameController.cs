@@ -142,6 +142,16 @@ namespace BattleTanks.Controllers
         {
             return Ok(_gameService.GetGameInfo(gameId));
         }
-                                           
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize]
+        [HttpGet("[action]")]
+        public IActionResult GetOpenedGames([FromQuery] Guid userId)
+        {
+            return Ok(_gameService.GetOpenedGames(userId));
+        }
     }
 }

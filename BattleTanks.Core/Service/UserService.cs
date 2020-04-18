@@ -161,5 +161,35 @@ namespace BattleTanks.Core.Service
         {
             return _mapper.Map<IEnumerable<UserInfo>>(_unitOfWork.UserRepo.Get("Photo,Role"));
         }
+
+        public async Task<OperationResult> Follow(FriendDto model)
+        {
+
+            var currentStatus = _unitOfWork.FriendRepo.Get()
+                .FirstOrDefault(x => x.WhoId == model.Who && x.ForWhoId == model.For);
+            if (currentStatus != null)
+            {
+                currentStatus.Deleted = !currentStatus.Deleted;
+                _unitOfWork.FriendRepo.Update(currentStatus);
+                await _unitOfWork.SaveAsync();
+                return new OperationResult(true);
+            }
+
+            _unitOfWork.FriendRepo.Insert(new Friend()
+            {
+                WhoId = model.Who,
+                ForWhoId = model.For
+            });
+
+            await _unitOfWork.SaveAsync();
+            return new OperationResult(true);
+        }
+
+        public List<UserInfo> GetFriends(Guid userId)
+        {
+            var res = _unitOfWork.FriendRepo.Get("ForWho.Photo").Where(x => x.WhoId == userId);
+
+            return _mapper.Map<List<UserInfo>>(res.Select(x => x.ForWho).ToList());
+        }
     }
 }

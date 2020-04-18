@@ -45,11 +45,24 @@ export default class FindGame extends Component {
         );
       return (
         <>
-          <Grid item xs={4}>
-            <DefaultLinkBlack to={"game/" + el.id}>
-              <p>Play with {el.author.nickname}</p>
-            </DefaultLinkBlack>
-          </Grid>
+        <Grid item xs={4}>
+              <Card
+                img={el.author.photoUrl}
+                title={
+                  <DefaultLink
+                    className="font-color"
+                    to={"profile/" + el.author.id}
+                  >
+                    {el.author.nickname}{" "}
+                  </DefaultLink>
+                }
+                body={<p>Bet: {el.bet}</p>}
+              >
+              <DefaultLinkBlack to={"game/" + el.id}>
+                <p>Go to game</p>
+              </DefaultLinkBlack>
+              </Card>
+            </Grid>
         </>
       );
     });

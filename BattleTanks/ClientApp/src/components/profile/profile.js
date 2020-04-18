@@ -10,7 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import PropTypes from "prop-types";
-import get_user from "../../actions/profile";
+import get_user, { getOpenedGames } from "../../actions/profile";
 import Spinner from "../spinner";
 import { Link } from "react-router-dom";
 
@@ -63,12 +63,14 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired
 };
 
-function CenteredTabs() {
+function CenteredTabs(props) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const {isPending, isError, isSuccess, data} = props.games;
 
   return (
     <StyledPaper className="center">
@@ -80,14 +82,15 @@ function CenteredTabs() {
         centered
       >
         <Tab className="tab" label="Friends" />
-        <Tab className="tab" label="Stats" />
+        <Tab className="tab" label="Opened Games" />
         <Tab className="tab" label="Other" />
       </Tabs>
       <TabPanel className="tab" value={value} index={0}>
         Item One
       </TabPanel>
       <TabPanel className="tab" value={value} index={1}>
-        Item Two
+        {isPending ? <Spinner/> : null}
+        {isSuccess ? 'yes' : null}
       </TabPanel>
       <TabPanel className="tab" value={value} index={2}>
         Item Three
@@ -99,6 +102,7 @@ function CenteredTabs() {
 class Profile extends Component {
   componentWillMount() {
     this.props.get_user(this.props.match.params.userId);
+    this.props.get_opened_game(this.props.match.params.userId);
   }
 
   render() {
@@ -151,7 +155,7 @@ class Profile extends Component {
                 </div>
               )}
             </div>
-            <CenteredTabs />
+            <CenteredTabs games={this.props.myGames} />
           </>
         ) : null}
         {spinner}
@@ -162,12 +166,14 @@ class Profile extends Component {
 
 const mapStateToProps = state => ({
   user: state.user,
-  profile: state.profile
+  profile: state.profile,
+  myGames: state.myGames
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    get_user: userId => dispatch(get_user(userId))
+    get_user: (userId) => dispatch(get_user(userId)),
+    get_opened_game: (userId) => dispatch(getOpenedGames(userId))
   };
 };
 
