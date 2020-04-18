@@ -50,6 +50,8 @@ namespace BattleTanks.DB.EF
                 .HasKey(u => u.Id);
             builder.Entity<Tank>()
                 .Property(u => u.Id).ValueGeneratedOnAdd();
+            builder.Entity<User>()
+               .Property(u => u.Money).HasDefaultValue(1000);
 
 
             // user config                                 

@@ -6,7 +6,12 @@ import validate from "../fields/validate";
 import Button from "@material-ui/core/Button";
 import { resetRegister } from "../../actions/register";
 import "./registration.css";
-import { withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormLabel from "@material-ui/core/FormLabel";
 
 const StyledButton = withStyles({
   textPrimary: {
@@ -22,7 +27,6 @@ class Registration extends Component {
   render() {
     const { pristine, reset, submitting, handleSubmit } = this.props;
     const { isSuccess, isError, isPending } = this.props.register;
-
     return (
       <>
         <form className="login-form text-center" onSubmit={handleSubmit}>
@@ -48,6 +52,29 @@ class Registration extends Component {
             label="Age"
             component={renderTextField}
             type="number"
+          />
+          <Field
+            className="mt-2"
+            component={() => (
+              <FormControl component="fieldset">
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender1"
+                  className="labelReg"
+                >
+                  <FormControlLabel
+                    value="0"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="1"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                </RadioGroup>
+              </FormControl>
+            )}
           />
 
           <Field

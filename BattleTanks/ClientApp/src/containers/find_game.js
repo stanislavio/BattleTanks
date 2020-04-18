@@ -32,7 +32,7 @@ class FindGameWrapper extends Component {
     const spinner = isPending ? <Spinner /> : null;
 
     return (
-      <div className="">
+      <div className="container">
         {spinner}
         {content}
       </div>

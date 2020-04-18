@@ -16,13 +16,13 @@ import { Link } from "react-router-dom";
 
 const StyledPaper = withStyles({
   root: {
-    background: "rgba(0,0,0,0)"
-  }
+    background: "rgba(0,0,0,0)",
+  },
 })(Paper);
 
 const StyledButton = withStyles({
   textPrimary: {
-    color: "white"
+    color: "white",
   },
   label: {
     boxShadow: "0px 2px 20px pink",
@@ -30,14 +30,14 @@ const StyledButton = withStyles({
     borderRadius: "15px",
     padding: "10px",
     marginBottom: "10px",
-    marginTop: "10px"
-  }
+    marginTop: "10px",
+  },
 })(Button);
 
 const useStyles = makeStyles({
   root: {
-    flexGrow: 1
-  }
+    flexGrow: 1,
+  },
 });
 
 function TabPanel(props) {
@@ -60,7 +60,7 @@ function TabPanel(props) {
 TabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired
+  value: PropTypes.any.isRequired,
 };
 
 function CenteredTabs(props) {
@@ -70,7 +70,7 @@ function CenteredTabs(props) {
     setValue(newValue);
   };
 
-  const {isPending, isError, isSuccess, data} = props.games;
+  const { isPending, isError, isSuccess, data } = props.games;
 
   return (
     <StyledPaper className="center">
@@ -83,14 +83,14 @@ function CenteredTabs(props) {
       >
         <Tab className="tab" label="Friends" />
         <Tab className="tab" label="Opened Games" />
-        <Tab className="tab" label="Other" />
+        <Tab className="tab" label="Stats" />
       </Tabs>
       <TabPanel className="tab" value={value} index={0}>
         Item One
       </TabPanel>
       <TabPanel className="tab" value={value} index={1}>
-        {isPending ? <Spinner/> : null}
-        {isSuccess ? 'yes' : null}
+        {isPending ? <Spinner /> : null}
+        {isSuccess ? "yes" : null}
       </TabPanel>
       <TabPanel className="tab" value={value} index={2}>
         Item Three
@@ -164,16 +164,16 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   user: state.user,
   profile: state.profile,
-  myGames: state.myGames
+  myGames: state.myGames,
 });
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     get_user: (userId) => dispatch(get_user(userId)),
-    get_opened_game: (userId) => dispatch(getOpenedGames(userId))
+    get_opened_game: (userId) => dispatch(getOpenedGames(userId)),
   };
 };
 

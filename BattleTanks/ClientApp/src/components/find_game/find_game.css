@@ -14,3 +14,16 @@
 .font-color {
   color: black !important;
 }
+
+.container {
+  margin: auto;
+}
+
+.item {
+  margin-top: 10vh !important;
+}
+
+.labelFind {
+  width: 50%;
+  margin-top: 5px;
+}

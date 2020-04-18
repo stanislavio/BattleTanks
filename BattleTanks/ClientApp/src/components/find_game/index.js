@@ -5,19 +5,26 @@ import Button from "@material-ui/core/Button";
 import "./find_game.css";
 import Grid from "@material-ui/core/Grid";
 import Card from "../card";
+import { withStyles } from "@material-ui/core/styles";
+
+const StyledButton = withStyles({
+  label: {
+    width: "90%",
+  },
+})(Button);
 
 export default class FindGame extends Component {
-  onClick = el => {
+  onClick = (el) => {
     this.props.joinToGame(el, this.refs.tank.value);
   };
 
-  renderGameCart = arr => {
-    return arr.map(el => {
-      var player = el.players.find(x => x.id == this.props.user.id);
+  renderGameCart = (arr) => {
+    return arr.map((el) => {
+      var player = el.players.find((x) => x.id == this.props.user.id);
       if (player == null)
         return (
           <>
-            <Grid item xs={4}>
+            <Grid item xs={4} className="item">
               <Card
                 img={el.author.photoUrl}
                 title={
@@ -30,39 +37,41 @@ export default class FindGame extends Component {
                 }
                 body={<p>Bet: {el.bet}</p>}
               >
-                <label for="tanks">Choose a tank:</label>
+                <label for="tanks" className="labelFind">
+                  Choose a tank:
+                </label>
                 <select id="tanks" ref="tank">
-                  {this.props.tanks.map(x => (
+                  {this.props.tanks.map((x) => (
                     <option value={x.id}>{x.name}</option>
                   ))}
                 </select>
-                <Button onClick={() => this.onClick(el.id)}>
+                <StyledButton onClick={() => this.onClick(el.id)}>
                   Play with {el.author.nickname}
-                </Button>
+                </StyledButton>
               </Card>
             </Grid>
           </>
         );
       return (
         <>
-        <Grid item xs={4}>
-              <Card
-                img={el.author.photoUrl}
-                title={
-                  <DefaultLink
-                    className="font-color"
-                    to={"profile/" + el.author.id}
-                  >
-                    {el.author.nickname}{" "}
-                  </DefaultLink>
-                }
-                body={<p>Bet: {el.bet}</p>}
-              >
-              <DefaultLinkBlack to={"game/" + el.id}>
+          <Grid item xs={4} className="item">
+            <Card
+              img={el.author.photoUrl}
+              title={
+                <DefaultLink
+                  className="font-color"
+                  to={"profile/" + el.author.id}
+                >
+                  {el.author.nickname}{" "}
+                </DefaultLink>
+              }
+              body={<p>Bet: {el.bet}</p>}
+            >
+              <DefaultLink to={"game/" + el.id}>
                 <p>Go to game</p>
-              </DefaultLinkBlack>
-              </Card>
-            </Grid>
+              </DefaultLink>
+            </Card>
+          </Grid>
         </>
       );
     });

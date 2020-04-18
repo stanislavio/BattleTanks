@@ -10,6 +10,7 @@ class RegistrationWrapper extends Component {
       Email: val.email,
       Age: val.age,
       Password: val.password,
+      Gender: val.gender1,
     });
   };
 
@@ -22,7 +23,7 @@ class RegistrationWrapper extends Component {
     return (
       <>
         <div className="row height-100 justify-content-center align-items-center login">
-          <div className="col-3">
+          <div className="col-3 ">
             <Registration onSubmit={this.onSubmit} />
           </div>
         </div>
