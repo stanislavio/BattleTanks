@@ -43,6 +43,7 @@ namespace BattleTanks.Controllers
 
             var userInfo = _mapper.Map<UserInfo>(user);
             userInfo.Token = result.Message;
+            userInfo.Friends = _userService.GetFriends(userInfo.Id);
 
             return Ok(userInfo);   
         }
@@ -98,7 +99,7 @@ namespace BattleTanks.Controllers
         {
             var user = _authService.GetCurrentUser(HttpContext.User);
             var userInfo = _mapper.Map<UserInfo>(user);
-
+            userInfo.Friends = _userService.GetFriends(userInfo.Id);
             return Ok(userInfo);
         }
 

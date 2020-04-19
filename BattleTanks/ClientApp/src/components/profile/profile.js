@@ -73,13 +73,37 @@ function CenteredTabs(props) {
     setValue(newValue);
   };
 
+  const renderMyGames = (arr) => {
+    console.log(arr);
+    return arr.map(el => (
+    <Grid key={el.id} item xs={4} className="item">
+        <Card
+          img={el.author.photoUrl}
+          title={
+            <DefaultLink
+              className="font-color"
+              to={"/profile/" + el.author.id}
+            >
+              {el.author.nickname}{" "}
+            </DefaultLink>
+          }
+          body={<p>Bet: {el.bet}</p>}
+        >
+          <DefaultLink to={"/game/" + el.id}>
+            <p>Go to game</p>
+          </DefaultLink>
+        </Card>
+      </Grid>
+    ));
+  }
+
   const renderFriendCart = (arr) => {
     if (arr == null)
       return <p className="text-center">You don't have friends yet</p>;
     return arr.map((el) => {
       return (
         <>
-          <Grid item xs={4} className="item">
+          <Grid key={el.id} item xs={4} className="item">
             <Card
               img={el.photoUrl}
               title={
@@ -110,14 +134,13 @@ function CenteredTabs(props) {
         <Tab className="tab" label="Stats" />
       </Tabs>
       <TabPanel className="tab" value={value} index={0}>
-        <Grid container> {renderFriendCart(props.profile.friends)} </Grid>
+        <Grid container justify="space-between"> {renderFriendCart(props.profile.friends)} </Grid>
       </TabPanel>
       <TabPanel className="tab" value={value} index={1}>
         {isPending ? <Spinner /> : null}
-        {isSuccess ? "yes" : null}
+  {isSuccess ? <Grid container justify="space-between">{renderMyGames(props.games.data)}</Grid> : null}
       </TabPanel>
       <TabPanel className="tab" value={value} index={2}>
-        Item Three
       </TabPanel>
     </StyledPaper>
   );
@@ -127,6 +150,13 @@ class Profile extends Component {
   componentWillMount() {
     this.props.get_user(this.props.match.params.userId);
     this.props.get_opened_game(this.props.match.params.userId);
+  }
+
+  componentWillUpdate(nextProps){
+    if(nextProps.match.params.userId != this.props.match.params.userId){
+      this.props.get_user(nextProps.match.params.userId);
+      this.props.get_opened_game(nextProps.match.params.userId);
+    }
   }
 
   render() {
@@ -160,7 +190,14 @@ class Profile extends Component {
 
               {this.props.user.id == data.id ? null : (
                 <div>
-                  <StyledButton
+                  {this.props.user.friends.find(el => (el.id == data.id)) != null ? <StyledButton
+                    className="follow"
+                    fullWidth={true}
+                    type="submit"
+                    color="primary"
+                  >
+                    Unfollow
+                  </StyledButton> :  <StyledButton
                     className="follow"
                     fullWidth={true}
                     type="submit"
@@ -168,14 +205,8 @@ class Profile extends Component {
                   >
                     Follow
                   </StyledButton>
-                  <StyledButton
-                    className="follow"
-                    fullWidth={true}
-                    type="submit"
-                    color="primary"
-                  >
-                    Unfollow
-                  </StyledButton>
+}
+                 
                 </div>
               )}
             </div>

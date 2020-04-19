@@ -27,3 +27,7 @@
 .text-right {
   text-align: right;
 }
+
+.fa-heart {
+  color: red;  
+}

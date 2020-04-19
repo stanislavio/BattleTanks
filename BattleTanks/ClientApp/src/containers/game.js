@@ -100,12 +100,18 @@ class GameWrapper extends Component{
         }
       }
 
+      const renderLives = (lives) => {
+        let l = [];
+        for(var i = 0;i< lives;i++){
+            l.push(<span><i className="fas fa-heart"></i></span>);
+        }
+        return l.map(el => (el));
+      }
+
       const renderPlayerInfo = (player) => {
         console.log('rendering');
         if(player.info != null){
-          console.log('time');
-          console.log(player.last_shoot + player.recharge_time);
-          return <div>{player.info.nickname}: {player.lives} 
+          return <div>{player.info.nickname} {renderLives(player.lives)} 
                                                             </div>
         }
         return <div></div>
