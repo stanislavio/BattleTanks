@@ -109,7 +109,7 @@ namespace BattleTanks.Controllers
             });
             if (res.Successed)
             {
-                return Ok();
+                return Ok(_userService.GetFriends(currentUser.Id));
             }
 
             return BadRequest(res.Message);

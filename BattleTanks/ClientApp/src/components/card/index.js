@@ -8,6 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import "./card.css";
+import defaultPhoto from "../../photo/default-user-icon-8.jpg";
 
 const useStyles = makeStyles({
   root: {
@@ -24,7 +25,11 @@ export default function MediaCard(props) {
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <CardMedia className={classes.media} image={props.img} />
+        <CardMedia
+          className={classes.media}
+          image={props.img == null ? defaultPhoto : props.img}
+        />
+
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {props.title}

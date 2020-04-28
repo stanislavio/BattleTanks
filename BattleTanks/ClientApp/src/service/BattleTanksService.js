@@ -5,7 +5,7 @@ export default class BattleTanksService {
 
   getOpenedGames = async (userId) => {
     return await this.getResource("game/getOpenedGames?userId=" + userId);
-  }
+  };
 
   getUsers = async () => {
     return await this.getResource("user/all");
@@ -131,6 +131,14 @@ export default class BattleTanksService {
 
   createGame = async (data) => {
     const res = await this.setResource("game/createGame", data);
+    if (!res.ok) {
+      return { error: await res.text() };
+    }
+    return res;
+  };
+
+  follow = async (userId) => {
+    const res = await this.setResource("user/follow?userId=" + userId);
     if (!res.ok) {
       return { error: await res.text() };
     }
