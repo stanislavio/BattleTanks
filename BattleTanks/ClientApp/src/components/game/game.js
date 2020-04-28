@@ -47,8 +47,10 @@ export default class Game extends Component{
 
         if(this.props.hub != null){
 
+            
+            const players = this.props.game.players.data;
+
             this.props.hub.on('ReceiveOnline', (data) => {
-                const players = this.props.game.players.data;
                 let player = players.find((x) => (x.info.id == data));
                 if(player != null)
                 player.info.online = true;
@@ -56,33 +58,40 @@ export default class Game extends Component{
 
             this.props.hub.on('StartGame', (data) => {
                 this.setOnline(true);
+                if(this.props.game.players.data.length < 2){
+                    this.props.setPlayers();
+                }
             });
 
             this.props.hub.on('ReceiveOffline', (data) => {
-                const players = this.props.game.players.data;
                 let player = players.find((x) => (x.info.id == data));
+                if(player != null){
                 player.info.online = false;
                 this.setOnline(false);
+                }
             });
 
             this.props.hub.on('ReceiveShoot', (data) => {
-                const players = this.props.game.players.data;
                 const map = this.props.game.map.data.coor;
                 let bullet_player = players.find((x) => (x.info.id == data.ownerId));
+                if(bullet_player != null) {
                 bullet_player = bullet_player.bullet;
                 bullet_player.direct = data.direct;
                 bullet_player.map = map;
                 bullet_player.enemies = players.filter((el) => (el.info.id != data.ownerId));
                 bullet_player.position(JSON.parse(data.position).x, JSON.parse(data.position).y);
                 this.addBullet(bullet_player);
+                }
         });
             this.props.hub.on('ReceiveMove', (data) => {
                 const map = this.props.game.map.data.coor;
-                const players = this.props.game.players.data;
+                console.log(players);
                 const current_player = players.find((x) => (x.info.id == data.ownerId));
+                if(current_player != null){
                 current_player.setMap(map);
                 current_player.enemies = players.filter((x) => (x.info.id != data.ownerId));
                 current_player.move(data.direct, this.props.game.ctx);
+                }
             });
             
             this.props.hub

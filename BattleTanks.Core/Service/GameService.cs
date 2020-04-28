@@ -206,5 +206,28 @@ namespace BattleTanks.Core.Service
 
             return new OperationResult(false);
         }
+
+
+        public Dictionary<string, object> GetStats(Guid userId)
+        {
+            var games = _unitOfWork.UserGame.Get("Game").Where(x => x.TankerId == userId && x.Game.Finished != DateTime.MinValue);
+            var gameCount = games.Count();
+            float wins = (games.Count(x => x.DiedCount < 5) * 100) / gameCount;
+            float loses = 100 - wins;
+            var stats = games.ToList().GroupBy(x => x.Game.Finished.Date).Select(x => new
+            {
+                Name = x.Key,
+                Wins = games.Count(y => y.DiedCount < 5 && y.Game.Finished.Date == x.Key.Date),
+                Loses = games.Count(y => y.DiedCount == 5 && y.Game.Finished.Date == x.Key.Date)
+            });                 
+
+            return new Dictionary<string, object>()
+            {
+                { "GameCount", gameCount },
+                { "Wins", wins },
+                { "Loses", loses },
+                { "Stats", stats }
+            };
+        }
     }
 }

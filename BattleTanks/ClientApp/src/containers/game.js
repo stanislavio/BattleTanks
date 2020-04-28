@@ -46,9 +46,9 @@ class GameWrapper extends Component{
       const { gameId } = this.props.match.params;
       this.props.set_players(gameId);
       this.props.set_game(gameId);
-      this.props.hubConnection.on('ReceiveOnline', (data) => {
-        this.props.set_players(gameId);
-      });
+      // this.props.hubConnection.on('ReceiveOnline', (data) => {
+      //   this.props.set_players(gameId);
+      // });
     }
 
     componentWillUnmount(){
@@ -76,7 +76,7 @@ class GameWrapper extends Component{
         ctx.fillStyle = "black";
         ctx.fill();
       }
-      const content = players.isSuccess & map.isSuccess ? <Game setFirstPlayer={this.setFirstPlayer} setSecondPlayer={this.setSecondPlayer} gameId={this.props.match.params.gameId} hub={this.props.hubConnection} game={this.props.game} current_user={this.props.user} /> : null;
+      const content = players.isSuccess & map.isSuccess ? <Game setPlayers={() => {if(this.props.game.players.data.length < 2) this.props.set_players(this.props.match.params.gameId)}} setFirstPlayer={this.setFirstPlayer} setSecondPlayer={this.setSecondPlayer} gameId={this.props.match.params.gameId} hub={this.props.hubConnection} game={this.props.game} current_user={this.props.user} /> : null;
       const spinner = players.isPending & map.isPending ? <Spinner /> : null;
       
       const gameOver = data != null && data.winnerId != null ? <div>Game Over</div> : null;

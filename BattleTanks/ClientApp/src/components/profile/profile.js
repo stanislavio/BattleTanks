@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./profile.css";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
-import AppBar from "@material-ui/core/AppBar";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 import { withStyles, makeStyles } from "@material-ui/core/styles";
@@ -16,6 +15,8 @@ import { DefaultLink } from "../helpers/helpers";
 import { Link } from "react-router-dom";
 import Card from "../card";
 import Grid from "@material-ui/core/Grid";
+import Chart from '../chart';
+import Moment from 'moment';
 
 const StyledPaper = withStyles({
   root: {
@@ -120,6 +121,8 @@ function CenteredTabs(props) {
 
   const { isPending, isError, isSuccess, data } = props.games;
 
+  const wins = props.profile.stats.Stats.map(x => (x.wins));
+  const loses = props.profile.stats.Stats.map(x => (x.loses));
   return (
     <StyledPaper className="center">
       <Tabs
@@ -141,6 +144,18 @@ function CenteredTabs(props) {
   {isSuccess ? <Grid container justify="space-between">{renderMyGames(props.games.data)}</Grid> : null}
       </TabPanel>
       <TabPanel className="tab" value={value} index={2}>
+        <Chart categories={props.profile.stats.Stats.map(x => {
+          return Moment(x.name).format('MMM D');
+        })}
+        series={[{
+            name: 'Wins',
+            data: wins
+        },
+        {
+          name: 'Loses',
+          data: loses
+        }]} 
+        title={'Tanker static'} />
       </TabPanel>
     </StyledPaper>
   );
@@ -161,8 +176,7 @@ class Profile extends Component {
 
   render() {
     const { data } = this.props.profile;
-
-    const { isSuccess, isPending } = this.props.profile;
+    const { isSuccess, isPending } = this.props.profile; 
 
     const spinner = isPending ? <Spinner /> : null;
 

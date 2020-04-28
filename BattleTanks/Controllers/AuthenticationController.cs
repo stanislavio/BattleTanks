@@ -16,16 +16,19 @@ namespace BattleTanks.Controllers
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
         private readonly IMapper _mapper;
+        private readonly IGameService _gameService;
 
         public AuthenticationController(
             IUserService userSrv,
             IMapper mapper,
-            IAuthService authSrv
+            IAuthService authSrv,
+            IGameService gameService
             )
         {
             _userService = userSrv;
             _mapper = mapper;
             _authService = authSrv;
+            _gameService = gameService;
         }
         
         [AllowAnonymous]
@@ -44,6 +47,7 @@ namespace BattleTanks.Controllers
             var userInfo = _mapper.Map<UserInfo>(user);
             userInfo.Token = result.Message;
             userInfo.Friends = _userService.GetFriends(userInfo.Id);
+            userInfo.Stats = _gameService.GetStats(userInfo.Id);
 
             return Ok(userInfo);   
         }
