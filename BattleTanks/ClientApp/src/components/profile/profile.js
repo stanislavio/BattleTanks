@@ -76,15 +76,12 @@ function CenteredTabs(props) {
 
   const renderMyGames = (arr) => {
     console.log(arr);
-    return arr.map(el => (
-    <Grid key={el.id} item xs={4} className="item">
+    return arr.map((el) => (
+      <Grid key={el.id} item xs={4} className="item">
         <Card
           img={el.author.photoUrl}
           title={
-            <DefaultLink
-              className="font-color"
-              to={"/profile/" + el.author.id}
-            >
+            <DefaultLink className="font-color" to={"/profile/" + el.author.id}>
               {el.author.nickname}{" "}
             </DefaultLink>
           }
@@ -96,7 +93,7 @@ function CenteredTabs(props) {
         </Card>
       </Grid>
     ));
-  }
+  };
 
   const renderFriendCart = (arr) => {
     if (arr == null)
@@ -137,11 +134,16 @@ function CenteredTabs(props) {
         <Tab className="tab" label="Stats" />
       </Tabs>
       <TabPanel className="tab" value={value} index={0}>
-        <Grid container justify="space-between"> {renderFriendCart(props.profile.friends)} </Grid>
+        <Grid container justify="space-between">
+          {" "}
+          {renderFriendCart(props.profile.friends)}{" "}
+        </Grid>
       </TabPanel>
       <TabPanel className="tab" value={value} index={1}>
         {isPending ? <Spinner /> : null}
-  {isSuccess ? <Grid container justify="space-between">{renderMyGames(props.games.data)}</Grid> : null}
+        {isSuccess ? (
+          <Grid container>{renderMyGames(props.games.data)}</Grid>
+        ) : null}
       </TabPanel>
       <TabPanel className="tab" value={value} index={2}>
         <Chart categories={props.profile.stats.Stats.map(x => {
@@ -167,8 +169,8 @@ class Profile extends Component {
     this.props.get_opened_game(this.props.match.params.userId);
   }
 
-  componentWillUpdate(nextProps){
-    if(nextProps.match.params.userId != this.props.match.params.userId){
+  componentWillUpdate(nextProps) {
+    if (nextProps.match.params.userId != this.props.match.params.userId) {
       this.props.get_user(nextProps.match.params.userId);
       this.props.get_opened_game(nextProps.match.params.userId);
     }
@@ -190,10 +192,11 @@ class Profile extends Component {
                 <li> Email: {data.email} </li>
                 <li> Age: {data.age} </li>
                 <li> Gender: {data.gender ? "Male" : "Female"}</li>
+                <li>Money: {data.money}</li>
               </ul>
 
               {this.props.user.id == data.id ? (
-                <Link to="/edit_profile" className="img-container">
+                <Link to="/add-map" className="img-container">
                   <img className="img-adjust edit-prof" src={data.photoUrl} />{" "}
                 </Link>
               ) : (
@@ -204,23 +207,26 @@ class Profile extends Component {
 
               {this.props.user.id == data.id ? null : (
                 <div>
-                  {this.props.user.friends.find(el => (el.id == data.id)) != null ? <StyledButton
-                    className="follow"
-                    fullWidth={true}
-                    type="submit"
-                    color="primary"
-                  >
-                    Unfollow
-                  </StyledButton> :  <StyledButton
-                    className="follow"
-                    fullWidth={true}
-                    type="submit"
-                    color="primary"
-                  >
-                    Follow
-                  </StyledButton>
-}
-                 
+                  {this.props.user.friends.find((el) => el.id == data.id) !=
+                  null ? (
+                    <StyledButton
+                      className="follow"
+                      fullWidth={true}
+                      type="submit"
+                      color="primary"
+                    >
+                      Unfollow
+                    </StyledButton>
+                  ) : (
+                    <StyledButton
+                      className="follow"
+                      fullWidth={true}
+                      type="submit"
+                      color="primary"
+                    >
+                      Follow
+                    </StyledButton>
+                  )}
                 </div>
               )}
             </div>
