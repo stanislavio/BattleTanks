@@ -101,6 +101,7 @@ export default class Game extends Component{
     }
 
     gameOver = (val) => {
+        this.props.rebuild_user();
         this.setState({
             gameOver: true,
             winner: val

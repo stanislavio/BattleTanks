@@ -33,7 +33,7 @@ namespace BattleTanks.Core.Service
             {
                 return new OperationResult(false, "Bad request", "");
             }
-            var currentOpenGame = _unitOfWork.UserGame.Get("Game").FirstOrDefault(x => x.TankerId == model.UserId && x.Author && x.Game.Finished == DateTime.MinValue);
+            var currentOpenGame = _unitOfWork.UserGame.Get("Game").FirstOrDefault(x => x.TankerId == model.UserId && x.Game.Finished == DateTime.MinValue);
             if (currentOpenGame != null) return new OperationResult(false, "You have not finished game", "");
             var map = _unitOfWork.MapRepo.Get(model.MapId.Value);
             if (map == null) return new OperationResult(false, "Map not Found", "");
@@ -212,21 +212,29 @@ namespace BattleTanks.Core.Service
         {
             var games = _unitOfWork.UserGame.Get("Game").Where(x => x.TankerId == userId && x.Game.Finished != DateTime.MinValue);
             var gameCount = games.Count();
-            float wins = (games.Count(x => x.DiedCount < 5) * 100) / gameCount;
-            float loses = 100 - wins;
-            var stats = games.ToList().GroupBy(x => x.Game.Finished.Date).Select(x => new
+            if (gameCount != 0)
             {
-                Name = x.Key,
-                Wins = games.Count(y => y.DiedCount < 5 && y.Game.Finished.Date == x.Key.Date),
-                Loses = games.Count(y => y.DiedCount == 5 && y.Game.Finished.Date == x.Key.Date)
-            });                 
-
+                float wins = (games.Count(x => x.DiedCount < 5) * 100) / gameCount;
+                float loses = 100 - wins;
+                var stats = games.ToList().GroupBy(x => x.Game.Finished.Date).Select(x => new
+                {
+                    Name = x.Key,
+                    Wins = games.Count(y => y.DiedCount < 5 && y.Game.Finished.Date == x.Key.Date),
+                    Loses = games.Count(y => y.DiedCount == 5 && y.Game.Finished.Date == x.Key.Date)
+                });
             return new Dictionary<string, object>()
             {
                 { "GameCount", gameCount },
                 { "Wins", wins },
                 { "Loses", loses },
                 { "Stats", stats }
+            };
+
+            }
+
+            return new Dictionary<string, object>()
+            {
+                { "GameCount", 0 }
             };
         }
     }

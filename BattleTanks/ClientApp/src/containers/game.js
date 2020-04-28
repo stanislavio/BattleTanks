@@ -8,7 +8,7 @@ import {setPlayers, setGame, set_canvas, reset_game, saveGameData, saveGameMapDa
 import { WIDTH, HEIGHT } from '../components/game/oop/constants';
 import Game from '../components/game';
 import Spinner from '../components/spinner';
-
+import get_user from '../actions/profile'
 import Grid from '@material-ui/core/Grid';
 
 class GameWrapper extends Component{
@@ -76,7 +76,7 @@ class GameWrapper extends Component{
         ctx.fillStyle = "black";
         ctx.fill();
       }
-      const content = players.isSuccess & map.isSuccess ? <Game setPlayers={() => {if(this.props.game.players.data.length < 2) this.props.set_players(this.props.match.params.gameId)}} setFirstPlayer={this.setFirstPlayer} setSecondPlayer={this.setSecondPlayer} gameId={this.props.match.params.gameId} hub={this.props.hubConnection} game={this.props.game} current_user={this.props.user} /> : null;
+      const content = players.isSuccess & map.isSuccess ? <Game rebuild_user={() => this.props.rebuild_user(this.props.id)} setPlayers={() => {if(this.props.game.players.data.length < 2) this.props.set_players(this.props.match.params.gameId)}} setFirstPlayer={this.setFirstPlayer} setSecondPlayer={this.setSecondPlayer} gameId={this.props.match.params.gameId} hub={this.props.hubConnection} game={this.props.game} current_user={this.props.user} /> : null;
       const spinner = players.isPending & map.isPending ? <Spinner /> : null;
       
       const gameOver = data != null && data.winnerId != null ? <div>Game Over</div> : null;
@@ -159,6 +159,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    rebuid_user: (id) => dispatch(get_user(id)),
     set_canvas: (ctx) => dispatch(set_canvas(ctx)),
     reset_game: () => dispatch(reset_game()),
     set_game: (gameId) => dispatch(setGame(gameId)),

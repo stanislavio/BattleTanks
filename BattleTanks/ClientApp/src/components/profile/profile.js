@@ -118,8 +118,11 @@ function CenteredTabs(props) {
 
   const { isPending, isError, isSuccess, data } = props.games;
 
-  const wins = props.profile.stats.Stats.map(x => (x.wins));
-  const loses = props.profile.stats.Stats.map(x => (x.loses));
+  let wins = [], loses = [];
+   if(props.profile.stats.GameCount != 0){
+  wins = props.profile.stats.Stats.map(x => (x.wins));
+  loses = props.profile.stats.Stats.map(x => (x.loses));
+  }
   return (
     <StyledPaper className="center">
       <Tabs
@@ -146,6 +149,7 @@ function CenteredTabs(props) {
         ) : null}
       </TabPanel>
       <TabPanel className="tab" value={value} index={2}>
+        {props.profile.stats.GameCount != 0 ? 
         <Chart categories={props.profile.stats.Stats.map(x => {
           return Moment(x.name).format('MMM D');
         })}
@@ -158,6 +162,7 @@ function CenteredTabs(props) {
           data: loses
         }]} 
         title={'Tanker static'} />
+        : <h4>You have never played before</h4>}
       </TabPanel>
     </StyledPaper>
   );
@@ -207,7 +212,7 @@ class Profile extends Component {
 
               {this.props.user.id == data.id ? null : (
                 <div>
-                  {this.props.user.friends.find((el) => el.id == data.id) !=
+                  {(this.props.user.friends || []).find((el) => el.id == data.id) !=
                   null ? (
                     <StyledButton
                       className="follow"
