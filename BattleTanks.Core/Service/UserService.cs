@@ -187,7 +187,7 @@ namespace BattleTanks.Core.Service
 
         public List<UserInfo> GetFriends(Guid userId)
         {
-            var res = _unitOfWork.FriendRepo.Get("ForWho.Photo").Where(x => x.WhoId == userId).ToList();
+            var res = _unitOfWork.FriendRepo.Get("ForWho.Photo").Where(x => x.WhoId == userId && !x.Deleted).ToList();
 
             return _mapper.Map<List<UserInfo>>(res.Select(x => x.ForWho));
         }

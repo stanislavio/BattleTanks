@@ -142,7 +142,7 @@ export default class BattleTanksService {
     if (!res.ok) {
       return { error: await res.text() };
     }
-    return res;
+    return await res.json();
   };
 
   addMap = async (data) => {

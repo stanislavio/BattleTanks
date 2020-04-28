@@ -16,6 +16,7 @@ export function follow(userId) {
     const res = api_serv.follow(userId);
     res.then((response) => {
       if (response.error == null) {
+        console.log(response);
         dispatch({
           type: FOLLOW_USER,
           payload: response,
