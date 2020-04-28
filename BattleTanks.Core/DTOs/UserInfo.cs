@@ -18,6 +18,6 @@ namespace BattleTanks.Core.DTOs
         public string Token { get; set; }
         public bool AfterEmailConfirmation { get; set; } = false;     
         public List<UserInfo> Friends { get; set; }
-
+        public Dictionary<string, object> Stats { get; set; }
     }
 }

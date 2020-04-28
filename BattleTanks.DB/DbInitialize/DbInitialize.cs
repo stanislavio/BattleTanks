@@ -33,6 +33,8 @@ namespace BattleTanks.DB.DbInitialize
                      EmailConfirmed = true,              
                      Gender = Gender.Male,
                      IsBlocked = false,
+                     Age = 17,
+                     Money = 1000,
                      Role =adminRole
                  },
 
@@ -41,9 +43,11 @@ namespace BattleTanks.DB.DbInitialize
                       PasswordHash = PasswordHasher.GenerateHash("1qaz1qaz"),
                       Email ="user@gmail.com",
                       EmailConfirmed = true,
-                      Gender =Gender.Male,
+                      Gender = Gender.Male,
                       IsBlocked =false,
-                      Role =userRole
+                      Age = 16,
+                      Money = 1000,
+                      Role = userRole
                   }
             };
 

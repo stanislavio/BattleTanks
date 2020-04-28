@@ -191,5 +191,6 @@ namespace BattleTanks.Core.Service
 
             return _mapper.Map<List<UserInfo>>(res.Select(x => x.ForWho));
         }
+
     }
 }

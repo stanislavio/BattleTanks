@@ -24,13 +24,15 @@ namespace BattleTanks.Controllers
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
         private readonly IEmailService _emailService;
+        private readonly IGameService _gameService;
 
         public UserController(
             IUserService userSrv,
             IAuthService authSrv,
             IMapper mapper,
             IMediator mediator,
-            IEmailService emailService
+            IEmailService emailService,
+            IGameService gameService
         )
         {
             _userService = userSrv;
@@ -38,6 +40,7 @@ namespace BattleTanks.Controllers
             _mapper = mapper;
             _emailService = emailService;
             _mediator = mediator;
+            _gameService = gameService;
         }
         
         [HttpPost("[action]")]
@@ -91,6 +94,7 @@ namespace BattleTanks.Controllers
         {
             var res = _mapper.Map<UserInfo>(_userService.GetById(id));
             res.Friends = _userService.GetFriends(id);
+            res.Stats = _gameService.GetStats(res.Id);
             return Ok(res);
         }
 

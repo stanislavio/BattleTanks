@@ -23,5 +23,6 @@ namespace BattleTanks.Core.IService
         Task<bool> CanStartGame(Guid gameId);
         Task<OperationResult> KillPlayer(KillDto model);
         IEnumerable<GamePreviewDto> GetOpenedGames(Guid userId);
+        Dictionary<string, object> GetStats(Guid userId);
     }
 }
