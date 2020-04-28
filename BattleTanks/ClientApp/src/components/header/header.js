@@ -50,6 +50,7 @@ const RenderProfileMenu = (props) => {
 
   return (
     <div>
+      {props.user.money} Pesso  
       <IconButton onClick={(event) => handleMenu(event)} color="inherit">
         <AccountCircle />
       </IconButton>

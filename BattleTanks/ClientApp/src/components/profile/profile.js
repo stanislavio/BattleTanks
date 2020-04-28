@@ -10,12 +10,13 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import PropTypes from "prop-types";
-import get_user, { getOpenedGames } from "../../actions/profile";
+import get_user, { getOpenedGames, follow } from "../../actions/profile";
 import Spinner from "../spinner";
 import { DefaultLink } from "../helpers/helpers";
 import { Link } from "react-router-dom";
 import Card from "../card";
 import Grid from "@material-ui/core/Grid";
+import defaultPhoto from "../../photo/default-user-icon-8.jpg";
 
 const StyledPaper = withStyles({
   root: {
@@ -131,10 +132,7 @@ function CenteredTabs(props) {
         <Tab className="tab" label="Stats" />
       </Tabs>
       <TabPanel className="tab" value={value} index={0}>
-        <Grid container justify="space-between">
-          {" "}
-          {renderFriendCart(props.profile.friends)}{" "}
-        </Grid>
+        <Grid container> {renderFriendCart(props.profile.friends)} </Grid>
       </TabPanel>
       <TabPanel className="tab" value={value} index={1}>
         {isPending ? <Spinner /> : null}
@@ -173,20 +171,25 @@ class Profile extends Component {
           <>
             <div className="frame-container">
               <ul className="text-container">
-                <li> User name: {data.nickname} </li>
+                <li> User name: {data.nickname}</li>
                 <li> Email: {data.email} </li>
                 <li> Age: {data.age} </li>
                 <li> Gender: {data.gender ? "Male" : "Female"}</li>
-                <li>Money: {data.money}</li>
               </ul>
 
               {this.props.user.id == data.id ? (
-                <Link to="/add-map" className="img-container">
-                  <img className="img-adjust edit-prof" src={data.photoUrl} />{" "}
+                <Link to="/change-photo" className="img-container">
+                  <img
+                    className="img-adjust edit-prof "
+                    src={data.photoUrl == null ? defaultPhoto : data.photoUrl}
+                  />
                 </Link>
               ) : (
                 <>
-                  <img className="img-adjust" src={data.photoUrl} />{" "}
+                  <img
+                    className="img-adjust"
+                    src={data.photoUrl == null ? defaultPhoto : data.photoUrl}
+                  />
                 </>
               )}
 
@@ -195,6 +198,7 @@ class Profile extends Component {
                   {this.props.user.friends.find((el) => el.id == data.id) !=
                   null ? (
                     <StyledButton
+                      onClick={() => this.props.follow_user(data.id)}
                       className="follow"
                       fullWidth={true}
                       type="submit"
@@ -204,6 +208,7 @@ class Profile extends Component {
                     </StyledButton>
                   ) : (
                     <StyledButton
+                      onClick={() => this.props.follow_user(data.id)}
                       className="follow"
                       fullWidth={true}
                       type="submit"
@@ -235,6 +240,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    follow_user: (userId) => dispatch(follow(userId)),
     get_user: (userId) => dispatch(get_user(userId)),
     get_opened_game: (userId) => dispatch(getOpenedGames(userId)),
   };

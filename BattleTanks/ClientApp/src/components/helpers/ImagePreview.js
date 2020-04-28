@@ -6,7 +6,7 @@ const ImagePreview = ({ imagefile }) =>
     <div key={name} className="render-preview">
       <div className="image-container">
         {/* <div className="pic-container pic-medium pic-circle"> */}
-            <img src={preview} alt={name} className="pic" />
+        <img src={preview} alt={name} className="pic img-size" />
         {/* </div> */}
       </div>
     </div>
@@ -18,9 +18,9 @@ ImagePreview.propTypes = {
       file: PropTypes.file,
       name: PropTypes.string,
       preview: PropTypes.string,
-      size: PropTypes.number
+      size: PropTypes.number,
     })
-  )
+  ),
 };
 
 export default ImagePreview;

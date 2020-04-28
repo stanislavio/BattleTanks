@@ -42,7 +42,7 @@ class App extends Component {
             <Route path="/maps" component={MapsWrapper} />
             <Route path="/tanks" component={TanksWrapper} />
             <Route path="/add-tank" component={AddTankWrapper} />
-            <Route path="/add-map" component={AddMapWrapper} />
+            <Route path="/change-photo" component={AddMapWrapper} />
             <Route path="/game/:gameId" component={Game} />
             <Route path="/profile/:userId" component={Profile} />
             <Route path="/login" component={Login} />
