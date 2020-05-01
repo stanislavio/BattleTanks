@@ -26,10 +26,6 @@ body {
   text-decoration: none;
 }
 
-body {
-  color: white;
-}
-
 /* registration */
 .MuiFormGroup-root {
   flex-direction: row !important;
