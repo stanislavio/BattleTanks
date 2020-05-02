@@ -4,6 +4,7 @@
 
 .game-pause {
   position: absolute;
+  color: white;
   z-index: 100;
   font-size: 40px;
   background: rgba(0, 0, 0, 0.5);
@@ -29,5 +30,5 @@
 }
 
 .fa-heart {
-  color: red;  
+  color: red;
 }
