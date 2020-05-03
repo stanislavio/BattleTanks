@@ -6,7 +6,7 @@ import {
   WIDTH,
   HEIGHT,
   ICON_W,
-  ICON_H
+  ICON_H,
 } from "./constants";
 
 export default class Sprite {
@@ -18,7 +18,7 @@ export default class Sprite {
     info,
     bullet,
     direct = RIGHT,
-    recharge_time = 6000
+    recharge_time = 3500
   ) {
     this.img = new Image();
     this.img.src = icon;
@@ -254,7 +254,8 @@ export default class Sprite {
               this.center_y,
               this.enemies[k].center_x,
               this.enemies[k].center_y
-            ) )
+            )
+          )
             return true;
         }
         if (
@@ -272,21 +273,20 @@ export default class Sprite {
     return false;
   }
 
+  checkColisionWithEnemy(x1, y1, x2, y2) {
+    x1 = x1 - ICON_W / 2;
+    y1 = y1 - ICON_H / 2;
+    x2 = x2 - ICON_W / 2;
+    y2 = y2 - ICON_H / 2;
 
-  checkColisionWithEnemy(x1, y1, x2, y2){
-
-      x1 = x1 - ICON_W / 2;
-      y1 = y1 - ICON_H / 2;
-      x2 = x2 - ICON_W / 2;
-      y2 = y2 - ICON_H / 2;
-
-    if (x1 < x2 + ICON_W - 1 &&
+    if (
+      x1 < x2 + ICON_W - 1 &&
       x1 + ICON_W - 1 > x2 &&
       y1 < y2 + ICON_H - 1 &&
-      y1 + ICON_H - 1 > y2) {
-        return true;
-   }
-   return false;
+      y1 + ICON_H - 1 > y2
+    ) {
+      return true;
+    }
+    return false;
   }
-
 }
