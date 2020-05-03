@@ -120,10 +120,22 @@ function CenteredTabs(props) {
   const { isPending, isError, isSuccess, data } = props.games;
 
   let wins = [],
-    loses = [];
+    loses = [],
+    winComponent = null;
   if (props.profile.stats.GameCount != 0) {
     wins = props.profile.stats.Stats.map((x) => x.wins);
     loses = props.profile.stats.Stats.map((x) => x.loses);
+  }
+
+  if (props.profile.stats.GameCount) {
+    winComponent = (
+      <div>
+        Wins: 
+        {(props.profile.stats.GameCount / props.profile.stats.Stats[0].wins) *
+          100}
+        %
+      </div>
+    );
   }
 
   return (
@@ -171,14 +183,7 @@ function CenteredTabs(props) {
         )}
         <div style={{ textAlign: "right", marginRight: "10vw" }}>
           <div>Game Count: {props.profile.stats.GameCount} </div>
-          <div>
-            Wins: 
-            {(props.profile.stats.GameCount /
-              props.profile.stats.Stats[0].wins) *
-              100}
-            %
-          </div>
-          {/* <div>Loses: {props.profile.stats.Stats[0].loses} </div> */}
+          {winComponent}
         </div>
       </TabPanel>
     </StyledPaper>
