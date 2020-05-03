@@ -1,6 +1,6 @@
 .frame-container {
   margin: 10vh;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: space-around;
 }
@@ -13,7 +13,7 @@
 
 .img-adjust {
   border-radius: 20%;
-  width: 10%;
+  width: 20%;
   box-shadow: 0 0 5px white;
 }
 .img-container {
