@@ -13,6 +13,7 @@ export default class Chart extends React.Component {
         chart: {
           height: 350,
           type: "line",
+          background: 'rgba(0,0,0,0.3)',
           zoom: {
             enabled: false,
           },
@@ -39,6 +40,12 @@ export default class Chart extends React.Component {
         },
         xaxis: {
           categories: this.props.categories,
+          labels: {
+            show: true,
+            style: {
+              colors: "white",
+            },
+          },
         },
         yaxis: {
           show: true,

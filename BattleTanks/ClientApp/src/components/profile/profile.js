@@ -159,7 +159,11 @@ function CenteredTabs(props) {
         ) : null}
       </TabPanel>
       <TabPanel className="tab" value={value} index={2}>
-        {props.profile.stats.GameCount != 0 ? (
+        {props.profile.stats.GameCount != 0 ? (<>
+          <div style={{ textAlign: "right", marginRight: "10vw" }}>
+          <div>Games: {props.profile.stats.GameCount} </div>
+          {winComponent}
+        </div>
           <Chart
             categories={props.profile.stats.Stats.map((x) => {
               return Moment(x.name).format("MMM D");
@@ -176,13 +180,10 @@ function CenteredTabs(props) {
             ]}
             title={"Tanker statistic"}
           />
-        ) : (
+        </>) : (
           <h4>You have never played before</h4>
         )}
-        <div style={{ textAlign: "right", marginRight: "10vw" }}>
-          <div>Game Count: {props.profile.stats.GameCount} </div>
-          {winComponent}
-        </div>
+
       </TabPanel>
     </StyledPaper>
   );
