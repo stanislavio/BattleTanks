@@ -25,7 +25,11 @@ export default class Chart extends React.Component {
         },
         title: {
           text: this.props.title,
-          align: "left",
+          align: "center",
+          style: {
+            fontFamily: "Roboto",
+            color: "white",
+          },
         },
         grid: {
           row: {
@@ -35,6 +39,16 @@ export default class Chart extends React.Component {
         },
         xaxis: {
           categories: this.props.categories,
+        },
+        yaxis: {
+          show: true,
+          showAlways: true,
+          labels: {
+            show: true,
+            style: {
+              colors: "white",
+            },
+          },
         },
       },
     };
