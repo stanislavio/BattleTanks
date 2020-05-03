@@ -19,6 +19,15 @@ const StyledButton = withStyles({
   },
 })(Button);
 
+
+
+
+const renderRadioGroup = ({ input, ...rest }) => (
+  <RadioGroup  {...input} {...rest}
+    valueSelected={input.value}
+    onChange={(event, value) => input.onChange(value)}/>
+)
+
 class Registration extends Component {
   componentWillUnmount = () => {
     this.props.resetRegister();
@@ -55,27 +64,24 @@ class Registration extends Component {
           />
           <Field
             className="mt-2"
-            component={() => (
-              <FormControl component="fieldset">
-                <RadioGroup
-                  aria-label="gender"
-                  name="gender1"
-                  className="labelReg"
-                >
+            name="gender1"
+            type="radio"
+            component={renderRadioGroup}
+            
+            >
+              <FormControl className="labelReg" component={'fieldset'}>
                   <FormControlLabel
-                    value="0"
-                    control={<Radio />}
+                    value="1"
+                    control={<Radio  />}
                     label="Female"
                   />
                   <FormControlLabel
-                    value="1"
+                    value="0"
                     control={<Radio />}
                     label="Male"
                   />
-                </RadioGroup>
-              </FormControl>
-            )}
-          />
+                  </FormControl>
+            </Field>
 
           <Field
             name="password"

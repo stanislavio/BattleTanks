@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BattleTanks.DB.Enums;
 
 namespace BattleTanks.Core.DTOs
 {             
@@ -12,5 +13,7 @@ namespace BattleTanks.Core.DTOs
         public string Password { get; set; }
         [Required]
         public int Age { get; set; }
+        [Required]
+        public Gender Gender { get; set; } 
     }
 }

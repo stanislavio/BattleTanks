@@ -217,7 +217,7 @@ class Profile extends Component {
                 <li> User name: {data.nickname}</li>
                 <li> Email: {data.email} </li>
                 <li> Age: {data.age} </li>
-                <li> Gender: {data.gender ? "Male" : "Female"}</li>
+                <li> Gender: {!data.gender ? "Male" : "Female"}</li>
               </ul>
 
               {this.props.user.id == data.id ? (

@@ -10,7 +10,7 @@ class RegistrationWrapper extends Component {
       Email: val.email,
       Age: val.age,
       Password: val.password,
-      Gender: val.gender1,
+      Gender: parseInt(val.gender1),
     });
   };
 

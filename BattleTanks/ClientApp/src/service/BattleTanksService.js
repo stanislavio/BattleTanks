@@ -75,6 +75,7 @@ export default class BattleTanksService {
   };
 
   setRegister = async (data) => {
+    console.log(data);
     const res = await this.setResource("authentication/register", data);
     if (!res.ok) {
       return { error: await res.text() };
