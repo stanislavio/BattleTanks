@@ -11,6 +11,10 @@
   padding: 33vh 45.5vw;
 }
 
+.color-players {
+  color: white !important;
+}
+
 .game-info-header {
   display: flex;
   width: 100%;

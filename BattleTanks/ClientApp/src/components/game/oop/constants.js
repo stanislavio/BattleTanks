@@ -12,8 +12,21 @@ let icon_w = width / 26,
 if (!Number.isInteger(icon_w)) icon_w = Math.ceil(icon_w);
 if (!Number.isInteger(icon_h)) icon_h = Math.ceil(icon_h);
 
+icon_h = icon_w;
+
 export const WIDTH = icon_w * 26,
   HEIGHT = icon_h * 11;
 
 export const ICON_W = icon_w,
   ICON_H = icon_h;
+
+console.log(
+  "width " +
+    WIDTH +
+    " Height " +
+    HEIGHT +
+    " ICON_W " +
+    ICON_W +
+    " ICON_H" +
+    ICON_H
+);

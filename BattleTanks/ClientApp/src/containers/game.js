@@ -160,13 +160,13 @@ class GameWrapper extends Component {
         <Grid container direction="row" justify="space-between">
           {data != null ? (
             <>
-              <Grid item xs={6} className="text-center">
+              <Grid item xs={6} className="text-center color-players">
                 {this.state.firstPlayer != {}
                   ? renderPlayerInfo(this.state.firstPlayer)
                   : null}
               </Grid>
 
-              <Grid item xs={6} className="text-center">
+              <Grid item xs={6} className="text-center color-players">
                 {this.state.secondPlayer != {} &&
                 this.state.secondPlayer != null
                   ? renderPlayerInfo(this.state.secondPlayer)
