@@ -24,6 +24,10 @@ class HomeWrapper extends Component {
 
   render() {
     const { loadInfo } = this.props;
+    console.log(this.props);
+    if(loadInfo.isSuccess){
+      
+    }
     const { isSuccess, isPending } = this.props.tanks;
     const { maps } = this.props;
     const content =
