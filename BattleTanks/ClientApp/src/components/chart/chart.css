@@ -1,0 +1,21 @@
+.color {
+  color: black !important;
+}
+.apexcharts-legend-text {
+  color: white !important;
+}
+.apexcharts-text.apexcharts-xaxis-label {
+  color: white !important;
+}
+.apexcharts-xaxis-texts-g {
+  color: white !important;
+}
+tspan {
+  color: white !important;
+}
+.apexcharts-toolbar {
+  opacity: 0;
+}
+.apexcharts-canvas:hover .apexcharts-toolbar {
+  opacity: 0;
+}

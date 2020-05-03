@@ -1,12 +1,8 @@
 body {
-  margin: 0;
-  padding: 0;
-  background: url("../src/photo/10.jpg") top left no-repeat fixed;
+  background: url(".../../photo/10.jpg");
   background-repeat: no-repeat;
-  background-size: cover;
-  display: initial;
-  position: relative;
-  color: white;
+  background-size: 100% 100%;
+  background-attachment: fixed;
 }
 
 .default-link {
@@ -24,10 +20,6 @@ body {
 .color-link-black:hover {
   color: rgb(97, 29, 29);
   text-decoration: none;
-}
-
-body {
-  color: white;
 }
 
 /* registration */

@@ -33,7 +33,7 @@ class Login extends Component {
           <form className="login-form text-center" onSubmit={handleSubmit}>
             <Field
               className="login-field"
-              name="email"
+              name="email_or_nickname"
               label="Nickname or Email"
               component={renderTextField}
               type="text"

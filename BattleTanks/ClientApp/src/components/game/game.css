@@ -4,10 +4,15 @@
 
 .game-pause {
   position: absolute;
+  color: white;
   z-index: 100;
   font-size: 40px;
   background: rgba(0, 0, 0, 0.5);
   padding: 33vh 45.5vw;
+}
+
+.color-players {
+  color: white !important;
 }
 
 .game-info-header {
@@ -29,5 +34,5 @@
 }
 
 .fa-heart {
-  color: red;  
+  color: red;
 }
