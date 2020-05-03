@@ -131,9 +131,7 @@ function CenteredTabs(props) {
     winComponent = (
       <div>
         Wins: 
-        {(props.profile.stats.GameCount / props.profile.stats.Stats[0].wins) *
-          100}
-        %
+        {props.profile.stats.Wins}%
       </div>
     );
   }
