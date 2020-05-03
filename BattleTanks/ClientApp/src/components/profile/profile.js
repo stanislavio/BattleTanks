@@ -16,8 +16,8 @@ import { Link } from "react-router-dom";
 import Card from "../card";
 import Grid from "@material-ui/core/Grid";
 import defaultPhoto from "../../photo/default-user-icon-8.jpg";
-import Chart from '../chart';
-import Moment from 'moment';
+import Chart from "../chart";
+import Moment from "moment";
 
 const StyledPaper = withStyles({
   root: {
@@ -119,11 +119,23 @@ function CenteredTabs(props) {
 
   const { isPending, isError, isSuccess, data } = props.games;
 
-  let wins = [], loses = [];
-   if(props.profile.stats.GameCount != 0){
-  wins = props.profile.stats.Stats.map(x => (x.wins));
-  loses = props.profile.stats.Stats.map(x => (x.loses));
+  let wins = [],
+    loses = [],
+    winComponent = null;
+  if (props.profile.stats.GameCount != 0) {
+    wins = props.profile.stats.Stats.map((x) => x.wins);
+    loses = props.profile.stats.Stats.map((x) => x.loses);
   }
+
+  if (props.profile.stats.GameCount) {
+    winComponent = (
+      <div>
+        Wins: 
+        {props.profile.stats.Wins}%
+      </div>
+    );
+  }
+
   return (
     <StyledPaper className="center">
       <Tabs
@@ -147,20 +159,30 @@ function CenteredTabs(props) {
         ) : null}
       </TabPanel>
       <TabPanel className="tab" value={value} index={2}>
-        {props.profile.stats.GameCount != 0 ? 
-        <Chart categories={props.profile.stats.Stats.map(x => {
-          return Moment(x.name).format('MMM D');
-        })}
-        series={[{
-            name: 'Wins',
-            data: wins
-        },
-        {
-          name: 'Loses',
-          data: loses
-        }]} 
-        title={'Tanker static'} />
-        : <h4>You have never played before</h4>}
+        {props.profile.stats.GameCount != 0 ? (
+          <Chart
+            categories={props.profile.stats.Stats.map((x) => {
+              return Moment(x.name).format("MMM D");
+            })}
+            series={[
+              {
+                name: "Wins",
+                data: wins,
+              },
+              {
+                name: "Loses",
+                data: loses,
+              },
+            ]}
+            title={"Tanker statistic"}
+          />
+        ) : (
+          <h4>You have never played before</h4>
+        )}
+        <div style={{ textAlign: "right", marginRight: "10vw" }}>
+          <div>Game Count: {props.profile.stats.GameCount} </div>
+          {winComponent}
+        </div>
       </TabPanel>
     </StyledPaper>
   );
@@ -181,7 +203,7 @@ class Profile extends Component {
 
   render() {
     const { data } = this.props.profile;
-    const { isSuccess, isPending } = this.props.profile; 
+    const { isSuccess, isPending } = this.props.profile;
 
     const spinner = isPending ? <Spinner /> : null;
 
@@ -215,8 +237,9 @@ class Profile extends Component {
 
               {this.props.user.id == data.id ? null : (
                 <div>
-                  {(this.props.user.friends || []).find((el) => el.id == data.id) !=
-                  null ? (
+                  {(this.props.user.friends || []).find(
+                    (el) => el.id == data.id
+                  ) != null ? (
                     <StyledButton
                       onClick={() => this.props.follow_user(data.id)}
                       className="follow"
